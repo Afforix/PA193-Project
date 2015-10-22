@@ -1,14 +1,14 @@
 #include <string>
 
 enum token_type {
-    ERR,
-    EOF,
+    T_EOF,
+    T_ERR,
     T_LBRACE,
     T_RBRACE,
     T_LBRACKET,
     T_RBRACKET,
     T_LPAREN,
-    T_LPAREN,
+    T_RPAREN,
     T_COLON,
     T_COMMA,
     T_STR,
