@@ -30,3 +30,5 @@
 # Qt Creator
 *.pro
 *.pro.user
+
+parser
