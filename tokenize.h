@@ -1,6 +1,19 @@
 #include <string>
 
-enum token_type { _types }; // TODO
+enum token_type {
+    ERR,
+    EOF,
+    T_LBRACE,
+    T_RBRACE,
+    T_LBRACKET,
+    T_RBRACKET,
+    T_LPAREN,
+    T_LPAREN,
+    T_COLON,
+    T_COMMA,
+    T_STR,
+    T_NUM
+};
 
 class token
 {
