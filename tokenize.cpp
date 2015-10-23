@@ -62,6 +62,25 @@ bool tokenizer::init(const char* path_)
         return true;
 }
 
+token tokenizer::procstr(){
+    std::string str;
+    str.push_back(*_iter);
+    _iter++;
+
+    for (; *_iter != '\"'; _iter++)
+    {
+        switch(*_iter) {
+            default:
+                str.push_back(*_iter);
+        }
+
+    }
+    str.push_back(*_iter);
+    _iter++;
+
+    return token(T_STR, str);
+}
+
 token tokenizer::get_token()
 {
     for (; _iter < _contents.end(); _iter++)
@@ -110,6 +129,10 @@ token tokenizer::get_token()
                      token tok(T_COMMA);
                     _iter++;
                      return tok;
+                }
+            case '\"':
+                {
+                    return this->procstr();
                 }
         }
     }

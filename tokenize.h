@@ -63,6 +63,10 @@ private:
     std::string::iterator _iter;
 
 public:
+    /**
+     * @brief read the json input file
+     * @param path to the file
+     */
     bool init(const char* path_);
 
     /**
@@ -70,5 +74,11 @@ public:
      * @return token
      */
     token get_token();
+
+    /**
+     * @brief process string tokens
+     * @param iterator
+     */
+    token procstr();
 };
 
