@@ -30,10 +30,48 @@ token tokenizer::get_token()
 {
     for (; _iter < _contents.end(); _iter++)
     {
-        std::cout << *_iter;
+        switch(*_iter) {
+            case '\0':
+                {
+                    token tok(T_ERR);
+                    return tok;
+                }
+            case ' ': case '\t': case '\n': case '\r':
+                break; // skip whitespace
+            case '{':
+                {
+                     token tok(T_LBRACE);
+                     return tok;
+                }
+            case '}':
+                {
+                     token tok(T_RBRACE);
+                     return tok;
+                }
+            case '[':
+                {
+                     token tok(T_LBRACKET);
+                     return tok;
+                }
+            case ']':
+                {
+                     token tok(T_RBRACKET);
+                     return tok;
+                }
+            case ':':
+                {
+                     token tok(T_COLON);
+                     return tok;
+                }
+            case ',':
+                {
+                     token tok(T_COMMA);
+                     return tok;
+                }
+        }
     }
 
     token tok(T_STR, "placeholder");
-    return(tok);
+    return tok;
 }
 
