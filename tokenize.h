@@ -2,18 +2,16 @@
 #include <fstream>
 
 enum token_type {
-    T_EOF,
-    T_ERR,
-    T_LBRACE,
-    T_RBRACE,
-    T_LBRACKET,
-    T_RBRACKET,
-    T_LPAREN,
-    T_RPAREN,
-    T_COLON,
-    T_COMMA,
-    T_STR,
-    T_NUM
+    T_EOF,      // End Of File
+    T_ERR,      // Error
+    T_LBRACE,   // { left brace
+    T_RBRACE,   // } right brace
+    T_LBRACKET, // [ left bracket
+    T_RBRACKET, // ] right bracket
+    T_COLON,    // : colon
+    T_COMMA,    // , comma
+    T_STR,      // string enclosed in double quotes
+    T_NUM       // number
 };
 
 class token
