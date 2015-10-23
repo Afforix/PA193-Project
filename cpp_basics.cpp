@@ -1,4 +1,4 @@
-#include "tokenize.h"
+#include "token.h"
 
 // you can use namespaces to hide things from global scope
 namespace examples

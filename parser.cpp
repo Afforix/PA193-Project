@@ -11,7 +11,7 @@
  */
 
 #include <iostream>
-#include "tokenize.h"
+#include "tokenizer.h"
 
 using namespace std;
 
@@ -26,12 +26,12 @@ int main(int argc, char const* argv[])
     tokenizer json;
 
     if (!json.init(argv[1]))
-        {
-            std::cerr << "Unable to open " << argv[1] << ". Exitting." <<endl;
-            return 1;
-        }
+    {
+        std::cerr << "Unable to open " << argv[1] << ". Exitting." << endl;
+        return 1;
+    }
 
-    while (1)
+    while (true)
     {
          token tok = json.get_token();
          tok.print();
