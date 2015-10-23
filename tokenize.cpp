@@ -67,11 +67,31 @@ token tokenizer::procstr(){
     str.push_back(*_iter);
     _iter++;
 
+    // TODO \uXXXX, EOF
+
     for (; *_iter != '\"'; _iter++)
     {
         switch(*_iter) {
+            case '\\':
+                str.push_back(*_iter);
+                _iter++;
+                if (*_iter=='\"' || *_iter=='\\' || *_iter=='b' || *_iter=='f' || *_iter=='n' || *_iter=='r' || *_iter=='t') {
+                    str.push_back(*_iter);
+                } else if (*_iter=='u') {
+                    str.push_back(*_iter);
+                } else {
+                    _iter++;
+                    while (*_iter != '\"')
+                        _iter++;
+                    _iter++;
+                    return token(T_ERR);
+                }
+
+                str.push_back(*_iter);
+                break;
             default:
                 str.push_back(*_iter);
+                break;
         }
 
     }
