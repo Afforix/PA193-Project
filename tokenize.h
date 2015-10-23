@@ -49,6 +49,11 @@ public:
      * @return text of string token
      */
     const std::string& text() const { return _text; }
+
+    /*
+     * @brief print contents of token
+     */
+    void print();
 };
 
 class tokenizer
