@@ -103,7 +103,7 @@ token tokenizer::procstr(){
 
 token tokenizer::get_token()
 {
-    for (; _iter < _contents.end(); _iter++)
+    for (; _iter != _contents.end(); _iter++)
     {
         switch(*_iter) {
             case '\0':
