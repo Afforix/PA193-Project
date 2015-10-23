@@ -1,9 +1,10 @@
 #include <string>
 #include <cerrno>
+#include <iostream>
 
 #include "tokenize.h"
 
-void tokenizer::init(const char* path_)
+bool tokenizer::init(const char* path_)
 {
         /*
          * inspired by second example from here
@@ -17,15 +18,22 @@ void tokenizer::init(const char* path_)
             is.seekg(0, std::ios::beg);
             is.read(&_contents[0], _contents.size());
             is.close();
+        } else {
+            return false;
         }
 
         _iter = _contents.begin();
+        return true;
 }
 
 token tokenizer::get_token()
 {
-    token tok(T_STR, "placeholder");
+    for (; _iter < _contents.end(); _iter++)
+    {
+        std::cout << *_iter;
+    }
 
+    token tok(T_STR, "placeholder");
     return(tok);
 }
 

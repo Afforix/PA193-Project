@@ -60,7 +60,7 @@ private:
     std::string::iterator _iter;
 
 public:
-    void init(const char* path_);
+    bool init(const char* path_);
 
     /**
      * @brief get next token from the json

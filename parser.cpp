@@ -24,7 +24,12 @@ int main(int argc, char const* argv[])
     }
 
     tokenizer json;
-    json.init(argv[1]); // TODO error handling
+    if (!json.init(argv[1]))
+        {
+            std::cerr << "Unable to open " << argv[1] << ". Exitting." <<endl;
+            return 1;
+        }
+
     json.get_token();
 
     return 0;
