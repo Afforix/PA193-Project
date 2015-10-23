@@ -1,4 +1,5 @@
 #include <string>
+#include <fstream>
 
 enum token_type {
     T_EOF,
@@ -50,5 +51,25 @@ public:
      * @return text of string token
      */
     const std::string& text() const { return _text; }
+};
+
+class tokenizer
+{
+    std::ifstream _ifs;
+
+public:
+
+    /*
+     * @brief tokenizer cleanup
+     */
+    ~tokenizer();
+
+    void init(const char* path_);
+
+    /**
+     * @brief get next token from the json
+     * @return token
+     */
+    token get_token();
 };
 

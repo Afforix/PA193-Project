@@ -11,12 +11,19 @@
  */
 
 #include <iostream>
+#include "tokenize.h"
 
 using namespace std;
 
 int main(int argc, char const* argv[])
 {
-    cout << "Hello, World!" << endl;
+    if (argc != 2) {
+        cout << "Usage: ./parser [json to parse]" << endl;
+        return 0;
+    }
+
+    tokenizer json;
+    json.init(argv[1]); // TODO error handling
 
     return 0;
 }
