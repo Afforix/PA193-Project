@@ -17,13 +17,15 @@ using namespace std;
 
 int main(int argc, char const* argv[])
 {
-    if (argc != 2) {
+    if (argc != 2)
+    {
         cout << "Usage: ./parser [json to parse]" << endl;
         return 0;
     }
 
     tokenizer json;
     json.init(argv[1]); // TODO error handling
+    json.get_token();
 
     return 0;
 }

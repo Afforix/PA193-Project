@@ -55,15 +55,11 @@ public:
 
 class tokenizer
 {
-    std::ifstream _ifs;
+private:
+    std::string _contents;
+    std::string::iterator _iter;
 
 public:
-
-    /*
-     * @brief tokenizer cleanup
-     */
-    ~tokenizer();
-
     void init(const char* path_);
 
     /**
