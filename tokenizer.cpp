@@ -37,7 +37,8 @@ token tokenizer::procstr()
 
     for (; _iter != _contents.end(); _iter++)
     {
-        switch(*_iter) {
+        switch(*_iter)
+        {
             case '\"':
                 str.push_back(*_iter);
                 _iter++;
@@ -51,9 +52,15 @@ token tokenizer::procstr()
                     return token(T_ERR);
                 }
 
-                if (*_iter=='\"' || *_iter=='\\' || *_iter=='b' || *_iter=='f' || *_iter=='n' || *_iter=='r' || *_iter=='t') {
+                if (*_iter=='\"' || *_iter=='\\'
+                    || *_iter=='b' || *_iter=='f'
+                    || *_iter=='n' || *_iter=='r'
+                    || *_iter=='t') {
+
                     str.push_back(*_iter);
+
                 } else if (*_iter=='u') {
+
                     str.push_back(*_iter);
 
                     for (int i = 0; i<4; i++){
@@ -96,7 +103,8 @@ token tokenizer::get_token()
 
     for (; _iter != _contents.end(); _iter++)
     {
-        switch(*_iter) {
+        switch(*_iter)
+        {
             case '\0':
                 {
                     err = true;
