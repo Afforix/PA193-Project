@@ -11,7 +11,6 @@ class tokenizer
 private:
     std::string _contents;
     std::string::iterator _iter;
-    std::string _hexnum;
     bool err;
 
     /**

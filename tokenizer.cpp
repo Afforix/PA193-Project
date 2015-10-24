@@ -40,7 +40,7 @@ inline bool tokenizer::contains(std::string str, char c)
 token tokenizer::procstr()
 {
     std::string str;
-    std::string hexnum = "0123456789ABCDEFabcdef";
+    const std::string hexnum = "0123456789ABCDEFabcdef";
 
     str.push_back(*_iter);
     _iter++;
@@ -98,6 +98,76 @@ token tokenizer::procstr()
                 break;
         }
 
+    }
+
+    err = true;
+    return token(T_ERR);
+}
+
+token tokenizer::procnum()
+{
+    std::string num;
+    bool exp = false;
+    bool dot = false;
+
+    const std::string first = "-0123456789";
+    const std::string digit = "0123456789";
+
+    if (this->contains(first, *_iter)) {
+        num.push_back(*_iter);
+        _iter++;
+    } else {
+        err = true;
+        return token(T_ERR);
+    }
+
+    for (; _iter != _contents.end(); _iter++)
+    {
+        switch(*_iter)
+        {
+            case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+                {
+                    num.push_back(*_iter);
+                    break;
+                }
+            case '.':
+                {
+                    if (!dot) {
+                        dot = true;
+                    } else {
+                        err = true;
+                        return token(T_ERR);
+                    }
+                    num.push_back(*_iter);
+                    break;
+                }
+            case 'e': case 'E':
+                {
+                    if (!exp) {
+                        exp = true;
+                    } else {
+                        err = true;
+                        return token(T_ERR);
+                    }
+                    num.push_back(*_iter);
+
+                    _iter++;
+                    if (_iter == _contents.end()){
+                        err = true;
+                        return token(T_ERR);
+                    } else if (*_iter == '+' || *_iter == '-') {
+                        num.push_back(*_iter);
+                    } else if (this->contains(digit, *_iter)) {
+                        dot = true;
+                        num.push_back(*_iter);
+                    }
+                    break;
+                }
+            default:
+                {
+                    return token(T_NUM, num);
+                }
+        }
     }
 
     err = true;
@@ -162,6 +232,10 @@ token tokenizer::get_token()
             case '\"':
                 {
                     return this->procstr();
+                }
+            default:
+                {
+                    return this->procnum();
                 }
         }
     }
