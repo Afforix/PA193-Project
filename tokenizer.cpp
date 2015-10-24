@@ -121,7 +121,6 @@ token tokenizer::procnum()
     bool exp = false;
     bool dot = false;
 
-    const std::string first = "-0123456789";
     const std::string digit = "0123456789";
 
     /*
@@ -129,9 +128,29 @@ token tokenizer::procnum()
      * specifications at http://json.org/.
      */
 
-    if (this->contains(first, *_iter)) {
+    if (this->contains(digit, *_iter)) {
         num.push_back(*_iter);
         _iter++;
+    } else if(*_iter == '0') {
+        num.push_back(*_iter);
+        _iter++;
+        if (_iter != _contents.end() && *_iter == '.') {
+            num.push_back(*_iter);
+            _iter++;
+        } else {
+            err = true;
+            return token(T_ERR);
+        }
+    } else if(*_iter == '-') {
+        num.push_back(*_iter);
+        _iter++;
+        if (_iter != _contents.end() && this->contains(digit, *_iter)) {
+            num.push_back(*_iter);
+            _iter++;
+        } else {
+            err = true;
+            return token(T_ERR);
+        }
     } else {
         err = true;
         return token(T_ERR);
@@ -155,6 +174,18 @@ token tokenizer::procnum()
                         return token(T_ERR);
                     }
                     num.push_back(*_iter);
+
+                    _iter++;
+                    if (_iter == _contents.end()){
+                        err = true;
+                        return token(T_ERR);
+                    } else if (this->contains(digit, *_iter)) {
+                        dot = true;
+                        num.push_back(*_iter);
+                    } else {
+                        err = true;
+                        return token(T_ERR);
+                    }
                     break;
                 }
             case 'e': case 'E':
@@ -176,6 +207,9 @@ token tokenizer::procnum()
                     } else if (this->contains(digit, *_iter)) {
                         dot = true;
                         num.push_back(*_iter);
+                    } else {
+                        err = true;
+                        return token(T_ERR);
                     }
                     break;
                 }
