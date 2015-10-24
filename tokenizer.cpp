@@ -1,6 +1,10 @@
 #include "tokenizer.h"
 
-const std::string _hexnum = "0123456789ABCDEFabcdef";
+tokenizer::tokenizer()
+{
+    _hexnum = "0123456789ABCDEFabcdef";
+    err = false;
+}
 
 bool tokenizer::init(const char *path_)
 {
@@ -27,7 +31,6 @@ bool tokenizer::init(const char *path_)
 token tokenizer::procstr()
 {
     std::string str;
-    bool err = false;
 
     str.push_back(*_iter);
     _iter++;
@@ -39,14 +42,12 @@ token tokenizer::procstr()
                 str.push_back(*_iter);
                 _iter++;
 
-                if (!err)
-                    return token(T_STR, str);
-                else
-                    return token(T_ERR);
+                return token(T_STR, str);
             case '\\':
                 str.push_back(*_iter);
                 _iter++;
                 if (_iter == _contents.end())
+                    err = true;
                     return token(T_ERR);
 
                 if (*_iter=='\"' || *_iter=='\\' || *_iter=='b' || *_iter=='f' || *_iter=='n' || *_iter=='r' || *_iter=='t') {
@@ -55,7 +56,8 @@ token tokenizer::procstr()
                     // TODO \uXXXX
                     str.push_back(*_iter);
                 } else {
-                    err = true;
+                        err = true;
+                        return token(T_ERR);
                 }
                 break;
             default:
@@ -65,16 +67,22 @@ token tokenizer::procstr()
 
     }
 
+    err = true;
     return token(T_ERR);
 }
 
 token tokenizer::get_token()
 {
+    if (err) {
+        return token(T_ERR);
+    }
+
     for (; _iter != _contents.end(); _iter++)
     {
         switch(*_iter) {
             case '\0':
                 {
+                    err = true;
                     token tok(T_ERR);
                     _iter++;
                     return tok;

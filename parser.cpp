@@ -35,7 +35,7 @@ int main(int argc, char const* argv[])
     {
          token tok = json.get_token();
          tok.print();
-         if (tok.type() == T_EOF)
+         if (tok.type() == T_EOF || tok.type() == T_ERR)
              break;
 
     }

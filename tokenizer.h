@@ -11,7 +11,8 @@ class tokenizer
 private:
     std::string _contents;
     std::string::iterator _iter;
-    const std::string _hexnum;
+    std::string _hexnum;
+    bool err;
 
     /**
      * @brief process string tokens
@@ -20,6 +21,11 @@ private:
     token procstr();
 
 public:
+
+    /**
+     * @brief tokenizer ctor
+     */
+    tokenizer();
 
     /**
      * @brief read the json input file
