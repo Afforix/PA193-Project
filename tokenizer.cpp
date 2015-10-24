@@ -2,7 +2,6 @@
 
 tokenizer::tokenizer()
 {
-    _hexnum = "0123456789ABCDEFabcdef";
     err = false;
 }
 
@@ -28,9 +27,20 @@ bool tokenizer::init(const char *path_)
         return true;
 }
 
+inline bool tokenizer::contains(std::string str, char c)
+{
+    if (str.find_first_of(c) == std::string::npos) {
+         return false;
+    } else {
+        return true;
+    }
+
+}
+
 token tokenizer::procstr()
 {
     std::string str;
+    std::string hexnum = "0123456789ABCDEFabcdef";
 
     str.push_back(*_iter);
     _iter++;
@@ -70,15 +80,14 @@ token tokenizer::procstr()
                             return token(T_ERR);
                         }
 
-                        size_t j = _hexnum.find_first_of(*_iter);
-
-                        if (j == std::string::npos){
+                        if (this->contains(hexnum, *_iter)){
+                            str.push_back(*_iter);
+                        } else {
                             err = true;
                             return token(T_ERR);
-                        } else {
-                            str.push_back(*_iter);
                         }
                     }
+
                 } else {
                         err = true;
                         return token(T_ERR);

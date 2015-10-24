@@ -16,9 +16,20 @@ private:
 
     /**
      * @brief process string tokens
-     * @param iterator
      */
     token procstr();
+
+    /**
+     * @brief process number tokens
+     */
+    token procnum();
+
+    /**
+     * @brief simple function verifying if c is in str
+     * @param str - reference string
+     * @param c - character to test
+     */
+    inline bool contains(std::string str, char c);
 
 public:
 
@@ -29,7 +40,7 @@ public:
 
     /**
      * @brief read the json input file
-     * @param path to the file
+     * @param path_ to the file
      */
     bool init(const char* path_);
 
