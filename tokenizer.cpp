@@ -46,15 +46,32 @@ token tokenizer::procstr()
             case '\\':
                 str.push_back(*_iter);
                 _iter++;
-                if (_iter == _contents.end())
+                if (_iter == _contents.end()) {
                     err = true;
                     return token(T_ERR);
+                }
 
                 if (*_iter=='\"' || *_iter=='\\' || *_iter=='b' || *_iter=='f' || *_iter=='n' || *_iter=='r' || *_iter=='t') {
                     str.push_back(*_iter);
                 } else if (*_iter=='u') {
-                    // TODO \uXXXX
                     str.push_back(*_iter);
+
+                    for (int i = 0; i<4; i++){
+                        _iter++;
+                        if (_iter == _contents.end()){
+                            err = true;
+                            return token(T_ERR);
+                        }
+
+                        size_t j = _hexnum.find_first_of(*_iter);
+
+                        if (j == std::string::npos){
+                            err = true;
+                            return token(T_ERR);
+                        } else {
+                            str.push_back(*_iter);
+                        }
+                    }
                 } else {
                         err = true;
                         return token(T_ERR);
