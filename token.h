@@ -11,7 +11,10 @@ enum token_type {
     T_COLON,    // : colon
     T_COMMA,    // , comma
     T_STR,      // string enclosed in double quotes
-    T_NUM       // number
+    T_NUM,      // number
+    T_NULL,     // null
+    T_TRUE,     // true
+    T_FALSE     // false
 };
 
 class token

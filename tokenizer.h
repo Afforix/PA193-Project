@@ -24,6 +24,11 @@ private:
     token procnum();
 
     /**
+     * @brief process null/true/false tokens
+     */
+    token procntf();
+
+    /**
      * @brief simple function verifying if c is in str
      * @param str - reference string
      * @param c - character to test

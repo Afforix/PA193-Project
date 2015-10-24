@@ -225,6 +225,58 @@ token tokenizer::procnum()
     return token(T_ERR);
 }
 
+token tokenizer::procntf()
+{
+    std::string tok = "";
+    tok.push_back(*_iter);
+
+    if (*_iter == 'n') {
+        for (int i=0; i<3; i++) {
+            if (++_iter == _contents.end()) {
+                err = true;
+                return token(T_ERR);
+            }
+            tok.push_back(*_iter);
+        }
+
+        if (tok == "null") {
+            *_iter++;
+            return token(T_NULL);
+        }
+
+    } else if (*_iter == 't') {
+        for (int i=0; i<3; i++) {
+            if (++_iter == _contents.end()) {
+                err = true;
+                return token(T_ERR);
+            }
+            tok.push_back(*_iter);
+        }
+
+        if (tok == "true") {
+            *_iter++;
+            return token(T_TRUE);
+        }
+
+    } else if (*_iter == 'f') {
+        for (int i=0; i<4; i++) {
+            if (++_iter == _contents.end()) {
+                err = true;
+                return token(T_ERR);
+            }
+            tok.push_back(*_iter);
+        }
+
+        if (tok == "false") {
+            *_iter++;
+            return token(T_FALSE);
+        }
+
+    }
+
+    return token(T_ERR);
+}
+
 token tokenizer::get_token()
 {
     if (err) { // Do not continue if T_ERR has already occured.
@@ -286,7 +338,7 @@ token tokenizer::get_token()
                 }
             case 'n': case 't': case 'f':
                 {
-                     return token(T_ERR);
+                    return this->procntf();
                 }
             default:
                 err = true;

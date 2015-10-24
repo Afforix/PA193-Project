@@ -31,6 +31,15 @@ void token::print()
         case T_COMMA:
             std::cout << "T_COMMA" << std::endl;
             break;
+        case T_NULL:
+            std::cout << "T_NULL" << std::endl;
+            break;
+        case T_TRUE:
+            std::cout << "T_TRUE" << std::endl;
+            break;
+        case T_FALSE:
+            std::cout << "T_FALSE" << std::endl;
+            break;
         case T_STR:
             std::cout << "T_STR     " << this->text() << std::endl;
             break;
