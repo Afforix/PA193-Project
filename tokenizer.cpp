@@ -1,15 +1,18 @@
 #include "tokenizer.h"
 
-tokenizer::tokenizer()
-{
+tokenizer::tokenizer() {
+    /*
+     * Instance variable indicating if error occured. If so, no other actions
+     * will be performed and every other call of get_token() will result to
+     * T_ERR.
+     */
     err = false;
 }
 
 bool tokenizer::init(const char *path_)
 {
         /*
-         * inspired by second example from here
-         * http://insanecoding.blogspot.ca/2011/11/how-to-read-in-file-in-c.html
+         * Open the json input file and read it's content. Initialize iterator.
          */
         std::ifstream is(path_);
         if (is)
@@ -29,6 +32,9 @@ bool tokenizer::init(const char *path_)
 
 inline bool tokenizer::contains(std::string str, char c)
 {
+    /*
+     * Just check if the string str contains char c
+     */
     if (str.find_first_of(c) == std::string::npos) {
          return false;
     } else {
@@ -45,6 +51,11 @@ token tokenizer::procstr()
     str.push_back(*_iter);
     _iter++;
 
+    /*
+     * Read the string token enclosed in double quotes. Properly process
+     * escaped characters. Return T_ERR if string does not compy with
+     * specification at http://json.org/.
+     */
     for (; _iter != _contents.end(); _iter++)
     {
         switch(*_iter)
@@ -113,6 +124,11 @@ token tokenizer::procnum()
     const std::string first = "-0123456789";
     const std::string digit = "0123456789";
 
+    /*
+     * Read the number token. Return T_ERR if it does not comply with
+     * specifications at http://json.org/.
+     */
+
     if (this->contains(first, *_iter)) {
         num.push_back(*_iter);
         _iter++;
@@ -176,10 +192,14 @@ token tokenizer::procnum()
 
 token tokenizer::get_token()
 {
-    if (err) {
+    if (err) { // Do not continue if T_ERR has already occured.
         return token(T_ERR);
     }
 
+    /*
+     * Iterate over input json string and with each call return next token. In
+     * case of error return T_ERR.
+     */
     for (; _iter != _contents.end(); _iter++)
     {
         switch(*_iter)
