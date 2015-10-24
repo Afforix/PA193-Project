@@ -242,56 +242,55 @@ token tokenizer::get_token()
             case '\0':
                 {
                     err = true;
-                    token tok(T_ERR);
-                    _iter++;
-                    return tok;
+                    return token(T_ERR);
                 }
             case ' ': case '\t': case '\n': case '\r':
                 break; // skip whitespace
             case '{':
                 {
-                     token tok(T_LBRACE);
                     _iter++;
-                     return tok;
+                     return token(T_LBRACE);
                 }
             case '}':
                 {
-                     token tok(T_RBRACE);
                     _iter++;
-                     return tok;
+                     return token(T_RBRACE);
                 }
             case '[':
                 {
-                     token tok(T_LBRACKET);
                     _iter++;
-                     return tok;
+                     return token(T_LBRACKET);
                 }
             case ']':
                 {
-                     token tok(T_RBRACKET);
                     _iter++;
-                     return tok;
+                     return token(T_RBRACKET);
                 }
             case ':':
                 {
-                     token tok(T_COLON);
                     _iter++;
-                     return tok;
+                     return token(T_COLON);
                 }
             case ',':
                 {
-                     token tok(T_COMMA);
                     _iter++;
-                     return tok;
+                     return token(T_COMMA);
                 }
             case '\"':
                 {
                     return this->procstr();
                 }
-            default:
+            case '-': case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
                 {
                     return this->procnum();
                 }
+            case 'n': case 't': case 'f':
+                {
+                     return token(T_ERR);
+                }
+            default:
+                err = true;
+                return token(T_ERR);
         }
     }
 
