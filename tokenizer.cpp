@@ -2,7 +2,7 @@
 
 tokenizer::tokenizer() {
     /*
-     * Instance variable indicating if error occured. If so, no other actions
+     * Instance variable indicating if error occurred. If so, no other actions
      * will be performed and every other call of get_token() will result to
      * T_ERR.
      */
@@ -53,7 +53,7 @@ token tokenizer::procstr()
 
     /*
      * Read the string token enclosed in double quotes. Properly process
-     * escaped characters. Return T_ERR if string does not compy with
+     * escaped characters. Return T_ERR if string does not comply with
      * specification at http://json.org/.
      */
     for (; _iter != _contents.end(); _iter++)
@@ -279,7 +279,7 @@ token tokenizer::procntf()
 
 token tokenizer::get_token()
 {
-    if (err) { // Do not continue if T_ERR has already occured.
+    if (err) { // Do not continue if T_ERR has already occurred.
         return token(T_ERR);
     }
 
