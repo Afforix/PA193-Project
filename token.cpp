@@ -32,13 +32,11 @@ void token::print()
             std::cout << "T_COMMA" << std::endl;
             break;
         case T_STR:
-            std::cout << "T_STR " << this->text() << std::endl;
+            std::cout << "T_STR     " << this->text() << std::endl;
             break;
         case T_NUM:
-            std::cout << "T_NUM " << this->text() << std::endl;
+            std::cout << "T_NUM     " << this->text() << std::endl;
             break;
     }
 }
-
-
 

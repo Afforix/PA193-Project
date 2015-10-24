@@ -11,6 +11,7 @@ class tokenizer
 private:
     std::string _contents;
     std::string::iterator _iter;
+    const std::string _hexnum;
 
     /**
      * @brief process string tokens
@@ -34,3 +35,4 @@ public:
 };
 
 #endif // TOKENIZER_H
+
