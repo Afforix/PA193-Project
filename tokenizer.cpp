@@ -121,6 +121,7 @@ token tokenizer::procnum()
     bool exp = false;
     bool dot = false;
 
+    const std::string first = "123456789";
     const std::string digit = "0123456789";
 
     /*
@@ -128,7 +129,7 @@ token tokenizer::procnum()
      * specifications at http://json.org/.
      */
 
-    if (this->contains(digit, *_iter)) {
+    if (this->contains(first, *_iter)) {
         num.push_back(*_iter);
         _iter++;
     } else if(*_iter == '0') {
