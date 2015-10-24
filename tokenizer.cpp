@@ -76,7 +76,7 @@ token tokenizer::procstr()
                 if (*_iter=='\"' || *_iter=='\\'
                     || *_iter=='b' || *_iter=='f'
                     || *_iter=='n' || *_iter=='r'
-                    || *_iter=='t') {
+                    || *_iter=='t' || *_iter=='/') {
 
                     str.push_back(*_iter);
 
