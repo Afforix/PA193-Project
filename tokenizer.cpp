@@ -1,5 +1,9 @@
 #include "tokenizer.h"
 
+#define HEXNUM "0123456789ABCDEFabcdef"
+#define FIRST "123456789"
+#define DIGIT "0123456789"
+
 tokenizer::tokenizer() {
     /*
      * Instance variable indicating if error occurred. If so, no other actions
@@ -46,7 +50,6 @@ inline bool tokenizer::contains(std::string str, char c)
 token tokenizer::procstr()
 {
     std::string str;
-    const std::string hexnum = "0123456789ABCDEFabcdef";
 
     str.push_back(*_iter);
     _iter++;
@@ -91,7 +94,7 @@ token tokenizer::procstr()
                             return token(T_ERR);
                         }
 
-                        if (this->contains(hexnum, *_iter)){
+                        if (this->contains(HEXNUM, *_iter)){
                             str.push_back(*_iter);
                         } else {
                             err = true;
@@ -108,7 +111,6 @@ token tokenizer::procstr()
                 str.push_back(*_iter);
                 break;
         }
-
     }
 
     err = true;
@@ -121,15 +123,12 @@ token tokenizer::procnum()
     bool exp = false;
     bool dot = false;
 
-    const std::string first = "123456789";
-    const std::string digit = "0123456789";
-
     /*
      * Read the number token. Return T_ERR if it does not comply with
      * specifications at http://json.org/.
      */
 
-    if (this->contains(first, *_iter)) {
+    if (this->contains(FIRST, *_iter)) {
         num.push_back(*_iter);
         _iter++;
     } else if(*_iter == '0') {
@@ -145,7 +144,7 @@ token tokenizer::procnum()
     } else if(*_iter == '-') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter != _contents.end() && this->contains(digit, *_iter)) {
+        if (_iter != _contents.end() && this->contains(DIGIT, *_iter)) {
             num.push_back(*_iter);
             _iter++;
         } else {
@@ -180,7 +179,7 @@ token tokenizer::procnum()
                     if (_iter == _contents.end()){
                         err = true;
                         return token(T_ERR);
-                    } else if (this->contains(digit, *_iter)) {
+                    } else if (this->contains(DIGIT, *_iter)) {
                         dot = true;
                         num.push_back(*_iter);
                     } else {
@@ -205,7 +204,7 @@ token tokenizer::procnum()
                         return token(T_ERR);
                     } else if (*_iter == '+' || *_iter == '-') {
                         num.push_back(*_iter);
-                    } else if (this->contains(digit, *_iter)) {
+                    } else if (this->contains(DIGIT, *_iter)) {
                         dot = true;
                         num.push_back(*_iter);
                     } else {
@@ -240,7 +239,7 @@ token tokenizer::procntf()
         }
 
         if (tok == "null") {
-            *_iter++;
+            _iter++;
             return token(T_NULL);
         }
 
@@ -254,7 +253,7 @@ token tokenizer::procntf()
         }
 
         if (tok == "true") {
-            *_iter++;
+            _iter++;
             return token(T_TRUE);
         }
 
@@ -268,12 +267,10 @@ token tokenizer::procntf()
         }
 
         if (tok == "false") {
-            *_iter++;
+            _iter++;
             return token(T_FALSE);
         }
-
     }
-
     return token(T_ERR);
 }
 
@@ -345,7 +342,6 @@ token tokenizer::get_token()
                 return token(T_ERR);
         }
     }
-
     return token(T_EOF);
 }
 
