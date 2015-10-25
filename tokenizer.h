@@ -16,7 +16,7 @@ private:
      * will be performed and every other call of get_token() will result to
      * T_ERR.
      */
-    bool err;
+    bool _err;
 
     /**
      * @brief process string tokens

@@ -5,7 +5,7 @@ static const std::string FIRST  = "123456789";
 static const std::string DIGIT  = "0123456789";
 
 tokenizer::tokenizer()
-    : err(false)
+    : _err(false)
 {}
 
 
@@ -64,7 +64,7 @@ token tokenizer::procstr()
             str.push_back(*_iter);
             _iter++;
             if (_iter == _contents.end()) {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
 
@@ -82,20 +82,20 @@ token tokenizer::procstr()
                 for (int i = 0; i<4; i++){
                     _iter++;
                     if (_iter == _contents.end()){
-                        err = true;
+                        _err = true;
                         return token(T_ERR);
                     }
 
                     if (this->contains(HEXNUM, *_iter)){
                         str.push_back(*_iter);
                     } else {
-                        err = true;
+                        _err = true;
                         return token(T_ERR);
                     }
                 }
 
             } else {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             break;
@@ -105,7 +105,7 @@ token tokenizer::procstr()
         }
     }
 
-    err = true;
+    _err = true;
     return token(T_ERR);
 }
 
@@ -130,7 +130,7 @@ token tokenizer::procnum()
             num.push_back(*_iter);
             _iter++;
         } else {
-            err = true;
+            _err = true;
             return token(T_ERR);
         }
     } else if(*_iter == '-') {
@@ -140,11 +140,11 @@ token tokenizer::procnum()
             num.push_back(*_iter);
             _iter++;
         } else {
-            err = true;
+            _err = true;
             return token(T_ERR);
         }
     } else {
-        err = true;
+        _err = true;
         return token(T_ERR);
     }
 
@@ -162,20 +162,20 @@ token tokenizer::procnum()
             if (!dot) {
                 dot = true;
             } else {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             num.push_back(*_iter);
 
             _iter++;
             if (_iter == _contents.end()){
-                err = true;
+                _err = true;
                 return token(T_ERR);
             } else if (this->contains(DIGIT, *_iter)) {
                 dot = true;
                 num.push_back(*_iter);
             } else {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             break;
@@ -185,14 +185,14 @@ token tokenizer::procnum()
             if (!exp) {
                 exp = true;
             } else {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             num.push_back(*_iter);
 
             _iter++;
             if (_iter == _contents.end()){
-                err = true;
+                _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
                 num.push_back(*_iter);
@@ -200,7 +200,7 @@ token tokenizer::procnum()
                 dot = true;
                 num.push_back(*_iter);
             } else {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             break;
@@ -212,7 +212,7 @@ token tokenizer::procnum()
         }
     }
 
-    err = true;
+    _err = true;
     return token(T_ERR);
 }
 
@@ -224,7 +224,7 @@ token tokenizer::procntf()
     if (*_iter == 'n') {
         for (int i=0; i<3; i++) {
             if (++_iter == _contents.end()) {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             tok.push_back(*_iter);
@@ -238,7 +238,7 @@ token tokenizer::procntf()
     } else if (*_iter == 't') {
         for (int i=0; i<3; i++) {
             if (++_iter == _contents.end()) {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             tok.push_back(*_iter);
@@ -252,7 +252,7 @@ token tokenizer::procntf()
     } else if (*_iter == 'f') {
         for (int i=0; i<4; i++) {
             if (++_iter == _contents.end()) {
-                err = true;
+                _err = true;
                 return token(T_ERR);
             }
             tok.push_back(*_iter);
@@ -268,7 +268,7 @@ token tokenizer::procntf()
 
 token tokenizer::get_token()
 {
-    if (err) { // Do not continue if T_ERR has already occurred.
+    if (_err) { // Do not continue if T_ERR has already occurred.
         return token(T_ERR);
     }
 
@@ -282,7 +282,7 @@ token tokenizer::get_token()
         {
         case '\0':
         {
-            err = true;
+            _err = true;
             return token(T_ERR);
         }
         case ' ': case '\t': case '\n': case '\r':
@@ -330,7 +330,7 @@ token tokenizer::get_token()
             return this->procntf();
         }
         default:
-            err = true;
+            _err = true;
             return token(T_ERR);
         }
     }
