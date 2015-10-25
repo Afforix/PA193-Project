@@ -1,8 +1,6 @@
 #include "tokenizer.h"
 
-static const std::string HEXNUM = "0123456789ABCDEFabcdef";
 static const std::string FIRST  = "123456789";
-static const std::string DIGIT  = "0123456789";
 
 tokenizer::tokenizer()
     : _err(false)
@@ -86,7 +84,7 @@ token tokenizer::procstr()
                         return token(T_ERR);
                     }
 
-                    if (this->contains(HEXNUM, *_iter)){
+                    if (std::isxdigit(*_iter)){
                         str.push_back(*_iter);
                     } else {
                         _err = true;
@@ -136,7 +134,7 @@ token tokenizer::procnum()
     } else if(*_iter == '-') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter != _contents.end() && this->contains(DIGIT, *_iter)) {
+        if (_iter != _contents.end() && std::isdigit(*_iter)) {
             num.push_back(*_iter);
             _iter++;
         } else {
@@ -171,7 +169,7 @@ token tokenizer::procnum()
             if (_iter == _contents.end()){
                 _err = true;
                 return token(T_ERR);
-            } else if (this->contains(DIGIT, *_iter)) {
+            } else if (std::isdigit(*_iter)) {
                 dot = true;
                 num.push_back(*_iter);
             } else {
@@ -196,7 +194,7 @@ token tokenizer::procnum()
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
                 num.push_back(*_iter);
-            } else if (this->contains(DIGIT, *_iter)) {
+            } else if (std::isdigit(*_iter)) {
                 dot = true;
                 num.push_back(*_iter);
             } else {
@@ -278,6 +276,11 @@ token tokenizer::get_token()
      */
     for (; _iter != _contents.end(); _iter++)
     {
+        // skip whitespace
+        if (std::isspace(*_iter)) {
+            continue;
+        }
+
         switch(*_iter)
         {
         case '\0':
@@ -285,8 +288,6 @@ token tokenizer::get_token()
             _err = true;
             return token(T_ERR);
         }
-        case ' ': case '\t': case '\n': case '\r':
-            break; // skip whitespace
         case '{':
         {
             _iter++;
