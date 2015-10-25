@@ -134,6 +134,20 @@ token tokenizer::procnum()
             exp = true;
             dot = true;
             _iter++;
+
+            if (_iter == _contents.end()){
+                _err = true;
+                return token(T_ERR);
+            } else if (*_iter == '+' || *_iter == '-') {
+                num.push_back(*_iter);
+                _iter++;
+            } else if (std::isdigit(*_iter)) {
+                num.push_back(*_iter);
+                _iter++;
+            } else {
+                _err = true;
+                return token(T_ERR);
+            }
         } else if (*_iter == '.') {
             num.push_back(*_iter);
             dot = true;
