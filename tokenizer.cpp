@@ -124,9 +124,22 @@ token tokenizer::procnum()
     } else if(*_iter == '0') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter != _contents.end() && *_iter == '.') {
+        if (_iter == _contents.end()) {
+            _err = true;
+            return token(T_ERR);
+        }
+
+        if (this->contains("eE", *_iter)) {
             num.push_back(*_iter);
+            exp = true;
+            dot = true;
             _iter++;
+        } else if (*_iter == '.') {
+            num.push_back(*_iter);
+            dot = true;
+            _iter++;
+        } else if (!std::isalnum(*_iter)) {
+            return token(T_NUM, num);
         } else {
             _err = true;
             return token(T_ERR);
@@ -157,7 +170,7 @@ token tokenizer::procnum()
         }
         case '.':
         {
-            if (!dot) {
+            if (!dot && !exp) {
                 dot = true;
             } else {
                 _err = true;
