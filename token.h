@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 #include <string>
 #include <fstream>
 
@@ -59,3 +62,4 @@ public:
     void print();
 };
 
+#endif // TOKEN_H
