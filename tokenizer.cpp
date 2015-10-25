@@ -1,50 +1,42 @@
 #include "tokenizer.h"
 
-#define HEXNUM "0123456789ABCDEFabcdef"
-#define FIRST "123456789"
-#define DIGIT "0123456789"
+static const std::string HEXNUM = "0123456789ABCDEFabcdef";
+static const std::string FIRST  = "123456789";
+static const std::string DIGIT  = "0123456789";
 
-tokenizer::tokenizer() {
-    /*
-     * Instance variable indicating if error occurred. If so, no other actions
-     * will be performed and every other call of get_token() will result to
-     * T_ERR.
-     */
-    err = false;
-}
+tokenizer::tokenizer()
+    : err(false)
+{}
 
+
+/**
+ * Open the json input file and read it's content. Initialize iterator.
+ */
 bool tokenizer::init(const char *path_)
 {
-        /*
-         * Open the json input file and read it's content. Initialize iterator.
-         */
-        std::ifstream is(path_);
-        if (is)
-        {
-            is.seekg(0, std::ios::end);
-            _contents.resize(is.tellg());
-            is.seekg(0, std::ios::beg);
-            is.read(&_contents[0], _contents.size());
-            is.close();
-        } else {
-            return false;
-        }
-
-        _iter = _contents.begin();
-        return true;
-}
-
-inline bool tokenizer::contains(std::string str, char c)
-{
-    /*
-     * Just check if the string str contains char c
-     */
-    if (str.find_first_of(c) == std::string::npos) {
-         return false;
+    std::ifstream is(path_);
+    if (is)
+    {
+        is.seekg(0, std::ios::end);
+        _contents.resize(is.tellg());
+        is.seekg(0, std::ios::beg);
+        is.read(&_contents[0], _contents.size());
+        is.close();
     } else {
-        return true;
+        return false;
     }
 
+    _iter = _contents.begin();
+    return true;
+}
+
+
+/**
+ * Just check if the string str contains char c.
+ */
+bool tokenizer::contains(const std::string& str, char c)
+{
+    return str.find(c) != std::string::npos;
 }
 
 token tokenizer::procstr()
@@ -63,53 +55,53 @@ token tokenizer::procstr()
     {
         switch(*_iter)
         {
-            case '\"':
-                str.push_back(*_iter);
-                _iter++;
+        case '\"':
+            str.push_back(*_iter);
+            _iter++;
 
-                return token(T_STR, str);
-            case '\\':
-                str.push_back(*_iter);
-                _iter++;
-                if (_iter == _contents.end()) {
-                    err = true;
-                    return token(T_ERR);
-                }
+            return token(T_STR, str);
+        case '\\':
+            str.push_back(*_iter);
+            _iter++;
+            if (_iter == _contents.end()) {
+                err = true;
+                return token(T_ERR);
+            }
 
-                if (*_iter=='\"' || *_iter=='\\'
+            if (*_iter=='\"' || *_iter=='\\'
                     || *_iter=='b' || *_iter=='f'
                     || *_iter=='n' || *_iter=='r'
                     || *_iter=='t' || *_iter=='/') {
 
-                    str.push_back(*_iter);
+                str.push_back(*_iter);
 
-                } else if (*_iter=='u') {
+            } else if (*_iter=='u') {
 
-                    str.push_back(*_iter);
+                str.push_back(*_iter);
 
-                    for (int i = 0; i<4; i++){
-                        _iter++;
-                        if (_iter == _contents.end()){
-                            err = true;
-                            return token(T_ERR);
-                        }
-
-                        if (this->contains(HEXNUM, *_iter)){
-                            str.push_back(*_iter);
-                        } else {
-                            err = true;
-                            return token(T_ERR);
-                        }
-                    }
-
-                } else {
+                for (int i = 0; i<4; i++){
+                    _iter++;
+                    if (_iter == _contents.end()){
                         err = true;
                         return token(T_ERR);
+                    }
+
+                    if (this->contains(HEXNUM, *_iter)){
+                        str.push_back(*_iter);
+                    } else {
+                        err = true;
+                        return token(T_ERR);
+                    }
                 }
-                break;
-            default:
-                str.push_back(*_iter);
-                break;
+
+            } else {
+                err = true;
+                return token(T_ERR);
+            }
+            break;
+        default:
+            str.push_back(*_iter);
+            break;
         }
     }
 
@@ -160,63 +152,63 @@ token tokenizer::procnum()
     {
         switch(*_iter)
         {
-            case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
-                {
-                    num.push_back(*_iter);
-                    break;
-                }
-            case '.':
-                {
-                    if (!dot) {
-                        dot = true;
-                    } else {
-                        err = true;
-                        return token(T_ERR);
-                    }
-                    num.push_back(*_iter);
+        case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+        {
+            num.push_back(*_iter);
+            break;
+        }
+        case '.':
+        {
+            if (!dot) {
+                dot = true;
+            } else {
+                err = true;
+                return token(T_ERR);
+            }
+            num.push_back(*_iter);
 
-                    _iter++;
-                    if (_iter == _contents.end()){
-                        err = true;
-                        return token(T_ERR);
-                    } else if (this->contains(DIGIT, *_iter)) {
-                        dot = true;
-                        num.push_back(*_iter);
-                    } else {
-                        err = true;
-                        return token(T_ERR);
-                    }
-                    break;
-                }
-            case 'e': case 'E':
-                {
-                    if (!exp) {
-                        exp = true;
-                    } else {
-                        err = true;
-                        return token(T_ERR);
-                    }
-                    num.push_back(*_iter);
+            _iter++;
+            if (_iter == _contents.end()){
+                err = true;
+                return token(T_ERR);
+            } else if (this->contains(DIGIT, *_iter)) {
+                dot = true;
+                num.push_back(*_iter);
+            } else {
+                err = true;
+                return token(T_ERR);
+            }
+            break;
+        }
+        case 'e': case 'E':
+        {
+            if (!exp) {
+                exp = true;
+            } else {
+                err = true;
+                return token(T_ERR);
+            }
+            num.push_back(*_iter);
 
-                    _iter++;
-                    if (_iter == _contents.end()){
-                        err = true;
-                        return token(T_ERR);
-                    } else if (*_iter == '+' || *_iter == '-') {
-                        num.push_back(*_iter);
-                    } else if (this->contains(DIGIT, *_iter)) {
-                        dot = true;
-                        num.push_back(*_iter);
-                    } else {
-                        err = true;
-                        return token(T_ERR);
-                    }
-                    break;
-                }
-            default:
-                {
-                    return token(T_NUM, num);
-                }
+            _iter++;
+            if (_iter == _contents.end()){
+                err = true;
+                return token(T_ERR);
+            } else if (*_iter == '+' || *_iter == '-') {
+                num.push_back(*_iter);
+            } else if (this->contains(DIGIT, *_iter)) {
+                dot = true;
+                num.push_back(*_iter);
+            } else {
+                err = true;
+                return token(T_ERR);
+            }
+            break;
+        }
+        default:
+        {
+            return token(T_NUM, num);
+        }
         }
     }
 
@@ -288,58 +280,58 @@ token tokenizer::get_token()
     {
         switch(*_iter)
         {
-            case '\0':
-                {
-                    err = true;
-                    return token(T_ERR);
-                }
-            case ' ': case '\t': case '\n': case '\r':
-                break; // skip whitespace
-            case '{':
-                {
-                    _iter++;
-                     return token(T_LBRACE);
-                }
-            case '}':
-                {
-                    _iter++;
-                     return token(T_RBRACE);
-                }
-            case '[':
-                {
-                    _iter++;
-                     return token(T_LBRACKET);
-                }
-            case ']':
-                {
-                    _iter++;
-                     return token(T_RBRACKET);
-                }
-            case ':':
-                {
-                    _iter++;
-                     return token(T_COLON);
-                }
-            case ',':
-                {
-                    _iter++;
-                     return token(T_COMMA);
-                }
-            case '\"':
-                {
-                    return this->procstr();
-                }
-            case '-': case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
-                {
-                    return this->procnum();
-                }
-            case 'n': case 't': case 'f':
-                {
-                    return this->procntf();
-                }
-            default:
-                err = true;
-                return token(T_ERR);
+        case '\0':
+        {
+            err = true;
+            return token(T_ERR);
+        }
+        case ' ': case '\t': case '\n': case '\r':
+            break; // skip whitespace
+        case '{':
+        {
+            _iter++;
+            return token(T_LBRACE);
+        }
+        case '}':
+        {
+            _iter++;
+            return token(T_RBRACE);
+        }
+        case '[':
+        {
+            _iter++;
+            return token(T_LBRACKET);
+        }
+        case ']':
+        {
+            _iter++;
+            return token(T_RBRACKET);
+        }
+        case ':':
+        {
+            _iter++;
+            return token(T_COLON);
+        }
+        case ',':
+        {
+            _iter++;
+            return token(T_COMMA);
+        }
+        case '\"':
+        {
+            return this->procstr();
+        }
+        case '-': case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+        {
+            return this->procnum();
+        }
+        case 'n': case 't': case 'f':
+        {
+            return this->procntf();
+        }
+        default:
+            err = true;
+            return token(T_ERR);
         }
     }
     return token(T_EOF);

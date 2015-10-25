@@ -11,6 +11,11 @@ class tokenizer
 private:
     std::string _contents;
     std::string::iterator _iter;
+    /**
+     * Instance variable indicating if error occurred. If so, no other actions
+     * will be performed and every other call of get_token() will result to
+     * T_ERR.
+     */
     bool err;
 
     /**
@@ -33,7 +38,7 @@ private:
      * @param str - reference string
      * @param c - character to test
      */
-    inline bool contains(std::string str, char c);
+    bool contains(const std::string& str, char c);
 
 public:
 
