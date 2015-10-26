@@ -170,6 +170,18 @@ token tokenizer::procnum()
             num.push_back(*_iter);
             dot = true;
             _iter++;
+            if (_iter == _contents.end()) {
+                _err = true;
+                return token(T_ERR);
+            }
+
+            if (std::isdigit(*_iter)) {
+                num.push_back(*_iter);
+                _iter++;
+            } else {
+                _err = true;
+                return token(T_ERR);
+            }
         } else if (!std::isalnum(*_iter)) {
             return token(T_NUM, num);
         } else {
@@ -248,7 +260,6 @@ token tokenizer::procnum()
                     }
                     if (std::isdigit(*_iter)) {
                         num.push_back(*_iter);
-                        _iter++;
                     } else {
                         _err = true;
                         return token(T_ERR);
