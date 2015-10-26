@@ -191,7 +191,16 @@ token tokenizer::procnum()
     } else if(*_iter == '-') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter != _contents.end() && std::isdigit(*_iter)) {
+        if (_iter == _contents.end()) {
+            _err = true;
+            return token(T_ERR);
+        }
+
+        if (*_iter == '0') {
+            _err = true;
+            return token(T_ERR);
+        }
+        else if (std::isdigit(*_iter)) {
             num.push_back(*_iter);
             _iter++;
         } else {
