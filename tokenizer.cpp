@@ -112,6 +112,7 @@ token tokenizer::procnum()
     std::string num;
     bool exp = false;
     bool dot = false;
+    bool epm = false;
 
     /*
      * Read the number token. Return T_ERR if it does not comply with
@@ -139,8 +140,14 @@ token tokenizer::procnum()
                 _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
-                num.push_back(*_iter);
-                _iter++;
+                if (!epm) {
+                    epm = true;
+                    num.push_back(*_iter);
+                    _iter++;
+                } else {
+                _err = true;
+                return token(T_ERR);
+                }
             } else if (std::isdigit(*_iter)) {
                 num.push_back(*_iter);
                 _iter++;
@@ -220,7 +227,13 @@ token tokenizer::procnum()
                 _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
-                num.push_back(*_iter);
+                if (!epm) {
+                    epm = true;
+                    num.push_back(*_iter);
+                } else {
+                _err = true;
+                return token(T_ERR);
+                }
             } else if (std::isdigit(*_iter)) {
                 dot = true;
                 num.push_back(*_iter);
@@ -229,6 +242,16 @@ token tokenizer::procnum()
                 return token(T_ERR);
             }
             break;
+        }
+        case '+': case '-':
+        {
+            if (!epm) {
+                epm = true;
+                num.push_back(*_iter);
+            } else {
+            _err = true;
+            return token(T_ERR);
+            }
         }
         default:
         {
