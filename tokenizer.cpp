@@ -118,6 +118,19 @@ token tokenizer::procnum()
      * Read the number token. Return T_ERR if it does not comply with
      * specifications at http://json.org/.
      */
+    if(*_iter == '-') {
+        num.push_back(*_iter);
+        _iter++;
+        if (_iter == _contents.end()) {
+            _err = true;
+            return token(T_ERR);
+        }
+
+        if (!std::isdigit(*_iter)) {
+            _err = true;
+            return token(T_ERR);
+        }
+    }
 
     if (this->contains(FIRST, *_iter)) {
         num.push_back(*_iter);
@@ -184,25 +197,6 @@ token tokenizer::procnum()
             }
         } else if (!std::isalnum(*_iter)) {
             return token(T_NUM, num);
-        } else {
-            _err = true;
-            return token(T_ERR);
-        }
-    } else if(*_iter == '-') {
-        num.push_back(*_iter);
-        _iter++;
-        if (_iter == _contents.end()) {
-            _err = true;
-            return token(T_ERR);
-        }
-
-        if (*_iter == '0') {
-            _err = true;
-            return token(T_ERR);
-        }
-        else if (std::isdigit(*_iter)) {
-            num.push_back(*_iter);
-            _iter++;
         } else {
             _err = true;
             return token(T_ERR);
@@ -288,12 +282,12 @@ token tokenizer::procnum()
         }
         case '+': case '-':
         {
-            if (!epm) {
+            if (exp && !epm) {
                 epm = true;
                 num.push_back(*_iter);
             } else {
-            _err = true;
-            return token(T_ERR);
+                _err = true;
+                return token(T_ERR);
             }
         }
         default:
