@@ -174,6 +174,7 @@ token tokenizer::procnum()
                 }
             } else if (std::isdigit(*_iter)) {
                 num.push_back(*_iter);
+                epm = true;
                 _iter++;
             } else {
                 _err = true;
