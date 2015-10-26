@@ -144,6 +144,17 @@ token tokenizer::procnum()
                     epm = true;
                     num.push_back(*_iter);
                     _iter++;
+                    if (_iter == _contents.end()) {
+                        _err = true;
+                        return token(T_ERR);
+                    }
+                    if (std::isdigit(*_iter)) {
+                        num.push_back(*_iter);
+                        _iter++;
+                    } else {
+                        _err = true;
+                        return token(T_ERR);
+                    }
                 } else {
                 _err = true;
                 return token(T_ERR);
@@ -230,6 +241,18 @@ token tokenizer::procnum()
                 if (!epm) {
                     epm = true;
                     num.push_back(*_iter);
+                    _iter++;
+                    if (_iter == _contents.end()) {
+                        _err = true;
+                        return token(T_ERR);
+                    }
+                    if (std::isdigit(*_iter)) {
+                        num.push_back(*_iter);
+                        _iter++;
+                    } else {
+                        _err = true;
+                        return token(T_ERR);
+                    }
                 } else {
                 _err = true;
                 return token(T_ERR);
