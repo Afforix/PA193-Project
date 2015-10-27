@@ -27,7 +27,7 @@ int main(int argc, char const* argv[])
 
     if (!json.init(argv[1]))
     {
-        std::cerr << "Unable to open " << argv[1] << ". Exitting." << endl;
+        std::cerr << "Unable to open " << argv[1] << ". Exiting." << endl;
         return 1;
     }
 
@@ -37,7 +37,7 @@ int main(int argc, char const* argv[])
     {
          token tok = json.get_token();
          tok.print();
-         
+
          if (tok.type() == T_EOF) {
              // we are out of tokens, but tree is not finished
              if (!root.is_finished()) {
