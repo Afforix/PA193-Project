@@ -10,8 +10,10 @@
  *
  */
 
-#include <iostream>
 #include "tokenizer.h"
+#include "json_tree.h"
+
+#include <iostream>
 
 using namespace std;
 
@@ -32,6 +34,8 @@ int main(int argc, char const* argv[])
     }
 
     int err = 0;
+
+    json_tree root;
 
     while (true)
     {
