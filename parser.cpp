@@ -71,6 +71,8 @@ int main(int argc, char const* argv[])
         std::cerr << "Some unexpected error occured" << endl;
     }
 
+    if (!err)
+        std::cout << root.get_root()->to_string() << std::endl;
 
     return 0;
 }
