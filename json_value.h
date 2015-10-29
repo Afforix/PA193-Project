@@ -27,18 +27,22 @@ enum class json_type
  */
 class json_value
 {
-    static constexpr const char *TAB = "    ";
-    static void indent(std::string &str_)
+protected:
+    static std::string indent(size_t num)
     {
-
+        return std::string(4*num, ' ');
     }
 
 public:
+
+    using object_children_t = std::map< const std::string, std::shared_ptr< json_value > >;
+    using array_children_t = std::vector< std::shared_ptr< json_value > >;
+
     json_value() = default;
     virtual ~json_value() = default;
-    virtual std::string str() const = 0;
     virtual json_type jtype() const = 0;
     virtual std::string to_string() const = 0;
+    virtual void to_string(std::stringstream& stream_, size_t depth = 0) const = 0;
 };
 
 
@@ -51,7 +55,28 @@ class json_object : public json_value
     std::string _last_key;
 
 public:
-    virtual std::string str() const { return "json_object"; }
+    virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const
+    {
+        ss_ << '{';
+
+        if (!_pairs.empty())
+        {
+            auto it = _pairs.begin();
+            ss_ << std::endl << indent(depth_+1) << (*it).first << " : ";
+            (*it).second->to_string(ss_, depth_+1);
+
+            for (++it ; it != _pairs.end(); ++it)
+            {
+                ss_ << ',' << std::endl << indent(depth_+1) << (*it).first << " : ";
+                (*it).second->to_string(ss_, depth_+1);
+            }
+
+            ss_ << std::endl << indent(depth_);
+        }
+
+        ss_ << '}';
+    }
+
     virtual json_type jtype() const { return json_type::J_OBJECT; }
 
     bool contains(const std::string &key_) const
@@ -73,26 +98,13 @@ public:
     virtual std::string to_string() const
     {
         std::stringstream ss;
-        ss << std::boolalpha << '{';
-
-        if (!_pairs.empty())
-        {
-            auto it = _pairs.begin();
-            ss << std::endl << (*it).first << " : " << (*it).second->to_string();
-            ++it;
-
-            std::for_each(it,
-                          _pairs.end(),
-                          [&ss](const auto &v_)
-            {
-                ss << ',' << std::endl << v_.first << " : " << v_.second->to_string();
-            });
-            ss << std::endl;
-        }
-        ss << '}';
+        ss << std::boolalpha;
+        to_string(ss);
 
         return ss.str();
     }
+
+    const object_children_t& children() const { return _pairs; }
 };
 
 
@@ -104,9 +116,30 @@ class json_array : public json_value
     std::vector< std::shared_ptr< json_value > > _values;
 
 public:
-//    json_array() {}
-    virtual std::string str() const { return "json_array"; }
+    virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const
+    {
+        ss_ << '[';
+
+        if (!_values.empty())
+        {
+            auto it = _values.begin();
+            ss_ << std::endl << indent(depth_+1);
+            (*it)->to_string(ss_, depth_+1);
+
+            for (++it ; it != _values.end(); ++it)
+            {
+                ss_ << ',' << std::endl << indent(depth_+1);
+                (*it)->to_string(ss_, depth_+1);
+            }
+
+            ss_ << std::endl << indent(depth_);
+        }
+
+        ss_ << ']';
+    }
+
     virtual json_type jtype() const { return json_type::J_ARRAY; }
+    array_children_t children() const { return _values; }
 
     void insert(const std::shared_ptr< json_value > &val_)
     {
@@ -116,24 +149,8 @@ public:
     virtual std::string to_string() const
     {
         std::stringstream ss;
-        ss << std::boolalpha << '[';
-
-        if (!_values.empty())
-        {
-            auto it = _values.begin();
-            ss << std::endl << *it;
-            ++it;
-
-            std::for_each(it,
-                          _values.end(),
-                          [&ss](const auto &v_)
-            {
-                ss << ',' << std::endl << v_->to_string();
-            });
-            ss << std::endl;
-        }
-
-        ss << ']';
+        ss << std::boolalpha;
+        to_string(ss);
 
         return ss.str();
     }
@@ -146,9 +163,15 @@ public:
 class json_string : public json_value
 {
     const std::string _str;
+
+protected:
+    virtual void to_string(std::stringstream &ss_, size_t) const
+    {
+        ss_ << _str;
+    }
+
 public:
     json_string(const std::string& s_) : _str(s_) {}
-    virtual std::string str() const { return "json_string"; }
     virtual json_type jtype() const { return json_type::J_STRING; }
 
     virtual std::string to_string() const
@@ -164,14 +187,20 @@ public:
 class json_bool : public json_value
 {
     const bool _val;
+
+protected:
+    virtual void to_string(std::stringstream &ss_, size_t) const
+    {
+        ss_ << _val;
+    }
+
 public:
     json_bool(bool b_) : _val(b_) {}
-    virtual std::string str() const { return "json_bool"; }
     virtual json_type jtype() const { return json_type::J_BOOL; }
 
     virtual std::string to_string() const
     {
-        return std::to_string(_val);
+        return _val ? "true" : "false";
     }
 };
 
@@ -182,7 +211,11 @@ public:
 class json_null : public json_value
 {
 public:
-    virtual std::string str() const { return "json_null"; }
+    virtual void to_string(std::stringstream &ss_, size_t) const
+    {
+        ss_ << to_string();
+    }
+
     virtual json_type jtype() const { return json_type::J_NULL; }
 
     virtual std::string to_string() const
@@ -198,9 +231,15 @@ public:
 class json_int : public json_value
 {
     long long int _val;
+
+protected:
+    virtual void to_string(std::stringstream &ss_, size_t) const
+    {
+        ss_ << _val;
+    }
+
 public:
     json_int(long long int num) : _val(num) {}
-    virtual std::string str() const { return "json_int"; }
     virtual json_type jtype() const { return json_type::J_INT; }
 
     virtual std::string to_string() const
@@ -216,9 +255,15 @@ public:
 class json_float : public json_value
 {
     long double _val;
+
+protected:
+    virtual void to_string(std::stringstream &ss_, size_t) const
+    {
+        ss_ << _val;
+    }
+
 public:
     json_float(long double num) : _val(num) {}
-    virtual std::string str() const { return "json_float"; }
     virtual json_type jtype() const { return json_type::J_DOUBLE; }
 
     virtual std::string to_string() const
