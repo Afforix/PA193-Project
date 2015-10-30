@@ -1,4 +1,7 @@
 #include "token.h"
+#include "json_value.h"
+
+#include <iostream>
 
 // you can use namespaces to hide things from global scope
 namespace examples
@@ -63,4 +66,32 @@ token return_data() { return token(T_ERR); }
 // token& - returns reference, no copy created
 // const token& - returns constant reference, no copy created, unmodifiable
 
+}
+
+void json_examples(std::shared_ptr< json_value >& val_)
+{
+     switch (val_->jtype())
+     {
+     case json_type::J_OBJECT:
+     {
+         auto& children = std::static_pointer_cast< json_object >(val_)->children();
+         for (auto& ch : children)
+         {
+             std::cout << ch.first << " : " << ch.second->to_string() << std::endl;
+         }
+         break;
+     }
+     case json_type::J_BOOL:
+     {
+         bool b_val = std::static_pointer_cast< json_bool >(val_)->value();
+         std::cout << (b_val ? "it's true" : "it's not") << std::endl;
+         break;
+     }
+     case json_type::J_ARRAY:
+     case json_type::J_DOUBLE:
+     case json_type::J_INT:
+     case json_type::J_NULL:
+     case json_type::J_STRING:
+         std::cout << "other type..." << std::endl;
+     }
 }

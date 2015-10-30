@@ -139,7 +139,6 @@ public:
     }
 
     virtual json_type jtype() const { return json_type::J_ARRAY; }
-    array_children_t children() const { return _values; }
 
     void insert(const std::shared_ptr< json_value > &val_)
     {
@@ -154,6 +153,8 @@ public:
 
         return ss.str();
     }
+
+    const array_children_t& children() const { return _values; }
 };
 
 
@@ -178,6 +179,8 @@ public:
     {
         return _str;
     }
+
+    const std::string& value() const { return _str; }
 };
 
 
@@ -202,6 +205,8 @@ public:
     {
         return _val ? "true" : "false";
     }
+
+    bool value() const { return _val; }
 };
 
 
@@ -246,6 +251,8 @@ public:
     {
         return std::to_string(_val);
     }
+
+    long long int value() const { return _val; }
 };
 
 
@@ -270,6 +277,8 @@ public:
     {
         return std::to_string(_val);
     }
+
+    long double value() const { return _val; }
 };
 
 #endif // JSON_VALUE
