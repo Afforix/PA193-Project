@@ -37,7 +37,7 @@ T_NUM     0.123
 T_COMMA
 T_STR     "pass 11"
 T_COLON
-T_NUM     0.123
+T_NUM     -0.123
 T_COMMA
 T_STR     "pass 12"
 T_COLON
@@ -70,7 +70,7 @@ T_EOF
     "pass 08" : 123E321,
     "pass 09" : 0,
     "pass 10" : 0.123,
-    "pass 11" : 0.123,
+    "pass 11" : -0.123,
     "pass 12" : 0e321,
     "pass 13" : -0E123,
     "pass 14" : -0,
