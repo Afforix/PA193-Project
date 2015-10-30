@@ -1,0 +1,79 @@
+T_LBRACE
+T_STR     "pass 01"
+T_COLON
+T_STR     "\/"
+T_COMMA
+T_STR     "pass 02"
+T_COLON
+T_NUM     123
+T_COMMA
+T_STR     "pass 03"
+T_COLON
+T_NUM     -123
+T_COMMA
+T_STR     "pass 05"
+T_COLON
+T_NUM     -132.321
+T_COMMA
+T_STR     "pass 06"
+T_COLON
+T_NUM     -123.123e123
+T_COMMA
+T_STR     "pass 07"
+T_COLON
+T_NUM     123.123E-123
+T_COMMA
+T_STR     "pass 08"
+T_COLON
+T_NUM     123E321
+T_COMMA
+T_STR     "pass 09"
+T_COLON
+T_NUM     0
+T_COMMA
+T_STR     "pass 10"
+T_COLON
+T_NUM     0.123
+T_COMMA
+T_STR     "pass 11"
+T_COLON
+T_NUM     0.123
+T_COMMA
+T_STR     "pass 12"
+T_COLON
+T_NUM     0e321
+T_COMMA
+T_STR     "pass 13"
+T_COLON
+T_NUM     -0E123
+T_COMMA
+T_STR     "pass 14"
+T_COLON
+T_NUM     -0
+T_COMMA
+T_STR     "pass 15"
+T_COLON
+T_NUM     -0.123e123
+T_COMMA
+T_STR     "pass 16"
+T_COLON
+T_NUM     -0.123E+123
+T_RBRACE
+T_EOF
+{
+    "pass 01" : "\/",
+    "pass 02" : 123,
+    "pass 03" : -123,
+    "pass 05" : -132.321,
+    "pass 06" : -123.123e123,
+    "pass 07" : 123.123E-123,
+    "pass 08" : 123E321,
+    "pass 09" : 0,
+    "pass 10" : 0.123,
+    "pass 11" : 0.123,
+    "pass 12" : 0e321,
+    "pass 13" : -0E123,
+    "pass 14" : -0,
+    "pass 15" : -0.123e123,
+    "pass 16" : -0.123E+123
+}

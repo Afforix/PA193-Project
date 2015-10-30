@@ -40,7 +40,7 @@ int main(int argc, char const* argv[])
     while (true)
     {
          token tok = json.get_token();
-         //tok.print();
+         tok.print();
 
          if (tok.type() == T_EOF) {
              // we are out of tokens, but tree is not finished

@@ -4,8 +4,9 @@ echo "All of the following tests should fail with bad lexemes msg:"
 for i in fail* ; do ../parser $i ;  done 1> /dev/null
 
 echo
-echo "Following test runs ../parser pass.j and compares the output using diff:"
+echo "Following test runs ../parser pass.j and compares the output using diff."
+echo "In the left column there is a reference and in the right is the actual output."
 ../parser pass.j > pass.out
 
 echo
-diff -y pass.j pass.out
+diff -y --suppress-common-lines pass.ref pass.out
