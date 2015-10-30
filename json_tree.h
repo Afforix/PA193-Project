@@ -32,7 +32,7 @@ class json_tree
         case T_NULL:
             return std::make_shared< json_null >();
         case T_NUM:
-            if (t_.text().find_first_of(".e") != std::string::npos)
+            if (t_.text().find_first_of(".e") == std::string::npos)
             { // integer
                 return std::make_shared< json_int >(std::stoll(t_.text()));
             }
