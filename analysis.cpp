@@ -33,8 +33,7 @@ is_hexadecimal_256bits (std::string s)
 
     for (int i = 0; i < s_size; i++)
     {
-        // XXX needs to check for all hexadecimal
-        if ( s[i] != 'a' ) {
+        if ( !isxdigit(s[i]) ) {
             return false;
         }
     }
