@@ -280,6 +280,7 @@ class json_tree
                 auto new_val = to_value(token_);
                 _parents.push_back(_current);
                 _current = new_val;
+                arr->insert(new_val);
 
                 accept_colon = false;
                 accept_comma = false;
