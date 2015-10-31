@@ -36,6 +36,6 @@ if [[ -z "$res" ]]
 then
     pass "pass.json"
 else
-    fail "pass.json      see ./pass.diff"
+    fail "pass.json      see ./tests/pass.diff"
     echo "$res" > pass.diff
 fi
