@@ -16,6 +16,7 @@
 
 #include <iostream>
 
+
 using namespace std;
 
 int main(int argc, char const* argv[])
@@ -63,11 +64,14 @@ int main(int argc, char const* argv[])
 
     // if there are any problems, write them
     if (err == 0) {
-		if (!check_fields (root.get_root())) {
+#ifndef DISABLE_SEMANTIC_ANALYSIS
+        if (!check_fields_root (root.get_root())) {
 			std::cerr << "Semantics is incorrect" << std::endl;
 			err = 3;
 		}
 
+
+#endif
     } else if (err == 1) {
         std::cerr << "Syntax is incorrect" << std::endl;
     } else if (err == 2) {
