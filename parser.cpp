@@ -12,6 +12,7 @@
 
 #include "tokenizer.h"
 #include "json_tree.h"
+#include "analysis.h"
 
 #include <iostream>
 
@@ -40,7 +41,7 @@ int main(int argc, char const* argv[])
     while (true)
     {
          token tok = json.get_token();
-         tok.print();
+         //tok.print();
 
          if (tok.type() == T_EOF) {
              // we are out of tokens, but tree is not finished
@@ -62,17 +63,24 @@ int main(int argc, char const* argv[])
 
     // if there are any problems, write them
     if (err == 0) {
-        // XXX ok, we can continue to semantic analysis
+		if (!check_fields (root.get_root())) {
+			std::cerr << "Semantics is incorrect" << std::endl;
+		}
+
     } else if (err == 1) {
-        std::cerr << "Syntax is incorrect" << endl;
+        std::cerr << "Syntax is incorrect" << std::endl;
     } else if (err == 2) {
-        std::cerr << "Lexems are incorrect" << endl;
+        std::cerr << "Lexems are incorrect" << std::endl;
     } else {
-        std::cerr << "Some unexpected error occured" << endl;
+        std::cerr << "Some unexpected error occured" << std::endl;
     }
 
-    if (!err)
+    if (!err) {
         std::cout << root.get_root()->to_string() << std::endl;
+
+		//printf("%x\n", root.get_root()->jtype());
+	}
+
 
     return 0;
 }
