@@ -4,11 +4,10 @@
 #include <iostream>
 #include <regex>
 
-
 bool
 is_os (std::string os)
 {
-    if (os == "linux" || os == "darwin" || os == "freebsd") {
+    if (os == "\"linux\"" || os == "\"darwin\"" || os == "\"freebsd\"") {
         return true;
     }
     return false;
@@ -17,7 +16,7 @@ is_os (std::string os)
 bool
 is_architecture (std::string arch)
 {
-    if (arch == "386" || arch == "amd64" || arch == "arm") {
+    if (arch == "\"386\"" || arch == "\"amd64\"" || arch == "\"arm\"") {
         return true;
     }
     return false;
@@ -26,19 +25,13 @@ is_architecture (std::string arch)
 bool
 is_hexadecimal_256bits (std::string s)
 {
-    int s_size = s.size();
+    std::regex hexastring_64 ("^\"[0-9a-fA-F]{64}\"$");
 
-    if (s_size != 32) {
-        return false;
+    if (std::regex_match (s, hexastring_64)) {
+        return true;
     }
 
-    for (int i = 0; i < s_size; i++)
-    {
-        if ( !isxdigit(s[i]) ) {
-            return false;
-        }
-    }
-    return true;
+    return false;
 }
 
 bool
@@ -141,25 +134,35 @@ is_integer // XXX probably not necessary; change syntax analysis?
 
 */
 
+
 bool
-check_fields_root (std::shared_ptr<json_value> val_)
+is_valid_config (std::shared_ptr< json_value > val_)
 {
     bool ret = true;
 
-    // XXX testing
+/*
+ // XXX nothing is mandatory!
+    User -> J_STRING, is_user_group()
+    Memory -> J_INT
+    MemorySwap -> J_INT
+    CpuShares -> J_INT
+    ExposedPorts -> J_OBJECT, is_valid_exposedports()
+    Env -> J_ARRAY, is_valid_env()
+    Entrypoint, J_ARRAY
+    Cmd, J_ARRAY
+    Volumes, J_OBJECT
+    WorkingDir, J_OBJECT
+*/
 
-    // XXX required in config
-
-    // XXX - C style
-    #define ROOT_ITEMS_LENGTH 9
-    std::string root_items[] = {"\"id\"", "\"created\"", "\"os\"",
-    "\"parent\"", "\"Size\"", "\"architecture\"", "\"author\"",
-    "\"checksum\"", "\"config\""};
+    #define CONFIG_ITEMS_LENGTH 10
+    std::string config_items[] = {"\"User\"", "\"Memory\"", "\"MemorySwap\"",
+    "\"CpuShares\"", "\"ExposedPorts\"", "\"Env\"", "\"Entrypoint\"",
+    "\"Cmd\"", "\"Volumes\"", "\"WorkingDir\""};
 
     if (val_->jtype() == json_type::J_OBJECT) {
-        for (int i = 0; i < ROOT_ITEMS_LENGTH; i++) {
-            if (!std::static_pointer_cast <json_object>(val_)->contains (root_items[i])) {
-                std::cerr << "doesn't contain " << root_items[i] << std::endl;
+        for (int i = 0; i < CONFIG_ITEMS_LENGTH; i++) {
+            if (!std::static_pointer_cast <json_object>(val_)->contains (config_items[i])) {
+                std::cerr << "config doesn't contain " << config_items[i] << std::endl;
                 ret = false;
             }
         }
@@ -168,13 +171,176 @@ check_fields_root (std::shared_ptr<json_value> val_)
     }
 
     return ret;
+
+
 }
 
-/*
+
 bool
-check_fields_config (std::shared_ptr< json_value > config)
+do_semantic_analysis (std::shared_ptr<json_value> val_)
 {
+    bool ret = true;
+
+    /*
+     * id -> J_STRING, is_hexadecimal_256bits()
+     * created -> J_STRING, is_iso8601_datetime()
+     * os -> J_STRING, is_os()
+     * parent -> J_STRING, is_hexadecimal_256bits()
+     * Size -> J_INT
+     * architecture -> J_STRING, is_architecture()
+     * author -> J_STRING
+     * checksum -> J_STRING
+     * config -> J_OBJECT / J_NULL, is_valid_config()
+     */
+
+    auto object = std::static_pointer_cast< json_object >(val_); // type std::shared_ptr< json_object >
+
+    // validate id
+    auto id = object->find("\"id\""); // id is of type std::shared_ptr< json_value >
+    if (id != nullptr) {
+        if (id->jtype() != json_type::J_STRING) {
+            std::cerr << "id isn't string" << std::endl;
+            ret = false;
+        } else {
+            // is string, check it's value
+            if (!is_hexadecimal_256bits(id->to_string())) {
+                std::cerr << "id isn't valid hexadecimal string" << std::endl;
+                ret = false;
+            }
+        }
+    } else {
+        std::cerr << "id doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate created
+    auto created = object->find("\"created\"");
+    if (created != nullptr) {
+        if (created->jtype() != json_type::J_STRING) {
+            std::cerr << "created isn't string" << std::endl;
+            ret = false;
+        } else {
+            // is string, check it's value
+            if (!is_iso8601_datetime(created->to_string())) {
+                std::cerr << "created isn't valid datetime string" << std::endl;
+                ret = false;
+            }
+        }
+    } else {
+        std::cerr << "created doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate os
+    auto os = object->find("\"os\"");
+    if (os != nullptr) {
+        if (os->jtype() != json_type::J_STRING) {
+            std::cerr << "os isn't string" << std::endl;
+            ret = false;
+        } else {
+            // is string, check it's value
+            if (!is_os(os->to_string())) {
+                std::cerr << "os isn't valid os string" << std::endl;
+                ret = false;
+            }
+        }
+    } else {
+        std::cerr << "os doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate parent
+    auto parent = object->find("\"parent\"");
+    if (parent != nullptr) {
+        if (parent->jtype() != json_type::J_STRING) {
+            std::cerr << "parent isn't string" << std::endl;
+            ret = false;
+        } else {
+            // is string, check it's value
+            if (!is_hexadecimal_256bits(parent->to_string())) {
+                std::cerr << "parent isn't valid hexadecimal string" << std::endl;
+                ret = false;
+            }
+        }
+    } else {
+        std::cerr << "parent doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate Size
+    auto size = object->find("\"Size\"");
+    if (size != nullptr) {
+        if (size->jtype() != json_type::J_INT) {
+            std::cerr << "size isn't int" << std::endl;
+            ret = false;
+        }
+    } else {
+        std::cerr << "size doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate architecture
+    auto architecture = object->find("\"architecture\"");
+    if (architecture != nullptr) {
+        if (architecture->jtype() != json_type::J_STRING) {
+            std::cerr << "architecture isn't string" << std::endl;
+            ret = false;
+        } else {
+            // is string, check it's value
+            if (!is_architecture(architecture->to_string())) {
+                std::cerr << "architecture isn't valid architecture string" << std::endl;
+                ret = false;
+            }
+        }
+    } else {
+        std::cerr << "architecture doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate author
+    auto author = object->find("\"author\"");
+    if (author != nullptr) {
+        if (author->jtype() != json_type::J_STRING) {
+            std::cerr << "author isn't string" << std::endl;
+            ret = false;
+        }
+    } else {
+        std::cerr << "author doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate checksum
+    auto checksum = object->find("\"checksum\"");
+    if (checksum != nullptr) {
+        if (checksum->jtype() != json_type::J_STRING) {
+            std::cerr << "checksum isn't string" << std::endl;
+            ret = false;
+        }
+    } else {
+        std::cerr << "checksum doesn't exist" << std::endl;
+        ret = false;
+    }
+
+    // validate config
+    auto config = object->find("\"config\"");
+    if (config != nullptr) {
+        if (config->jtype() == json_type::J_NULL) {
+            ; // can be null, is valid
+        } else if (config->jtype() == json_type::J_OBJECT) {
+            if (!is_valid_config(config)) {
+                std::cerr << "config isn't valid" << std::endl;
+                ret = false;
+            }
+        } else {
+            std::cerr << "config isn't valid type" << std::endl;
+            ret = false;
+        }
+    } else {
+        std::cerr << "config doesn't exist" << std::endl;
+        ret = false;
+    }
 
 
+    return ret;
+}
 
-}*/
