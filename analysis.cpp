@@ -114,6 +114,18 @@ is_port_spec (std::string s)
     return false;
 }
 
+bool
+is_env_spec (std::string s)
+{
+    std::regex env ("^[A-Z]+=[^=]*$");
+
+    if (std::regex_match (s, env)) {
+        return true;
+    }
+
+    return false;
+}
+
 /*
 // XXX ignore extra parameters or not?
 
@@ -125,7 +137,7 @@ is_integer // XXX probably not necessary; change syntax analysis?
 // XXX config can be null
 //is_user_group
 //is_port_spec
-is_env_spec
+//is_env_spec
 
 */
 
@@ -135,14 +147,6 @@ check_fields_root (std::shared_ptr<json_value> val_)
     bool ret = true;
 
     // XXX testing
-
-    std::string s = "2014-10-13T21:19:18.674353812Z";
-    if (is_iso8601_datetime((s))) {
-        std::cout << s << " je ok " << std::endl;
-    } else {
-        std::cout << s << " neni ok " << std::endl;
-    }
-
 
     // XXX required in config
 
