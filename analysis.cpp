@@ -34,25 +34,6 @@ check_fields (std::shared_ptr<json_value> val_)
 {
 	bool ret = true;
 
-	// XXX test
-	if (is_os ("freebsd")) {
-		std::cout << "freebsd je" << std::endl;
-	}
-
-	if (is_os ("linux")) {
-		std::cout << "linux je" << std::endl;
-	}
-
-	if (is_os ("darwin")) {
-		std::cout << "darwin je" << std::endl;
-	}
-
-	if (is_os ("lunex")) {
-		std::cout << "lunex je" << std::endl;
-	} else {
-		std::cout << "lunex neni" << std::endl;
-	}
-
 	// XXX required in config
 
 	// XXX - C style
