@@ -65,6 +65,7 @@ int main(int argc, char const* argv[])
     if (err == 0) {
 		if (!check_fields (root.get_root())) {
 			std::cerr << "Semantics is incorrect" << std::endl;
+			err = 3;
 		}
 
     } else if (err == 1) {
