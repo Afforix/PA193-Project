@@ -32,7 +32,7 @@ done
 
 res="$(../parser pass.json | diff -y pass.ref -)"
 
-if [[ -z "$res" ]]
+if [[ "$?" == 0 ]]
 then
     pass "pass.json"
 else
