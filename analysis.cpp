@@ -110,7 +110,7 @@ is_port_spec (std::string s)
 bool
 is_env_spec (std::string s)
 {
-    std::regex env ("\"^[A-Z]+=[^=]*$\"");
+    std::regex env ("^\"[A-Z]+=[^=]*\"$");
 
     if (std::regex_match (s, env)) {
         return true;
@@ -127,15 +127,74 @@ is_iso8601_datetime
 bool
 is_valid_env (std::shared_ptr< json_value > val_)
 {
+    if (val_->jtype() != json_type::J_ARRAY) {
+        return false;
+    }
+
+    auto object = std::static_pointer_cast< json_array >(val_);
+    auto _values = object->children();
+
+    if (!_values.empty())
+    {
+        for (auto it = _values.begin() ; it != _values.end(); ++it)
+        {
+            if (!is_env_spec((*it)->to_string())) {
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
 bool
 is_valid_exposedports (std::shared_ptr< json_value > val_)
 {
+    if (val_->jtype() != json_type::J_OBJECT) {
+        return false;
+    }
+
+    auto object = std::static_pointer_cast< json_object >(val_);
+    auto _values = object->children();
+
+    if (!_values.empty())
+    {
+        for (auto it = _values.begin(); it != _values.end(); ++it)
+        {
+            if (!is_port_spec((*it).first)) {
+                return false;
+            }
+            if ((*it).second->jtype() != json_type::J_OBJECT) {
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
+bool
+is_valid_second_object_object (std::shared_ptr< json_value > val_)
+{
+    if (val_->jtype() != json_type::J_OBJECT) {
+        return false;
+    }
+
+    auto object = std::static_pointer_cast< json_object >(val_);
+    auto _values = object->children();
+
+    if (!_values.empty())
+    {
+        for (auto it = _values.begin(); it != _values.end(); ++it)
+        {
+            if ((*it).second->jtype() != json_type::J_OBJECT) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 
 bool
 is_valid_config (std::shared_ptr< json_value > val_)
@@ -151,7 +210,7 @@ is_valid_config (std::shared_ptr< json_value > val_)
     * Env -> J_ARRAY, is_valid_env()
     * Entrypoint, J_ARRAY
     * Cmd, J_ARRAY
-    * Volumes, J_OBJECT
+    * Volumes, J_OBJECT, is_valid_second_object_object()
     * WorkingDir, J_OBJECT
     */
 
@@ -200,6 +259,11 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (Volumes->jtype() != json_type::J_OBJECT) {
             std::cerr << "Volumes isn't object" << std::endl;
             ret = false;
+        } else {
+            if (!is_valid_second_object_object(Volumes)) {
+                std::cerr << "Volumes isn't valid volumes object" << std::endl;
+                ret = false;
+            }
         }
     }
 
