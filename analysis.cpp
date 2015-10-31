@@ -37,10 +37,19 @@ is_hexadecimal_256bits (std::string s)
 bool
 is_iso8601_datetime (std::string s)
 {
-    std::regex date ("^$");
+    std::regex date ("^\"\"$");
 
-    // XXX
-    return true;
+
+    /*
+
+2015-10-29T23:00:49+00:00
+2015-10-29T23:00:49Z
+20151029T230049Z
+
+     */
+
+
+    return true; // XXX
 
     if (std::regex_match (s, date)) {
         return true;
@@ -119,11 +128,6 @@ is_env_spec (std::string s)
     return false;
 }
 
-/*
-// TODO
-is_iso8601_datetime
-*/
-
 bool
 is_valid_env (std::shared_ptr< json_value > val_)
 {
@@ -138,6 +142,9 @@ is_valid_env (std::shared_ptr< json_value > val_)
     {
         for (auto it = _values.begin() ; it != _values.end(); ++it)
         {
+            if ((*it)->jtype() != json_type::J_STRING) {
+                return false;
+            }
             if (!is_env_spec((*it)->to_string())) {
                 return false;
             }
@@ -197,6 +204,29 @@ is_valid_second_object_object (std::shared_ptr< json_value > val_)
 }
 
 bool
+is_content_j_string_array (std::shared_ptr< json_value > val_)
+{
+    if (val_->jtype() != json_type::J_ARRAY) {
+        return false;
+    }
+
+    auto object = std::static_pointer_cast< json_array >(val_);
+    auto _values = object->children();
+
+    if (!_values.empty())
+    {
+        for (auto it = _values.begin() ; it != _values.end(); ++it)
+        {
+            if ((*it)->jtype() != json_type::J_STRING) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+bool
 is_valid_config (std::shared_ptr< json_value > val_)
 {
     bool ret = true;
@@ -208,8 +238,8 @@ is_valid_config (std::shared_ptr< json_value > val_)
     * CpuShares -> J_INT
     * ExposedPorts -> J_OBJECT, is_valid_exposedports()
     * Env -> J_ARRAY, is_valid_env()
-    * Entrypoint, J_ARRAY
-    * Cmd, J_ARRAY
+    * Entrypoint, J_ARRAY, is_content_j_string_array()
+    * Cmd, J_ARRAY,is_content_j_string_array()
     * Volumes, J_OBJECT, is_valid_second_object_object()
     * WorkingDir, J_OBJECT
     */
@@ -273,6 +303,11 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (Cmd->jtype() != json_type::J_ARRAY) {
             std::cerr << "Cmd isn't array" << std::endl;
             ret = false;
+        } else {
+            if (!is_content_j_string_array(Cmd)) {
+                std::cerr << "Cmd isn't valid array of strings" << std::endl;
+                ret = false;
+            }
         }
     }
 
@@ -282,6 +317,11 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (Entrypoint->jtype() != json_type::J_ARRAY) {
             std::cerr << "Entrypoint isn't array" << std::endl;
             ret = false;
+        } else {
+            if (!is_content_j_string_array(Entrypoint)) {
+                std::cerr << "Entrypoint isn't valid array of strings" << std::endl;
+                ret = false;
+            }
         }
     }
 
