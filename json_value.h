@@ -115,6 +115,17 @@ public:
         else
             return nullptr;
     }
+
+    std::vector< std::string > keys() const
+    {
+        std::vector< std::string > v;
+        for (auto& pair : _pairs)
+        {
+            v.push_back(pair.first);
+        }
+
+        return v;
+    }
 };
 
 
