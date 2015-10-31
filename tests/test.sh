@@ -1,13 +1,41 @@
 #!/usr/bin/env bash
 
-echo "All of the following tests should fail."
-for i in fail*.json ; do ../parser $i ;  done 1> /dev/null
-echo '=== EOF ==='
+__RAINBOWPALETTE="1"
+function __colortext()
+{
+  echo -e " \e[$__RAINBOWPALETTE;$2m$1\e[0m"
+}
 
-echo
-echo "Following test runs ../parser pass.j and compares the output using diff."
-echo "In the left column there is a reference and in the right is the actual output."
-../parser pass.json > pass.out
+function pass()
+{
+  echo -n $(__colortext "PASS\t" "32")
+  echo "$@"
+}
 
-echo
-diff -y --suppress-common-lines pass.ref pass.out
+function fail()
+{
+  echo -n $(__colortext "FAIL\t" "31")
+  echo "$@"
+}
+
+
+for i in fail*.json ;
+do
+    ../parser "$i" &> /dev/null
+    if [[ "$?" == 2 ]]
+    then
+        pass "$i"
+    else
+        fail "$i"
+    fi
+done
+
+res="$(../parser pass.json | diff -y pass.ref -)"
+
+if [[ -z "$res" ]]
+then
+    pass "pass.json"
+else
+    fail "pass.json      see ./pass.diff"
+    echo "$res" > pass.diff
+fi

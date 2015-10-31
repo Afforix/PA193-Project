@@ -69,12 +69,15 @@ int main(int argc, char const* argv[])
         if (!do_semantic_analysis (root.get_root())) {
 			std::cerr << "Semantics is incorrect" << std::endl;
 			err = 3;
+            return 2;
 		}
 #endif
     } else if (err == 1) {
         std::cerr << "Syntax is incorrect" << std::endl;
+        return 2;
     } else if (err == 2) {
         std::cerr << "Lexems are incorrect" << std::endl;
+        return 2;
     } else {
         std::cerr << "Some unexpected error occured" << std::endl;
     }
