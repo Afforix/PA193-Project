@@ -105,6 +105,16 @@ public:
     }
 
     const object_children_t& children() const { return _pairs; }
+
+    std::shared_ptr< json_value > find(const std::string& key_) const
+    {
+        auto value_it = _pairs.find(key_);
+
+        if (value_it != _pairs.end())
+            return (*value_it).second;
+        else
+            return nullptr;
+    }
 };
 
 
