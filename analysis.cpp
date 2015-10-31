@@ -2,6 +2,7 @@
 #include "json_value.h"
 
 #include <iostream>
+#include <regex>
 
 
 bool
@@ -40,6 +41,78 @@ is_hexadecimal_256bits (std::string s)
     return true;
 }
 
+bool
+is_iso8601_datetime (std::string s)
+{
+    std::regex date ("^$");
+
+    // XXX
+    return true;
+
+    if (std::regex_match (s, date)) {
+        return true;
+    }
+    return false;
+}
+
+bool
+is_user_group (std::string s)
+{
+  std::regex uid ("^[0-9]+$");
+  std::regex user ("^[a-z_][a-z0-9_-]*[$]?$");
+  std::regex user_group ("^[a-z_][a-z0-9_-]*[$]?:[0-9a-zA-Z]+$");
+  std::regex uid_guid ("^[0-9]+:[0-9]+$");
+  std::regex uid_group ("^[0-9]+:[a-z_][a-z0-9_-]*[$]?$");
+  std::regex user_gid ("^[a-z_][a-z0-9_-]*[$]?:[0-9]+$");
+
+  if (std::regex_match (s, uid)) {
+      return true;
+  }
+
+  if (std::regex_match (s, user)) {
+      return true;
+  }
+
+  if (std::regex_match (s, user_group)) {
+      return true;
+  }
+
+  if (std::regex_match (s, uid_guid)) {
+      return true;
+  }
+
+  if (std::regex_match (s, uid_group)) {
+      return true;
+  }
+
+  if (std::regex_match (s, user_gid)) {
+      return true;
+  }
+
+  return false;
+}
+
+bool
+is_port_spec (std::string s)
+{
+    std::regex port ("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$");
+    std::regex udp ("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/udp$");
+    std::regex tcp ("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/tcp$");
+
+    if (std::regex_match (s, port)) {
+        return true;
+    }
+
+    if (std::regex_match (s, udp)) {
+        return true;
+    }
+
+    if (std::regex_match (s, tcp)) {
+        return true;
+    }
+
+    return false;
+}
 
 /*
 // XXX ignore extra parameters or not?
@@ -50,8 +123,8 @@ is_iso8601_datetime
 //is_os
 is_integer // XXX probably not necessary; change syntax analysis?
 // XXX config can be null
-is_user_group
-is_port_spec
+//is_user_group
+//is_port_spec
 is_env_spec
 
 */
@@ -60,6 +133,16 @@ bool
 check_fields_root (std::shared_ptr<json_value> val_)
 {
     bool ret = true;
+
+    // XXX testing
+
+    std::string s = "2014-10-13T21:19:18.674353812Z";
+    if (is_iso8601_datetime((s))) {
+        std::cout << s << " je ok " << std::endl;
+    } else {
+        std::cout << s << " neni ok " << std::endl;
+    }
+
 
     // XXX required in config
 
@@ -83,10 +166,11 @@ check_fields_root (std::shared_ptr<json_value> val_)
     return ret;
 }
 
+/*
 bool
-check_fields_config (json_object config)
+check_fields_config (std::shared_ptr< json_value > config)
 {
 
 
 
-}
+}*/

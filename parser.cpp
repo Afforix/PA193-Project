@@ -71,9 +71,22 @@ int main(int argc, char const* argv[])
 			err = 3;
 		}
 
+        /*
+        auto object = std::static_pointer_cast< json_object >(root.get_root()); // typ std::shared_ptr< json_object >
+        auto config = object->find("config"); // config je typu std::shared_ptr< json_value >
+        if (config != nullptr && check_fields_config(*config))
+        {
+            std::cerr << "Semantics is incorrect" << std::endl;
+        }*/
 
-
-
+/*
+        auto& children = std::static_pointer_cast< json_object >(root.get_root())->children();
+        auto config = children.find("config");
+        if (config != nullptr && check_fields_config(*config))
+        {
+            std::cerr << "Semantics is incorrect" << std::endl;
+        }
+*/
 #endif
     } else if (err == 1) {
         std::cerr << "Syntax is incorrect" << std::endl;
