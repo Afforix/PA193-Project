@@ -44,7 +44,7 @@ is_hexadecimal_256bits (std::string s)
 /*
 // XXX ignore extra parameters or not?
 
-/is_hexadecimal_256bits
+//is_hexadecimal_256bits
 is_iso8601_datetime
 //is_architecture
 //is_os
@@ -57,7 +57,7 @@ is_env_spec
 */
 
 bool
-check_fields (std::shared_ptr<json_value> val_)
+check_fields_root (std::shared_ptr<json_value> val_)
 {
     bool ret = true;
 
@@ -83,4 +83,10 @@ check_fields (std::shared_ptr<json_value> val_)
     return ret;
 }
 
+bool
+check_fields_config (json_object config)
+{
 
+
+
+}

@@ -12,6 +12,7 @@
 
 #include "tokenizer.h"
 #include "json_tree.h"
+#include "json_value.h"
 #include "analysis.h"
 
 #include <iostream>
@@ -69,6 +70,8 @@ int main(int argc, char const* argv[])
 			std::cerr << "Semantics is incorrect" << std::endl;
 			err = 3;
 		}
+
+
 
 
 #endif
