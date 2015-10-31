@@ -120,18 +120,8 @@ is_env_spec (std::string s)
 }
 
 /*
-// XXX ignore extra parameters or not?
-
-//is_hexadecimal_256bits
+// TODO
 is_iso8601_datetime
-//is_architecture
-//is_os
-is_integer // XXX probably not necessary; change syntax analysis?
-// XXX config can be null
-//is_user_group
-//is_port_spec
-//is_env_spec
-
 */
 
 bool
@@ -275,7 +265,6 @@ is_valid_config (std::shared_ptr< json_value > val_)
     return ret;
 }
 
-
 bool
 do_semantic_analysis (std::shared_ptr<json_value> val_)
 {
@@ -302,7 +291,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
             std::cerr << "id isn't string" << std::endl;
             ret = false;
         } else {
-            // is string, check it's value
             if (!is_hexadecimal_256bits(id->to_string())) {
                 std::cerr << "id isn't valid hexadecimal string" << std::endl;
                 ret = false;
@@ -320,7 +308,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
             std::cerr << "created isn't string" << std::endl;
             ret = false;
         } else {
-            // is string, check it's value
             if (!is_iso8601_datetime(created->to_string())) {
                 std::cerr << "created isn't valid datetime string" << std::endl;
                 ret = false;
@@ -338,7 +325,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
             std::cerr << "os isn't string" << std::endl;
             ret = false;
         } else {
-            // is string, check it's value
             if (!is_os(os->to_string())) {
                 std::cerr << "os isn't valid os string" << std::endl;
                 ret = false;
@@ -356,7 +342,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
             std::cerr << "parent isn't string" << std::endl;
             ret = false;
         } else {
-            // is string, check it's value
             if (!is_hexadecimal_256bits(parent->to_string())) {
                 std::cerr << "parent isn't valid hexadecimal string" << std::endl;
                 ret = false;
@@ -386,7 +371,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
             std::cerr << "architecture isn't string" << std::endl;
             ret = false;
         } else {
-            // is string, check it's value
             if (!is_architecture(architecture->to_string())) {
                 std::cerr << "architecture isn't valid architecture string" << std::endl;
                 ret = false;
