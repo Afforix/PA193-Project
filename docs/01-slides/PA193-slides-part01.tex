@@ -82,8 +82,9 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage[utf8]{inputenc}
 \usepackage{url}
-\usepackage[backend=biber, style=numeric, sorting=nyt]{biblatex}
-\bibliography{PA193-slides-part01.bib}
+\usepackage{verbatim}
+% \usepackage[backend=biber, style=numeric, sorting=nyt]{biblatex}
+% \bibliography{PA193-slides-part01.bib}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -112,8 +113,67 @@ FI MUNI \\ % Your institution for the title page
 
 \section{Introduction}
 
+\begin{frame}[fragile]{The Project}
 
-\begin{frame}
+\begin{itemize}
+    \item Docker - software containers
+    \pause \item Isolation - cgroups and kernel namespaces
+    \pause \item Docker Image - template for distributing containers
+    \pause \item Docker Image Specification - JSON format
+\end{itemize}
+
+\pause \begin{verbatim}
+{
+    "author": "foobar",
+    "architecture": "amd64",
+    "os": "linux",
+    "Size": 271828,
+    "config": {
+        "User": "foobar",
+        "Memory": 2048,
+        "MemorySwap": 4096,
+        "CpuShares": 8,
+        "ExposedPorts": {  
+            "8080/tcp": {}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Structure}
+
+\begin{itemize}
+    \item Lexical analysis
+    \item Syntactic analysis
+    \item Semantic analysis
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Lexical Analysis}
+
+\begin{itemize}
+    \item Read the input file characterwise
+    \item Identify tokens
+    \item Token types
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Syntactic Analysis}
+
+\end{frame}
+
+\begin{frame}{Semantic Analysis}
+
+\end{frame}
+
+\begin{frame}{Problems and Limitations}
+
+\end{frame}
+
+\begin{frame}{Conclusion}
+
+\end{frame}
+
+\begin{frame}{Thank You}
     \Huge{\centerline{Thank you for your attention.}}
 \end{frame}
 
