@@ -27,6 +27,7 @@ do
         pass "$i"
     else
         fail "$i"
+        exit 1
     fi
 done
 
@@ -38,4 +39,5 @@ then
 else
     fail "pass.json      see ./tests/pass.diff"
     echo "$res" > pass.diff
+    exit 1
 fi
