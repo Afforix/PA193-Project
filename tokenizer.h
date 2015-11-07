@@ -9,8 +9,9 @@ class tokenizer
 {
 
 private:
-    std::string _contents;
-    std::string::iterator _iter;
+    std::ifstream _contents;
+    std::istreambuf_iterator<char> _iter;
+
     /**
      * Instance variable indicating if error occurred. If so, no other actions
      * will be performed and every other call of get_token() will result to

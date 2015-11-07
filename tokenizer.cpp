@@ -1,6 +1,7 @@
 #include "tokenizer.h"
 
 static const std::string FIRST  = "123456789";
+static const std::istreambuf_iterator<char> END{};
 
 tokenizer::tokenizer()
     : _err(false)
@@ -8,24 +9,18 @@ tokenizer::tokenizer()
 
 
 /**
- * Open the json input file and read it's content. Initialize iterator.
+ * Open the JSON input file.
  */
 bool tokenizer::init(const char *path_)
 {
-    std::ifstream is(path_);
-    if (is)
+    _contents.open(path_);
+    if (_contents.good())
     {
-        is.seekg(0, std::ios::end);
-        _contents.resize(is.tellg());
-        is.seekg(0, std::ios::beg);
-        is.read(&_contents[0], _contents.size());
-        is.close();
-    } else {
-        return false;
+        _iter = std::istreambuf_iterator<char>(_contents);
+        return true;
     }
 
-    _iter = _contents.begin();
-    return true;
+    return false;
 }
 
 
@@ -49,7 +44,7 @@ token tokenizer::procstr()
      * escaped characters. Return T_ERR if string does not comply with
      * specification at http://json.org/.
      */
-    for (; _iter != _contents.end(); _iter++)
+    for (; _iter != END; ++_iter)
     {
         switch(*_iter)
         {
@@ -61,7 +56,7 @@ token tokenizer::procstr()
         case '\\':
             str.push_back(*_iter);
             _iter++;
-            if (_iter == _contents.end()) {
+            if (_iter == END) {
                 _err = true;
                 return token(T_ERR);
             }
@@ -79,7 +74,7 @@ token tokenizer::procstr()
 
                 for (int i = 0; i<4; i++){
                     _iter++;
-                    if (_iter == _contents.end()){
+                    if (_iter == END){
                         _err = true;
                         return token(T_ERR);
                     }
@@ -121,7 +116,7 @@ token tokenizer::procnum()
     if(*_iter == '-') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter == _contents.end()) {
+        if (_iter == END) {
             _err = true;
             return token(T_ERR);
         }
@@ -138,7 +133,7 @@ token tokenizer::procnum()
     } else if(*_iter == '0') {
         num.push_back(*_iter);
         _iter++;
-        if (_iter == _contents.end()) {
+        if (_iter == END) {
             _err = true;
             return token(T_ERR);
         }
@@ -149,7 +144,7 @@ token tokenizer::procnum()
             dot = true;
             _iter++;
 
-            if (_iter == _contents.end()){
+            if (_iter == END){
                 _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
@@ -157,7 +152,7 @@ token tokenizer::procnum()
                     epm = true;
                     num.push_back(*_iter);
                     _iter++;
-                    if (_iter == _contents.end()) {
+                    if (_iter == END) {
                         _err = true;
                         return token(T_ERR);
                     }
@@ -184,7 +179,7 @@ token tokenizer::procnum()
             num.push_back(*_iter);
             dot = true;
             _iter++;
-            if (_iter == _contents.end()) {
+            if (_iter == END) {
                 _err = true;
                 return token(T_ERR);
             }
@@ -207,7 +202,7 @@ token tokenizer::procnum()
         return token(T_ERR);
     }
 
-    for (; _iter != _contents.end(); _iter++)
+    for (; _iter != END; ++_iter)
     {
         switch(*_iter)
         {
@@ -227,7 +222,7 @@ token tokenizer::procnum()
             num.push_back(*_iter);
 
             _iter++;
-            if (_iter == _contents.end()){
+            if (_iter == END){
                 _err = true;
                 return token(T_ERR);
             } else if (std::isdigit(*_iter)) {
@@ -250,7 +245,7 @@ token tokenizer::procnum()
             num.push_back(*_iter);
 
             _iter++;
-            if (_iter == _contents.end()){
+            if (_iter == END){
                 _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
@@ -258,7 +253,7 @@ token tokenizer::procnum()
                     epm = true;
                     num.push_back(*_iter);
                     _iter++;
-                    if (_iter == _contents.end()) {
+                    if (_iter == END) {
                         _err = true;
                         return token(T_ERR);
                     }
@@ -309,7 +304,7 @@ token tokenizer::procntf()
 
     if (*_iter == 'n') {
         for (int i=0; i<3; i++) {
-            if (++_iter == _contents.end()) {
+            if (++_iter == END) {
                 _err = true;
                 return token(T_ERR);
             }
@@ -323,7 +318,7 @@ token tokenizer::procntf()
 
     } else if (*_iter == 't') {
         for (int i=0; i<3; i++) {
-            if (++_iter == _contents.end()) {
+            if (++_iter == END) {
                 _err = true;
                 return token(T_ERR);
             }
@@ -337,7 +332,7 @@ token tokenizer::procntf()
 
     } else if (*_iter == 'f') {
         for (int i=0; i<4; i++) {
-            if (++_iter == _contents.end()) {
+            if (++_iter == END) {
                 _err = true;
                 return token(T_ERR);
             }
@@ -362,7 +357,7 @@ token tokenizer::get_token()
      * Iterate over input json string and with each call return next token. In
      * case of error return T_ERR.
      */
-    for (; _iter != _contents.end(); _iter++)
+    for (; _iter != END; ++_iter)
     {
         // skip whitespace
         if (std::isspace(*_iter)) {
