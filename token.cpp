@@ -4,48 +4,37 @@
 
 #include "token.h"
 
-void token::print()
+std::string token::to_string()
 {
     switch(this->type()) {
         case T_EOF:
-            std::cout << "T_EOF" << std::endl;
-            break;
+            return "EOF";
         case T_ERR:
-            std::cout << "T_ERR" << std::endl;
-            break;
+            return "ERROR";
         case T_LBRACE:
-            std::cout << "T_LBRACE" << std::endl;
-            break;
+            return "{";
         case T_RBRACE:
-            std::cout << "T_RBRACE" << std::endl;
-            break;
+            return "}";
         case T_LBRACKET:
-            std::cout << "T_LBRACKET" << std::endl;
-            break;
+            return "[";
         case T_RBRACKET:
-            std::cout << "T_RBRACKET" << std::endl;
-            break;
+            return "]";
         case T_COLON:
-            std::cout << "T_COLON" << std::endl;
-            break;
+            return ":";
         case T_COMMA:
-            std::cout << "T_COMMA" << std::endl;
-            break;
+            return ",";
         case T_NULL:
-            std::cout << "T_NULL" << std::endl;
-            break;
+            return "null";
         case T_TRUE:
-            std::cout << "T_TRUE" << std::endl;
-            break;
+            return "true";
         case T_FALSE:
-            std::cout << "T_FALSE" << std::endl;
-            break;
+            return "false";
         case T_STR:
-            std::cout << "T_STR     " << this->text() << std::endl;
-            break;
+            return "string " + this->text();
         case T_NUM:
-            std::cout << "T_NUM     " << this->text() << std::endl;
-            break;
+            return "number " + this->text();
+        default:
+            return "unknown token";
     }
 }
 

@@ -52,7 +52,7 @@ public:
      * @brief read the json input file
      * @param path_ to the file
      */
-    bool init(const char* path_);
+    void init(const std::string &path_);
 
     /**
      * @brief get next token from the json

@@ -21,8 +21,8 @@ function fail()
 
 for i in fail*.json ;
 do
-    ../parser "$i" &> /dev/null
-    if [[ "$?" == 2 ]]
+    ../parser "$i"
+    if [[ "$?" == 1 ]]
     then
         pass "$i"
     else
@@ -30,6 +30,16 @@ do
         exit 1
     fi
 done
+
+NOFILE=nofile.json
+../parser $NOFILE
+if [[ "$?" == 1 ]]
+then
+    pass $NOFILE
+else
+    fail "$i"
+    exit 1
+fi
 
 res="$(../parser pass.json | diff -y pass.ref -)"
 

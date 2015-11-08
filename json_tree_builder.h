@@ -1,12 +1,13 @@
-#ifndef JSON_TREE
-#define JSON_TREE
+#ifndef JSON_TREE_BUILDER
+#define JSON_TREE_BUILDER
 
 #include "token.h"
 #include "json_types.h"
 
 #include <memory>
+#include <stdexcept>
 
-class json_tree
+class json_tree_builder
 {
     std::shared_ptr< json_value > _current;
     std::vector< std::shared_ptr< json_value > > _parents;
@@ -32,6 +33,8 @@ class json_tree
         case T_NULL:
             return std::make_shared< json_null >();
         case T_NUM:
+            try
+        {
             if (t_.text().find_first_of(".eE") == std::string::npos)
             { // integer
                 return std::make_shared< json_int >(std::stoll(t_.text()));
@@ -40,6 +43,12 @@ class json_tree
             { // floating
                 return std::make_shared< json_float >(std::stold(t_.text()));
             }
+        }
+            catch (const std::exception &e)
+            {
+                throw std::logic_error("number too large: " + t_.text());
+            }
+
         case T_LBRACKET:
             return std::make_shared< json_array >();
         case T_LBRACE:
@@ -329,7 +338,7 @@ public:
     /**
      * @brief add
      * @param token_
-     * @return
+     * @return true if token is expected
      */
     bool add(const token &token_)
     {
@@ -351,5 +360,5 @@ public:
     }
 };
 
-#endif // JSON_TREE
+#endif // JSON_TREE_BUILDER
 

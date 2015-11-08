@@ -12,25 +12,25 @@ tokenizer::tokenizer()
 /**
  * Open the JSON input file.
  */
-bool tokenizer::init(const char *path_)
+void tokenizer::init(const std::string &path_)
 {
     _contents.open(path_);
-    if (_contents.good())
+    if (!_contents.good())
     {
-        if (!utf8_validator::validate(_contents))
-        {
-            _contents.close();
-            return false;
-        }
-        // rewind
-        _contents.clear();
-        _contents.seekg(0, std::ios::beg);
-
-        _iter = std::istreambuf_iterator<char>(_contents);
-        return true;
+        throw std::runtime_error("unable to open file " + path_);
     }
 
-    return false;
+    if (!utf8_validator::validate(_contents))
+    {
+        _contents.close();
+        throw std::logic_error("invalid UTF-8 encoding");
+    }
+
+    // rewind
+    _contents.clear();
+    _contents.seekg(0, std::ios::beg);
+
+    _iter = std::istreambuf_iterator<char>(_contents);
 }
 
 
@@ -174,8 +174,8 @@ token tokenizer::procnum()
                         return token(T_ERR);
                     }
                 } else {
-                _err = true;
-                return token(T_ERR);
+                    _err = true;
+                    return token(T_ERR);
                 }
             } else if (std::isdigit(*_iter)) {
                 num.push_back(*_iter);
@@ -274,8 +274,8 @@ token tokenizer::procnum()
                         return token(T_ERR);
                     }
                 } else {
-                _err = true;
-                return token(T_ERR);
+                    _err = true;
+                    return token(T_ERR);
                 }
             } else if (std::isdigit(*_iter)) {
                 dot = true;

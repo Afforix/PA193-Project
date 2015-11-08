@@ -59,7 +59,7 @@ public:
     /**
      * @brief print contents of token
      */
-    void print();
+    std::string to_string();
 };
 
 #endif // TOKEN_H
