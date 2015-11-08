@@ -1,6 +1,8 @@
 #include "tokenizer.h"
 #include "utf8_validator.h"
 
+#include <stdexcept>
+
 static const std::string FIRST  = "123456789";
 static const std::istreambuf_iterator<char> END{};
 
