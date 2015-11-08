@@ -2,7 +2,7 @@
 #define JSON_TREE
 
 #include "token.h"
-#include "json_value.h"
+#include "json_types.h"
 
 #include <memory>
 
