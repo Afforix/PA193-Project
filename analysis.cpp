@@ -5,48 +5,35 @@
 #include <regex>
 
 bool
-is_os (std::string os)
+is_os (const std::string &os)
 {
-    if (os == "\"linux\"" || os == "\"darwin\"" || os == "\"freebsd\"") {
-        return true;
-    }
-    return false;
+    return os == "\"linux\"" || os == "\"darwin\"" || os == "\"freebsd\"";
 }
 
 bool
-is_architecture (std::string arch)
+is_architecture (const std::string &arch)
 {
-    if (arch == "\"386\"" || arch == "\"amd64\"" || arch == "\"arm\"") {
-        return true;
-    }
-    return false;
+    return arch == "\"386\"" || arch == "\"amd64\"" || arch == "\"arm\"";
 }
 
 bool
-is_hexadecimal_256bits (std::string s)
+is_hexadecimal_256bits (const std::string &s)
 {
     std::regex hexastring_64 ("^\"[0-9a-fA-F]{64}\"$");
 
-    if (std::regex_match (s, hexastring_64)) {
-        return true;
-    }
-
-    return false;
+    return std::regex_match (s, hexastring_64);
 }
 
 bool
-is_iso8601_datetime (std::string s)
+is_iso8601_datetime (const std::string &s)
 {
     std::regex date ("^\"([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?\"$");
 
-    if (std::regex_match (s, date)) {
-        return true;
-    }
-    return false;
+    return std::regex_match (s, date);
 }
 
 bool
-is_user_group (std::string s)
+is_user_group (const std::string &s)
 {
   std::regex uid ("^\"[0-9]+\"$");
   std::regex user ("^\"[a-zA-Z_][a-zA-Z0-9_-]*\"$");
@@ -83,7 +70,7 @@ is_user_group (std::string s)
 }
 
 bool
-is_port_spec (std::string s)
+is_port_spec (const std::string &s)
 {
     std::regex port ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\"$");
     std::regex udp ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/udp\"$");
@@ -105,15 +92,11 @@ is_port_spec (std::string s)
 }
 
 bool
-is_env_spec (std::string s)
+is_env_spec (const std::string &s)
 {
     std::regex env ("^\"[A-Z]+=[^=]*\"$");
 
-    if (std::regex_match (s, env)) {
-        return true;
-    }
-
-    return false;
+    return std::regex_match (s, env);
 }
 
 bool
@@ -124,11 +107,11 @@ is_valid_env (std::shared_ptr< json_value > val_)
     }
 
     auto object = std::static_pointer_cast< json_array >(val_);
-    auto _values = object->children();
+    const auto &values = object->children();
 
-    if (!_values.empty())
+    if (!values.empty())
     {
-        for (auto it = _values.begin() ; it != _values.end(); ++it)
+        for (auto it = values.begin() ; it != values.end(); ++it)
         {
             if ((*it)->jtype() != json_type::J_STRING) {
                 return false;
@@ -150,11 +133,11 @@ is_valid_exposedports (std::shared_ptr< json_value > val_)
     }
 
     auto object = std::static_pointer_cast< json_object >(val_);
-    auto _values = object->children();
+    const auto &values = object->children();
 
-    if (!_values.empty())
+    if (!values.empty())
     {
-        for (auto it = _values.begin(); it != _values.end(); ++it)
+        for (auto it = values.begin(); it != values.end(); ++it)
         {
             if (!is_port_spec((*it).first)) {
                 return false;
@@ -176,11 +159,11 @@ is_valid_second_object_object (std::shared_ptr< json_value > val_)
     }
 
     auto object = std::static_pointer_cast< json_object >(val_);
-    auto _values = object->children();
+    const auto &values = object->children();
 
-    if (!_values.empty())
+    if (!values.empty())
     {
-        for (auto it = _values.begin(); it != _values.end(); ++it)
+        for (auto it = values.begin(); it != values.end(); ++it)
         {
             if ((*it).second->jtype() != json_type::J_OBJECT) {
                 return false;
@@ -199,11 +182,11 @@ is_content_j_string_array (std::shared_ptr< json_value > val_)
     }
 
     auto object = std::static_pointer_cast< json_array >(val_);
-    auto _values = object->children();
+    const auto &values = object->children();
 
-    if (!_values.empty())
+    if (!values.empty())
     {
-        for (auto it = _values.begin() ; it != _values.end(); ++it)
+        for (auto it = values.begin() ; it != values.end(); ++it)
         {
             if ((*it)->jtype() != json_type::J_STRING) {
                 return false;
