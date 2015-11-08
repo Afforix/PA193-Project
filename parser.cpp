@@ -33,7 +33,7 @@ int main(int argc, char const* argv[])
     if (!json.init(argv[1]))
     {
         std::cerr << "Unable to open " << argv[1] << ". Exiting." << endl;
-        return 1;
+        return 2;
     }
 
     int err = 0;

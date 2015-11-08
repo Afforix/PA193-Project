@@ -1,4 +1,5 @@
 #include "tokenizer.h"
+#include "utf8_validator.h"
 
 static const std::string FIRST  = "123456789";
 static const std::istreambuf_iterator<char> END{};
@@ -16,6 +17,15 @@ bool tokenizer::init(const char *path_)
     _contents.open(path_);
     if (_contents.good())
     {
+        if (!utf8_validator::validate(_contents))
+        {
+            _contents.close();
+            return false;
+        }
+        // rewind
+        _contents.clear();
+        _contents.seekg(0, std::ios::beg);
+
         _iter = std::istreambuf_iterator<char>(_contents);
         return true;
     }
