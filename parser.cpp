@@ -36,7 +36,7 @@ int main(int argc, char const* argv[])
     }
 
 #ifndef DISABLE_SEMANTIC_ANALYSIS
-    if (!do_semantic_analysis (root.get_root())) {
+    if (!do_semantic_analysis (root)) {
         std::cerr << "Semantics is incorrect" << std::endl;
         return 2;
     }
