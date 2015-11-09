@@ -18,11 +18,11 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[paper=a4, fontsize=12pt, abstract=on]{scrartcl} % A4 paper and 11pt font size
+\documentclass[paper=a4, fontsize=11pt, abstract=on]{scrartcl} % A4 paper and 11pt font size
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage[utf8]{inputenc}
-%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
 \usepackage{amsmath,amsfonts,amsthm} % Math packages
 
@@ -115,12 +115,34 @@ different types of tokens for example numbers, strings or braces. The get\_token
 method reads the input characterwise and applies these methods to extract
 tokens. With each call next token is returned.
 
+\section{Syntactic analysis}
+
 
 \section{Semantic analysis}
 
 Semantic analysis is implemented in analysis.cpp file. It reads the tree constructed by syntax analysis. Analysis implements set of is\_* functions that check whether given json\_value is of expected type for that part of tree, or std::string has expected content for that particular element. By using these functions and tree search we are able to validate the tree from the semantic point of view. Required elements in Docker format are expected to exist and extra elements are ignored as they are seen as "implementation specific" by Docker file format specification.
 
+\section{Issues}
 
+\section{Stats}
+
+\textbf{TODO: update stats with final commit!}
+
+\begin{verbatim}
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JSON                            45             27              0           1533
+C++                              9            195            108           1236
+C/C++ Header                    16            130             84            384
+XML                              1              0              3             83
+Bourne Shell                     1              8              0             45
+make                             4             18              0             45
+YAML                             1              0              0             12
+-------------------------------------------------------------------------------
+SUM:                            77            378            195           3338
+-------------------------------------------------------------------------------
+\end{verbatim}
 
 \end{document}
 
