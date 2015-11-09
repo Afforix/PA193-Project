@@ -82,7 +82,7 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage[utf8]{inputenc}
 \usepackage{url}
-\usepackage{verbatim}
+\usepackage{fancyvrb}
 % \usepackage[backend=biber, style=numeric, sorting=nyt]{biblatex}
 % \bibliography{PA193-slides-part01.bib}
 
@@ -147,14 +147,31 @@ FI MUNI \\ % Your institution for the title page
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Lexical Analysis}
+\begin{frame}[fragile]{Lexical Analysis}
 
 \begin{itemize}
     \item Read the input file characterwise
-    \item Identify tokens
-    \item Token types
+    \pause \item Identify tokens
+    \pause \item Token types
 \end{itemize}
 
+\begin{Verbatim}[fontsize=\small]
+enum token_type {
+    T_EOF,      // End Of File
+    T_ERR,      // Error
+    T_LBRACE,   // { left brace
+    T_RBRACE,   // } right brace
+    T_LBRACKET, // [ left bracket
+    T_RBRACKET, // ] right bracket
+    T_COLON,    // : colon
+    T_COMMA,    // , comma
+    T_STR,      // string enclosed in double quotes
+    T_NUM,      // number
+    T_NULL,     // null
+    T_TRUE,     // true
+    T_FALSE     // false
+};
+\end{Verbatim}
 \end{frame}
 
 \begin{frame}{Syntactic Analysis}
