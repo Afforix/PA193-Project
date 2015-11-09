@@ -31,7 +31,7 @@ public:
      * @brief token ctor for non-strings
      * @param type_
      */
-    token(token_type type_)
+    explicit token(token_type type_)
         : _type(type_)
     {}
 
