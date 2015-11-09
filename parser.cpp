@@ -35,12 +35,10 @@ int main(int argc, char const* argv[])
         return 1;
     }
 
-#ifndef DISABLE_SEMANTIC_ANALYSIS
     if (!do_semantic_analysis (root)) {
         std::cerr << "Semantics is incorrect" << std::endl;
         return 2;
     }
-#endif
 
     std::cout << root->to_string() << std::endl;
 
