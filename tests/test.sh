@@ -22,7 +22,7 @@ function fail()
 for i in fail*.json ;
 do
     ../parser "$i"
-    if [[ "$?" == 1 ]]
+    if [[ "$?" != 0 ]]
     then
         pass "$i"
     else
