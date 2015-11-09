@@ -29,6 +29,7 @@ distclean: clean
 
 check:
 	cppcheck --enable=all $(program_C_SRCS) $(program_CXX_SRCS)
+	flawfinder *.cpp *.h
 
 test:
 	$(MAKE) -C tests
