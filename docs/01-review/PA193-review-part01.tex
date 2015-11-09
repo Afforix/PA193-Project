@@ -91,5 +91,12 @@
 
 \maketitle % Print the title
 
+
+\chapter{Semantic analysis}
+
+Semantic analysis is implemented in analysis.cpp file. It reads the tree constructed by syntax analysis. Analysis implements set of is\_* functions that check whether given json\_value is of expected type for that part of tree, or std::string has expected content for that particular element. By using these functions and tree search we are able to validate the tree from the semantic point of view. Required elements in Docker format are expected to exist and extra elements are ignored as they are seen as "implementation specific" by Docker file format specification.
+
+
+
 \end{document}
 
