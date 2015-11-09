@@ -1,1 +1,5 @@
-# PA193-Project ![Travis status](https://magnum.travis-ci.com/Afforix/PA193-Project.svg?token=dQpwzSiGnw31KCY1Czpb&branch=master)
+# PA193-Project
+## Parser of Docker image configuration stored in JSON
+Specification defined at https://github.com/docker/docker/blob/master/image/spec/v1.md
+
+This project is an assignment for the course Secure coding principles and practices at FI MU (www.fi.muni.cz).
