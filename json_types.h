@@ -1,6 +1,7 @@
 #ifndef JSON_TYPES_H
 #define JSON_TYPES_H
 
+// collection of all types of JSON values
 #include "json_value.h"
 #include "json_object.h"
 #include "json_array.h"

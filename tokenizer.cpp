@@ -6,14 +6,7 @@
 static const std::string FIRST  = "123456789";
 static const std::istreambuf_iterator<char> END{};
 
-tokenizer::tokenizer()
-    : _err(false)
-{}
 
-
-/**
- * Open the JSON input file.
- */
 void tokenizer::init(const std::string &path_)
 {
     _contents.open(path_);
@@ -36,13 +29,11 @@ void tokenizer::init(const std::string &path_)
 }
 
 
-/**
- * Just check if the string str contains char c.
- */
-bool tokenizer::contains(const std::string& str, char c)
+bool tokenizer::contains(const std::string& str_, char c_)
 {
-    return str.find(c) != std::string::npos;
+    return str_.find(c_) != std::string::npos;
 }
+
 
 token tokenizer::procstr()
 {
@@ -113,6 +104,7 @@ token tokenizer::procstr()
     _err = true;
     return token(T_ERR);
 }
+
 
 token tokenizer::procnum()
 {
@@ -309,6 +301,7 @@ token tokenizer::procnum()
     return token(T_ERR);
 }
 
+
 token tokenizer::procntf()
 {
     std::string tok = "";
@@ -358,6 +351,7 @@ token tokenizer::procntf()
     }
     return token(T_ERR);
 }
+
 
 token tokenizer::get_token()
 {
@@ -430,6 +424,7 @@ token tokenizer::get_token()
             return token(T_ERR);
         }
     }
+
     return token(T_EOF);
 }
 

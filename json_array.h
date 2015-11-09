@@ -6,7 +6,7 @@
 #include <vector>
 
 /**
- * @brief The json_array class
+ * @brief JSON array value.
  */
 class json_array : public json_value
 {
@@ -16,15 +16,7 @@ public:
     using array_children_t = std::vector< std::shared_ptr< json_value > >;
 
     virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const;
-
     virtual json_type jtype() const { return json_type::J_ARRAY; }
-
-    const array_children_t& children() const { return _values; }
-
-    void insert(const std::shared_ptr< json_value > &val_)
-    {
-        _values.push_back(val_);
-    }
 
     virtual std::string to_string() const
     {
@@ -33,6 +25,21 @@ public:
         to_string(ss);
 
         return ss.str();
+    }
+
+    /**
+     * @brief children
+     * @return values contained in the JSON array
+     */
+    const array_children_t& children() const { return _values; }
+
+    /**
+     * @brief insert
+     * @param val_ value to be inserted into the JSON array
+     */
+    void insert(const std::shared_ptr< json_value > &val_)
+    {
+        _values.push_back(val_);
     }
 };
 

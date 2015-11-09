@@ -2,7 +2,7 @@
 #define JSON_TYPE
 
 /**
- * @brief The json_type enum
+ * @brief Enum representing types of JSON nodes.
  */
 enum class json_type
 {

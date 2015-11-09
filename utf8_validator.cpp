@@ -1,18 +1,14 @@
 #include "utf8_validator.h"
 
-/**
- * Checks if given file contains valid UTF-8.
- * @param file file to read
- * @return true if contains valid UTF-8 contents
- */
-bool utf8_validator::validate(std::ifstream &file)
+
+bool utf8_validator::validate(std::ifstream &file_)
 {
-    if (!file.good())
+    if (!file_.good())
     {
         return false;
     }
 
-    auto it = std::istreambuf_iterator<char>(file);
+    auto it = std::istreambuf_iterator<char>(file_);
     const auto END = std::istreambuf_iterator<char>();
 
     while (it != END)

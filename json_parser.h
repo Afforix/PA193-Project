@@ -10,7 +10,20 @@
 class json_parser
 {
 public:
+    /**
+     * @brief json_parser - utility class
+     */
     json_parser() = delete;
+
+    /**
+     * Parses given file and returns its root.
+     * In case of error throws exception.
+     *
+     * @param name_ name of the file
+     * @throws std::logic_error in case of invalid data
+     * @throws std::runtime_error if file cannot be read
+     * @return pointer to the root of the JSON
+     */
     static std::shared_ptr< json_value > parseFile(const std::string &name_)
     {
         tokenizer t;

@@ -4,6 +4,9 @@
 #include <string>
 #include <fstream>
 
+/**
+ * @brief Types of tokens.
+ */
 enum token_type {
     T_EOF,      // End Of File
     T_ERR,      // Error
@@ -20,44 +23,47 @@ enum token_type {
     T_FALSE     // false
 };
 
+/**
+ * @brief Tokens containing type and possibly string value.
+ */
 class token
 {
     token_type _type; // bracket, string...
-    std::string _text; // text of string
+    std::string _text; // text of string, number
 
 public:
 
     /**
-     * @brief token ctor for non-strings
-     * @param type_
+     * @brief token ctor for non-strings/non-numbers
+     * @param type_ non-string/non-number token
      */
     explicit token(token_type type_)
         : _type(type_)
     {}
 
     /**
-     * @brief token ctor for strings
-     * @param type_
-     * @param text_
+     * @brief token ctor for strings and numbers
+     * @param type_ token type
+     * @param text_ value
      */
     token(token_type type_, const std::string& text_)
         : _type(type_), _text(text_)
     {}
 
     /**
-     * @brief type
+     * @brief type of token
      * @return token type
      */
     token_type type() const { return _type; }
 
     /**
-     * @brief text
-     * @return text of string token
+     * @brief text value
+     * @return text of string/number token
      */
     const std::string& text() const { return _text; }
 
     /**
-     * @brief print contents of token
+     * @brief Converts token to string.
      */
     std::string to_string();
 };

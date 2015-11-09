@@ -5,12 +5,23 @@
 
 #include <string>
 
+/**
+ * @brief The tokenizer class performs lexical analysis and converts
+ * stream of characters into tokens.
+ */
 class tokenizer
 {
 
 private:
+    /**
+     * @brief _contents file we read
+     */
     std::ifstream _contents;
+    /**
+     * @brief _iter position in the file
+     */
     std::istreambuf_iterator<char> _iter;
+
 
     /**
      * Instance variable indicating if error occurred. If so, no other actions
@@ -35,22 +46,23 @@ private:
     token procntf();
 
     /**
-     * @brief simple function verifying if c is in str
-     * @param str - reference string
-     * @param c - character to test
+     * @brief simple function verifying if character c_ is in str_
+     * @param str_ string
+     * @param c_ character to test
+     * @return true if str_ contains c_
      */
-    bool contains(const std::string& str, char c);
+    bool contains(const std::string& str_, char c_);
 
 public:
 
     /**
      * @brief tokenizer ctor
      */
-    tokenizer();
+    tokenizer() : _err(false) {}
 
     /**
-     * @brief read the json input file
-     * @param path_ to the file
+     * @brief Open the JSON input file.
+     * @param path_ path to the file
      */
     void init(const std::string &path_);
 

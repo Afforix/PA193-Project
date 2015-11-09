@@ -3,6 +3,9 @@
 
 #include <fstream>
 
+/**
+ * @brief The utf8_validator class validates if input is valid UTF-8 document.
+ */
 class utf8_validator
 {
     /**
@@ -24,8 +27,18 @@ class utf8_validator
     }
 
 public:
+
+    /**
+     * @brief utf8_validator - utility class
+     */
     utf8_validator() = delete;
-    static bool validate(std::ifstream& file);
+
+    /**
+     * Checks if given file contains valid UTF-8.
+     * @param file file to read
+     * @return true if contains valid UTF-8 contents
+     */
+    static bool validate(std::ifstream& file_);
 };
 
 #endif // UTF8_VALIDATOR_H

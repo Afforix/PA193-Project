@@ -4,36 +4,65 @@
 #include <iostream>
 #include <regex>
 
+/**
+ * @brief Is operating system?
+ * @param os_ string with OS
+ * @return true if os_ is OS
+ */
 bool
-is_os (const std::string &os)
+is_os (const std::string &os_)
 {
-    return os == "\"linux\"" || os == "\"darwin\"" || os == "\"freebsd\"";
+    return os_ == "\"linux\"" || os_ == "\"darwin\"" || os_ == "\"freebsd\"";
 }
 
+
+/**
+ * @brief Is architecture?
+ * @param arch_ architecture
+ * @return is architecture?
+ */
 bool
-is_architecture (const std::string &arch)
+is_architecture (const std::string &arch_)
 {
-    return arch == "\"386\"" || arch == "\"amd64\"" || arch == "\"arm\"";
+    return arch_ == "\"386\"" || arch_ == "\"amd64\"" || arch_ == "\"arm\"";
 }
 
+
+/**
+ * @brief Is hexadecimal 256 bits?
+ * @param s_ hex string
+ * @return is 256bit hex string?
+ */
 bool
-is_hexadecimal_256bits (const std::string &s)
+is_hexadecimal_256bits (const std::string &s_)
 {
     std::regex hexastring_64 ("^\"[0-9a-fA-F]{64}\"$");
 
-    return std::regex_match (s, hexastring_64);
+    return std::regex_match (s_, hexastring_64);
 }
 
+
+/**
+ * @brief Is iso8601 datetime?
+ * @param s_ date
+ * @return is valid date?
+ */
 bool
-is_iso8601_datetime (const std::string &s)
+is_iso8601_datetime (const std::string &s_)
 {
     std::regex date ("^\"([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?\"$");
 
-    return std::regex_match (s, date);
+    return std::regex_match (s_, date);
 }
 
+
+/**
+ * @brief Is user group?
+ * @param s_ group
+ * @return is group?
+ */
 bool
-is_user_group (const std::string &s)
+is_user_group (const std::string &s_)
 {
   std::regex uid ("^\"[0-9]+\"$");
   std::regex user ("^\"[a-zA-Z_][a-zA-Z0-9_-]*\"$");
@@ -42,63 +71,81 @@ is_user_group (const std::string &s)
   std::regex uid_group ("^\"[0-9]+:[a-zA-Z_][a-zA-Z0-9_-]*\"$");
   std::regex user_gid ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[0-9]+\"$");
 
-  if (std::regex_match (s, uid)) {
+  if (std::regex_match (s_, uid)) {
       return true;
   }
 
-  if (std::regex_match (s, user)) {
+  if (std::regex_match (s_, user)) {
       return true;
   }
 
-  if (std::regex_match (s, user_group)) {
+  if (std::regex_match (s_, user_group)) {
       return true;
   }
 
-  if (std::regex_match (s, uid_guid)) {
+  if (std::regex_match (s_, uid_guid)) {
       return true;
   }
 
-  if (std::regex_match (s, uid_group)) {
+  if (std::regex_match (s_, uid_group)) {
       return true;
   }
 
-  if (std::regex_match (s, user_gid)) {
+  if (std::regex_match (s_, user_gid)) {
       return true;
   }
 
   return false;
 }
 
+
+/**
+ * @brief Is port spec?
+ * @param s_ port
+ * @return is port?
+ */
 bool
-is_port_spec (const std::string &s)
+is_port_spec (const std::string &s_)
 {
     std::regex port ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\"$");
     std::regex udp ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/udp\"$");
     std::regex tcp ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/tcp\"$");
 
-    if (std::regex_match (s, port)) {
+    if (std::regex_match (s_, port)) {
         return true;
     }
 
-    if (std::regex_match (s, udp)) {
+    if (std::regex_match (s_, udp)) {
         return true;
     }
 
-    if (std::regex_match (s, tcp)) {
+    if (std::regex_match (s_, tcp)) {
         return true;
     }
 
     return false;
 }
 
+
+/**
+ * @brief Is environment variable?
+ * @param s_ env variable
+ * @return is env?
+ */
 bool
-is_env_spec (const std::string &s)
+is_env_spec (const std::string &s_)
 {
     std::regex env ("^\"[A-Z]+=[^=]*\"$");
 
-    return std::regex_match (s, env);
+    return std::regex_match (s_, env);
 }
 
+
+/**
+ * @brief Is valid list of env. variables?
+ * @param val_ env. variables
+ * @return are variables valid?
+ */
 bool
 is_valid_env (std::shared_ptr< json_value > val_)
 {
@@ -125,6 +172,12 @@ is_valid_env (std::shared_ptr< json_value > val_)
     return true;
 }
 
+
+/**
+ * @brief Are exposed ports valid?
+ * @param val_ ports
+ * @return are valid?
+ */
 bool
 is_valid_exposedports (std::shared_ptr< json_value > val_)
 {
@@ -151,6 +204,12 @@ is_valid_exposedports (std::shared_ptr< json_value > val_)
     return true;
 }
 
+
+/**
+ * @brief Is valid object with volumes?
+ * @param val_ object with volumes
+ * @return is valid?
+ */
 bool
 is_valid_second_object_object (std::shared_ptr< json_value > val_)
 {
@@ -174,6 +233,12 @@ is_valid_second_object_object (std::shared_ptr< json_value > val_)
     return true;
 }
 
+
+/**
+ * @brief Is array of strings?
+ * @param val_ array
+ * @return are all values strings?
+ */
 bool
 is_content_j_string_array (std::shared_ptr< json_value > val_)
 {
@@ -197,6 +262,12 @@ is_content_j_string_array (std::shared_ptr< json_value > val_)
     return true;
 }
 
+
+/**
+ * @brief Is valid config?
+ * @param val_ config
+ * @return is valid?
+ */
 bool
 is_valid_config (std::shared_ptr< json_value > val_)
 {
@@ -340,6 +411,14 @@ is_valid_config (std::shared_ptr< json_value > val_)
     return ret;
 }
 
+
+/**
+ * @brief Performs semantic analysis - tells if given JSON
+ * is valid Docker image confuguration:
+ * https://github.com/docker/docker/blob/master/image/spec/v1.md#image-json-description
+ * @param val_ JSON document
+ * @return is valid Docker image spec?
+ */
 bool
 do_semantic_analysis (std::shared_ptr<json_value> val_)
 {

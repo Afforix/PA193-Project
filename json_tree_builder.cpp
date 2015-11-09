@@ -8,7 +8,7 @@ bool json_tree_builder::process_first(const token &token_)
         return false;
     }
     _current = jval; // object or array
-    accept_value = _current->jtype() == json_type::J_ARRAY;
+    _accept_value = _current->jtype() == json_type::J_ARRAY;
 
     return true;
 }
@@ -21,30 +21,30 @@ bool json_tree_builder::insert_to_object(const token &token_)
     switch (token_.type())
     {
     case T_STR:
-        if (accept_name)
+        if (_accept_name)
         {
             if (obj->contains(token_.text()))
                 return false; // duplicit key name
 
             obj->insert(token_.text());
-            accept_colon = true;
-            accept_comma = false;
-            accept_name = false;
-            accept_value = false;
-            accept_end = false;
+            _accept_colon = true;
+            _accept_comma = false;
+            _accept_name = false;
+            _accept_value = false;
+            _accept_end = false;
 
             return true;
         }
-        else if (accept_value)
+        else if (_accept_value)
         {
             auto str = to_value(token_);
             obj->insert(str);
 
-            accept_colon = false;
-            accept_comma = true;
-            accept_name = false;
-            accept_value = false;
-            accept_end = true;
+            _accept_colon = false;
+            _accept_comma = true;
+            _accept_name = false;
+            _accept_value = false;
+            _accept_end = true;
 
             return true;
         }
@@ -54,13 +54,13 @@ bool json_tree_builder::insert_to_object(const token &token_)
         }
         break;
     case T_COLON:
-        if (accept_colon)
+        if (_accept_colon)
         {
-            accept_colon = false;
-            accept_comma = false;
-            accept_end = false;
-            accept_name = false;
-            accept_value = true;
+            _accept_colon = false;
+            _accept_comma = false;
+            _accept_end = false;
+            _accept_name = false;
+            _accept_value = true;
 
             return true;
         }
@@ -70,18 +70,18 @@ bool json_tree_builder::insert_to_object(const token &token_)
         }
         break;
     case T_LBRACE: // new object
-        if (accept_value)
+        if (_accept_value)
         {
             auto new_obj = to_value(token_);
             _parents.push(_current);
             _current = new_obj;
             obj->insert(new_obj);
 
-            accept_colon = false;
-            accept_comma = false;
-            accept_end = true;
-            accept_name = true;
-            accept_value = false;
+            _accept_colon = false;
+            _accept_comma = false;
+            _accept_end = true;
+            _accept_name = true;
+            _accept_value = false;
 
             return true;
         }
@@ -91,13 +91,13 @@ bool json_tree_builder::insert_to_object(const token &token_)
         }
         break;
     case T_COMMA:
-        if (accept_comma)
+        if (_accept_comma)
         {
-            accept_colon = false;
-            accept_comma = false;
-            accept_end = false;
-            accept_name = true;
-            accept_value = false;
+            _accept_colon = false;
+            _accept_comma = false;
+            _accept_end = false;
+            _accept_name = true;
+            _accept_value = false;
 
             return true;
         }
@@ -107,18 +107,18 @@ bool json_tree_builder::insert_to_object(const token &token_)
         }
         break;
     case T_LBRACKET: // new array
-        if (accept_value)
+        if (_accept_value)
         {
             auto new_arr = to_value(token_);
             _parents.push(_current);
             _current = new_arr;
             obj->insert(new_arr);
 
-            accept_colon = false;
-            accept_comma = false;
-            accept_end = true;
-            accept_name = false;
-            accept_value = true;
+            _accept_colon = false;
+            _accept_comma = false;
+            _accept_end = true;
+            _accept_name = false;
+            _accept_value = true;
 
             return true;
         }
@@ -128,7 +128,7 @@ bool json_tree_builder::insert_to_object(const token &token_)
         }
         break;
     case T_RBRACE:
-        if (accept_end)
+        if (_accept_end)
         {
             if (_parents.empty())
             { // parsing successfully finished
@@ -139,11 +139,11 @@ bool json_tree_builder::insert_to_object(const token &token_)
             _current = _parents.top();
             _parents.pop();
 
-            accept_colon = false;
-            accept_comma = true;
-            accept_end = true;
-            accept_name = true;
-            accept_value = _current->jtype() == json_type::J_ARRAY;
+            _accept_colon = false;
+            _accept_comma = true;
+            _accept_end = true;
+            _accept_name = true;
+            _accept_value = _current->jtype() == json_type::J_ARRAY;
 
             return true;
         }
@@ -156,15 +156,15 @@ bool json_tree_builder::insert_to_object(const token &token_)
     case T_FALSE:
     case T_NULL:
     case T_NUM:
-        if (accept_value)
+        if (_accept_value)
         {
             obj->insert(to_value(token_));
 
-            accept_colon = false;
-            accept_comma = true;
-            accept_end = true;
-            accept_name = false;
-            accept_value = false;
+            _accept_colon = false;
+            _accept_comma = true;
+            _accept_end = true;
+            _accept_name = false;
+            _accept_value = false;
 
             return true;
         }
@@ -188,11 +188,11 @@ bool json_tree_builder::insert_to_array(const token &token_)
     switch (token_.type())
     {
     case T_COMMA:
-        if (accept_comma)
+        if (_accept_comma)
         {
-            accept_comma = false;
-            accept_end = false;
-            accept_value = true;
+            _accept_comma = false;
+            _accept_end = false;
+            _accept_value = true;
 
             return true;
         }
@@ -202,7 +202,7 @@ bool json_tree_builder::insert_to_array(const token &token_)
         }
         break;
     case T_RBRACKET:
-        if (accept_end)
+        if (_accept_end)
         {
             if (_parents.empty())
             { // parsing successfully finished
@@ -213,11 +213,11 @@ bool json_tree_builder::insert_to_array(const token &token_)
             _current = _parents.top();
             _parents.pop();
 
-            accept_colon = false;
-            accept_comma = true;
-            accept_end = true;
-            accept_name = false;
-            accept_value = _current->jtype() == json_type::J_ARRAY;
+            _accept_colon = false;
+            _accept_comma = true;
+            _accept_end = true;
+            _accept_name = false;
+            _accept_value = _current->jtype() == json_type::J_ARRAY;
 
             return true;
         }
@@ -228,18 +228,18 @@ bool json_tree_builder::insert_to_array(const token &token_)
         break;
     case T_LBRACE:
     case T_LBRACKET:
-        if (accept_value)
+        if (_accept_value)
         {
             auto new_val = to_value(token_);
             _parents.push(_current);
             _current = new_val;
             arr->insert(new_val);
 
-            accept_colon = false;
-            accept_comma = false;
-            accept_end = true;
-            accept_name = true;
-            accept_value = new_val->jtype() == json_type::J_ARRAY;
+            _accept_colon = false;
+            _accept_comma = false;
+            _accept_end = true;
+            _accept_name = true;
+            _accept_value = new_val->jtype() == json_type::J_ARRAY;
 
             return true;
         }
@@ -253,12 +253,12 @@ bool json_tree_builder::insert_to_array(const token &token_)
     case T_TRUE:
     case T_FALSE:
     case T_NULL:
-        if (accept_value)
+        if (_accept_value)
         {
             arr->insert(to_value(token_));
-            accept_comma = true;
-            accept_end = true;
-            accept_value = false;
+            _accept_comma = true;
+            _accept_end = true;
+            _accept_value = false;
 
             return true;
         }
