@@ -17,7 +17,7 @@ protected:
     }
 
 public:
-    json_bool(bool b_) : _val(b_) {}
+    explicit json_bool(bool b_) : _val(b_) {}
     virtual json_type jtype() const { return json_type::J_BOOL; }
 
     virtual std::string to_string() const

@@ -18,7 +18,7 @@ protected:
     }
 
 public:
-    json_string(const std::string& s_) : _str(s_) {}
+    explicit json_string(const std::string& s_) : _str(s_) {}
     virtual json_type jtype() const { return json_type::J_STRING; }
 
     virtual std::string to_string() const

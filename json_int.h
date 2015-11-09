@@ -17,7 +17,7 @@ protected:
     }
 
 public:
-    json_int(long long int num) : _val(num) {}
+    explicit json_int(long long int num) : _val(num) {}
     virtual json_type jtype() const { return json_type::J_INT; }
 
     virtual std::string to_string() const

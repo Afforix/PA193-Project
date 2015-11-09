@@ -65,6 +65,7 @@ class json_tree_builder
     bool insert_to_array(const token &token_);
 
 public:
+    json_tree_builder() = default;
     bool is_finished() const { return _finished; }
     std::shared_ptr< json_value > get_root() const { return _current; }
     bool add(const token &token_);

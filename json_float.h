@@ -17,7 +17,7 @@ protected:
     }
 
 public:
-    json_float(long double num) : _val(num) {}
+    explicit json_float(long double num) : _val(num) {}
     virtual json_type jtype() const { return json_type::J_DOUBLE; }
 
     virtual std::string to_string() const
