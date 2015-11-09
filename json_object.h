@@ -3,6 +3,8 @@
 
 #include "json_value.h"
 
+#include <map>
+
 /**
  * @brief The json_object class
  */
@@ -12,6 +14,8 @@ class json_object : public json_value
     std::string _last_key;
 
 public:
+    using object_children_t = std::map< const std::string, std::shared_ptr< json_value > >;
+
     virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const;
     std::shared_ptr< json_value > find(const std::string& key_) const;
 

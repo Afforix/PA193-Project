@@ -5,12 +5,13 @@
 #include "json_types.h"
 
 #include <memory>
+#include <stack>
 #include <stdexcept>
 
 class json_tree_builder
 {
     std::shared_ptr< json_value > _current;
-    std::vector< std::shared_ptr< json_value > > _parents;
+    std::stack< std::shared_ptr< json_value > > _parents;
 
     bool _finished{false};
 
@@ -65,7 +66,7 @@ class json_tree_builder
 
 public:
     bool is_finished() const { return _finished; }
-    std::shared_ptr< json_value > get_root() { return _current; }
+    std::shared_ptr< json_value > get_root() const { return _current; }
     bool add(const token &token_);
 };
 

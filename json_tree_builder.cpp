@@ -73,7 +73,7 @@ bool json_tree_builder::insert_to_object(const token &token_)
         if (accept_value)
         {
             auto new_obj = to_value(token_);
-            _parents.push_back(_current);
+            _parents.push(_current);
             _current = new_obj;
             obj->insert(new_obj);
 
@@ -110,7 +110,7 @@ bool json_tree_builder::insert_to_object(const token &token_)
         if (accept_value)
         {
             auto new_arr = to_value(token_);
-            _parents.push_back(_current);
+            _parents.push(_current);
             _current = new_arr;
             obj->insert(new_arr);
 
@@ -136,8 +136,8 @@ bool json_tree_builder::insert_to_object(const token &token_)
                 return true;
             }
 
-            _current = _parents.back();
-            _parents.pop_back();
+            _current = _parents.top();
+            _parents.pop();
 
             accept_colon = false;
             accept_comma = true;
@@ -210,8 +210,8 @@ bool json_tree_builder::insert_to_array(const token &token_)
                 return true;
             }
 
-            _current = _parents.back();
-            _parents.pop_back();
+            _current = _parents.top();
+            _parents.pop();
 
             accept_colon = false;
             accept_comma = true;
@@ -231,7 +231,7 @@ bool json_tree_builder::insert_to_array(const token &token_)
         if (accept_value)
         {
             auto new_val = to_value(token_);
-            _parents.push_back(_current);
+            _parents.push(_current);
             _current = new_val;
             arr->insert(new_val);
 

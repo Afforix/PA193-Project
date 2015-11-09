@@ -3,6 +3,8 @@
 
 #include "json_value.h"
 
+#include <vector>
+
 /**
  * @brief The json_array class
  */
@@ -11,6 +13,8 @@ class json_array : public json_value
     std::vector< std::shared_ptr< json_value > > _values;
 
 public:
+    using array_children_t = std::vector< std::shared_ptr< json_value > >;
+
     virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const;
 
     virtual json_type jtype() const { return json_type::J_ARRAY; }

@@ -3,8 +3,6 @@
 
 #include "json_type.h"
 
-#include <map>
-#include <vector>
 #include <memory> // shared_ptr
 #include <sstream>
 
@@ -20,10 +18,6 @@ protected:
     }
 
 public:
-
-    using object_children_t = std::map< const std::string, std::shared_ptr< json_value > >;
-    using array_children_t = std::vector< std::shared_ptr< json_value > >;
-
     json_value() = default;
     virtual ~json_value() = default;
     virtual json_type jtype() const = 0;
