@@ -21,7 +21,9 @@
             "BAR=great_tool_you_know"
         ],
         "Entrypoint": [
-            "/bin/my-app-binary"
+            "/bin/my-app-binary", [
+			"aa"
+			]
         ],
         "Cmd": [
             "--foreground",
