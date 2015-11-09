@@ -22,7 +22,7 @@
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage[utf8]{inputenc}
-\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
 \usepackage{amsmath,amsfonts,amsthm} % Math packages
 
@@ -91,8 +91,32 @@
 
 \maketitle % Print the title
 
+For our project we chose to implement a prser of Docker Image Specification
+using JSON data-interchange format. Docker is an open-source project aiming to
+automate the deployment of applications inside software containers. It provides
+additional layer of abstraction and automation of operating system level
+virtualization on Linux. It is based on resource isolation features like cgroups
+and kernel namespaces. Docker images are composed of layers. These layers refer
+to metadata stored a json structures describing basic information about the
+image as such as date created, author and the ID of its parent image as well as
+execution/runtime configuration like its entry point, CPU/memory shares,
+networking and volumes.
 
-\chapter{Semantic analysis}
+The parser consists of three independent modules providing lexical, syntactic
+and semantic analysis of the input. First two modules together ensure the
+correctness of the JSON format while the latter verifies the Docker Image
+Specification.
+
+\section{Lexical analysis}
+
+The token class is basic data structure used to store information token type and
+contents. In the tokenizer class there are implemented methods for processing
+different types of tokens for example numbers, strings or braces. The get\_token
+method reads the input characterwise and applies these methods to extract
+tokens. With each call next token is returned.
+
+
+\section{Semantic analysis}
 
 Semantic analysis is implemented in analysis.cpp file. It reads the tree constructed by syntax analysis. Analysis implements set of is\_* functions that check whether given json\_value is of expected type for that part of tree, or std::string has expected content for that particular element. By using these functions and tree search we are able to validate the tree from the semantic point of view. Required elements in Docker format are expected to exist and extra elements are ignored as they are seen as "implementation specific" by Docker file format specification.
 
