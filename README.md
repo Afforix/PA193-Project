@@ -1,4 +1,4 @@
-# PA193-Project
+# PA193-Project ![Travis status](https://travis-ci.org/Afforix/PA193-Project.svg)
 ## Parser of Docker image configuration stored in JSON
 Specification defined at https://github.com/docker/docker/blob/master/image/spec/v1.md
 
