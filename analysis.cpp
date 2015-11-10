@@ -373,7 +373,13 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (CpuShares->jtype() != json_type::J_INT) {
             std::cerr << "CpuShares isn't int" << std::endl;
             ret = false;
-        }
+        } else {
+			if (std::static_pointer_cast<json_int>(CpuShares)->value() <= 0) {
+				std::cerr << "CpuShares isn't positive integer" << std::endl;
+				ret = false;
+			}
+		}
+
     }
 
     // validate MemorySwap
@@ -382,7 +388,12 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (MemorySwap->jtype() != json_type::J_INT) {
             std::cerr << "MemorySwap isn't int" << std::endl;
             ret = false;
-        }
+        } else {
+			if (std::static_pointer_cast<json_int>(MemorySwap)->value() <= 0) {
+				std::cerr << "MemorySwap isn't positive integer" << std::endl;
+				ret = false;
+			}
+		}
     }
 
     // validate Memory
@@ -391,7 +402,12 @@ is_valid_config (std::shared_ptr< json_value > val_)
         if (Memory->jtype() != json_type::J_INT) {
             std::cerr << "Memory isn't int" << std::endl;
             ret = false;
-        }
+        } else {
+			if (std::static_pointer_cast<json_int>(Memory)->value() <= 0) {
+				std::cerr << "Memory isn't positive integer" << std::endl;
+				ret = false;
+			}
+		}
     }
 
     // validate User
@@ -512,7 +528,12 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
         if (size->jtype() != json_type::J_INT) {
             std::cerr << "size isn't int" << std::endl;
             ret = false;
-        }
+        } else {
+			if (std::static_pointer_cast<json_int>(size)->value() <= 0) {
+				std::cerr << "Size isn't positive integer" << std::endl;
+				ret = false;
+			}
+		}
     } else {
         std::cerr << "size doesn't exist" << std::endl;
         ret = false;
