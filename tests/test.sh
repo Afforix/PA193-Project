@@ -37,7 +37,18 @@ if [[ "$?" == 1 ]]
 then
     pass $NOFILE
 else
-    fail "$i"
+    fail $NOFILE
+    exit 1
+fi
+
+# test reference config
+REF=pass-reference.json
+../parser $REF
+if [[ "$?" == 0 ]]
+then
+    pass $REF
+else
+    fail $REF
     exit 1
 fi
 

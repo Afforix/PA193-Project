@@ -175,7 +175,15 @@ enum token_type {
 \end{frame}
 
 \begin{frame}{Syntactic Analysis}
-
+\begin{itemize}
+    \item class json\_tree\_builder
+    \item performs top-down parsing
+    \item accepts tokens and creates JSON nodes (shared pointers)
+    \item refuses unexpected tokens
+    \item contains internal state machine
+    \item nodes allocated using std::make\_shared - operator new never used
+    \item must accept invalid JSON \{ "foo":"bar" , \}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Semantic Analysis}
