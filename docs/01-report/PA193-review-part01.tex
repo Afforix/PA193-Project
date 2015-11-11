@@ -133,9 +133,9 @@ aware of.
 \begin{itemize}
 
     \item After closer look at Docker Image Specification example we have
-        realised that it was not a valid JSON since comma appeared after
-        the last token in several objects. We decided to give docker a
-        precedence so our code accepts such input as valid.
+        realised that it was not a valid JSON since the comma character
+        appeared after the last token in several objects. We decided to give
+        docker a precedence so our code accepts such input as valid.
 
     \item During the phase of designing the parser we have forgotten to
         incorporate UTF-8 validation. We have realised this too late in the
