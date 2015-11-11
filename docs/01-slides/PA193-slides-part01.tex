@@ -117,12 +117,17 @@ FI MUNI \\ % Your institution for the title page
 
 \begin{itemize}
     \item Docker - software containers
-    \pause \item Isolation - cgroups and kernel namespaces
-    \pause \item Docker Image - template for distributing containers
-    \pause \item Docker Image Specification - JSON format
+    \item Isolation - cgroups and kernel namespaces
+    \item Docker Image - template for distributing containers
+    \item Docker Image Specification - JSON format
+    \item C++
+    \item Leak free
 \end{itemize}
 
-\pause \begin{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Spec example}
+\begin{verbatim}
 {
     "author": "foobar",
     "architecture": "amd64",
@@ -133,8 +138,10 @@ FI MUNI \\ % Your institution for the title page
         "Memory": 2048,
         "MemorySwap": 4096,
         "CpuShares": 8,
-        "ExposedPorts": {  
+        "ExposedPorts": {
             "8080/tcp": {}
+
+...
 \end{verbatim}
 \end{frame}
 
@@ -151,8 +158,8 @@ FI MUNI \\ % Your institution for the title page
 
 \begin{itemize}
     \item Read the input file characterwise
-    \pause \item Identify tokens
-    \pause \item Token types
+    \item Identify tokens
+    \item Token types
 \end{itemize}
 
 \begin{Verbatim}[fontsize=\small]
@@ -192,13 +199,15 @@ enum token_type {
 
         \item Invalid JSON in example
 
+        \item UTF-8 validation does duplicate file reading
+
     \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Conclusion}
-
-\end{frame}
+%\begin{frame}{Conclusion}
+%
+%\end{frame}
 
 \begin{frame}{Thank You}
     \Huge{\centerline{Thank you for your attention.}}
