@@ -161,7 +161,8 @@ FI MUNI \\ % Your institution for the title page
 \begin{itemize}
     \item Read the input file characterwise
     \item Identify tokens
-    \item Token types
+    \item Recognize token types
+    \item Verify format of numbers and strings
 \end{itemize}
 
 \begin{Verbatim}[fontsize=\small]
@@ -169,17 +170,12 @@ enum token_type {
     T_EOF,      // End Of File
     T_ERR,      // Error
     T_LBRACE,   // { left brace
-    T_RBRACE,   // } right brace
-    T_LBRACKET, // [ left bracket
-    T_RBRACKET, // ] right bracket
     T_COLON,    // : colon
-    T_COMMA,    // , comma
     T_STR,      // string enclosed in double quotes
     T_NUM,      // number
-    T_NULL,     // null
     T_TRUE,     // true
-    T_FALSE     // false
-};
+
+...
 \end{Verbatim}
 \end{frame}
 
@@ -223,9 +219,29 @@ enum token_type {
 
 \end{frame}
 
-%\begin{frame}{Conclusion}
-%
-%\end{frame}
+\begin{frame}[fragile]{Statistics}
+
+\begin{itemize}
+
+    \item GitHub: 157 commits
+
+\end{itemize}
+
+\begin{Verbatim}
+Language                     files           code
+-------------------------------------------------
+JSON                            54           1913
+C++                              8           1185
+C/C++ Header                    16            383
+XML                              1             83
+Bourne Shell                     1             54
+make                             4             45
+YAML                             1             12
+-------------------------------------------------
+SUM:                            85           3675
+\end{Verbatim}
+
+\end{frame}
 
 \begin{frame}{Thank You}
     \Huge{\centerline{Thank you for your attention.}}
