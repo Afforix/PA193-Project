@@ -24,9 +24,9 @@
 % which change the colors and layouts of slides. Below this is a list
 % of all the themes, uncomment each in turn to see what they look like.
 
-%\usetheme{default}
+% \usetheme{default}
 %\usetheme{AnnArbor}
-%\usetheme{Antibes}
+% \usetheme{Antibes}
 %\usetheme{Bergen}
 %\usetheme{Berkeley}
 %\usetheme{Berlin}
@@ -41,7 +41,7 @@
 %\usetheme{Ilmenau}
 %\usetheme{JuanLesPins}
 %\usetheme{Luebeck}
-\usetheme{Madrid}
+% \usetheme{Madrid}
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
 %\usetheme{Montpellier}
@@ -50,7 +50,7 @@
 %\usetheme{Rochester}
 %\usetheme{Singapore}
 %\usetheme{Szeged}
-%\usetheme{Warsaw}
+\usetheme{Warsaw}
 
 % As well as themes, the Beamer class has a number of color themes
 % for any slide theme. Uncomment each of these in turn to see how it
@@ -76,6 +76,8 @@
 
 %\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
+
+\setbeamertemplate{headline}{} % remove header
 
 \usepackage{graphicx} % Allows including images
 \graphicspath{ {./pic/} }
@@ -186,8 +188,6 @@ enum token_type {
     \item class json\_tree\_builder
     \item performs top-down parsing
     \item accepts tokens and creates JSON nodes (shared pointers)
-    \item refuses unexpected tokens
-    \item contains internal state machine
     \item nodes allocated using std::make\_shared - operator new never used
     \item must accept invalid JSON \{ "foo":"bar" , \}
 \end{itemize}
@@ -198,6 +198,16 @@ enum token_type {
 	\item tree search and is\_* functions
 	\item extra items are ignored - implementation specific
 	\item some items content is checked, some not becuase of missing spec or just because they can be anything
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Technical realisation}
+\begin{itemize}
+    \item C++11, no dependencies
+    \item never used operator new or malloc
+    \item no manually written dtors
+    \item Travis CI - build + tests
+    \item Cppcheck, Flawfinder, PREfast, Coverity
 \end{itemize}
 \end{frame}
 

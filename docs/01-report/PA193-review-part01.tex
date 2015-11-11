@@ -94,13 +94,13 @@
 
 \maketitle % Print the title
 
-For our project we chose to implement a prser of Docker Image Specification
+For our project we chose to implement a parser of Docker Image Specification
 using JSON data-interchange format. Docker is an open-source project aiming to
 automate the deployment of applications inside software containers. It provides
 additional layer of abstraction and automation of operating system level
 virtualization on Linux. It is based on resource isolation features like cgroups
 and kernel namespaces. Docker images are composed of layers. These layers refer
-to metadata stored a json structures describing basic information about the
+to metadata stored in JSON structures describing basic information about the
 image as such as date created, author and the ID of its parent image as well as
 execution/runtime configuration like its entry point, CPU/memory shares,
 networking and volumes.
@@ -119,11 +119,25 @@ method reads the input characterwise and applies these methods to extract
 tokens. With each call next token is returned.
 
 \section{Syntactic analysis}
-
-
+Parsing process: Input file is opened and checked if contains valid UTF-8 contents. 
+Then tokenizer reads tokens and passes them one at a time to json\_tree\_builder, 
+which performs top-down parsing. Based on given token json\_tree\_builder determines 
+of which types the next token must be to be accepted. Unexpected tokens are refused 
+and the whole parsing fails. JSON tree structure is allocated using C++11 shared pointers
+in such a way that we eliminated risk of memory leak (we never use new or malloc).
 \section{Semantic analysis}
 
 Semantic analysis is implemented in analysis.cpp file. It reads the tree constructed by syntax analysis. Analysis implements set of is\_* functions that check whether given json\_value is of expected type for that part of tree, or std::string has expected content for that particular element. By using these functions and tree search we are able to validate the tree from the semantic point of view. Required elements in Docker format are expected to exist and extra elements are ignored as they are seen as "implementation specific" by Docker file format specification.
+
+
+\section{Technical realisation}
+We used only C++11 and its standard library for the parser implementation, so it does not
+depend on third party libraries and should be multiplatform. On every push to our GitHub
+repository, build server Travis CI built the program and run our tests, reporting broken builds.
+Quality of the code was checked by tools Cppcheck, PREfast, Flawfinder and Coverity - no significant
+issues were found. The latter found dead code branch (now fixed) and errors in the standard library.
+We looked for memory leaks using valgrind, but our code should be leak-free thanks to the C++ containers
+and smart pointers (std::shared\_ptr).
 
 \section{Issues}
 
