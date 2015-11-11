@@ -49,6 +49,11 @@ token tokenizer::procstr()
      */
     for (; _iter != END; ++_iter)
     {
+        if (*_iter >= 0 && *_iter <= 0x1F)
+        { // control characters are not allowed in strings
+            break;
+        }
+
         switch(*_iter)
         {
         case '\"':

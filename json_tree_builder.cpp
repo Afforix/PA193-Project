@@ -24,7 +24,7 @@ bool json_tree_builder::insert_to_object(const token &token_)
         if (_accept_name)
         {
             if (obj->contains(token_.text()))
-                return false; // duplicit key name
+                throw std::logic_error("duplicit key: " + token_.text()); // duplicit key name
 
             obj->insert(token_.text());
             _accept_colon = true;
