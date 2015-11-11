@@ -152,21 +152,16 @@ token tokenizer::procnum()
                 _err = true;
                 return token(T_ERR);
             } else if (*_iter == '+' || *_iter == '-') {
-                if (!epm) {
-                    epm = true;
+                epm = true;
+                num.push_back(*_iter);
+                _iter++;
+                if (_iter == END) {
+                    _err = true;
+                    return token(T_ERR);
+                }
+                if (std::isdigit(*_iter)) {
                     num.push_back(*_iter);
                     _iter++;
-                    if (_iter == END) {
-                        _err = true;
-                        return token(T_ERR);
-                    }
-                    if (std::isdigit(*_iter)) {
-                        num.push_back(*_iter);
-                        _iter++;
-                    } else {
-                        _err = true;
-                        return token(T_ERR);
-                    }
                 } else {
                     _err = true;
                     return token(T_ERR);
