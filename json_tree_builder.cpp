@@ -95,7 +95,7 @@ bool json_tree_builder::insert_to_object(const token &token_)
         {
             _accept_colon = false;
             _accept_comma = false;
-            _accept_end = false;
+            _accept_end = true; // not valid JSON
             _accept_name = true;
             _accept_value = false;
 
