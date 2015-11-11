@@ -1,6 +1,7 @@
 #include "tokenizer.h"
 #include "utf8_validator.h"
 
+#include <cctype>
 #include <stdexcept>
 
 static const std::string FIRST  = "123456789";
