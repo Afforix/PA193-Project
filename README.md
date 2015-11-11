@@ -3,3 +3,11 @@
 Specification defined at https://github.com/docker/docker/blob/master/image/spec/v1.md
 
 This project is an assignment for the course Secure coding principles and practices at FI MU (www.fi.muni.cz).
+
+## Usage
+```
+make
+make test
+./parser <input_file>
+```
+If input is valid image configuration, it is printed, otherwise error is reported to the user.
