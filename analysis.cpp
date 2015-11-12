@@ -452,6 +452,11 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
      * config -> J_OBJECT / J_NULL, is_valid_config()
      */
 
+	if (val_->jtype() != json_type::J_OBJECT) {
+		std::cerr << "Root is not object" << std::endl;
+		return false;
+	}
+
     auto object = std::static_pointer_cast< json_object >(val_); // type std::shared_ptr< json_object >
 
     // validate id
