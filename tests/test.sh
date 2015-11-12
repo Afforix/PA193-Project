@@ -41,16 +41,17 @@ else
     exit 1
 fi
 
-# test reference config
-REF=pass-reference.json
-../parser $REF
-if [[ "$?" == 0 ]]
-then
-    pass $REF
-else
-    fail $REF
-    exit 1
-fi
+for i in pass-*.json ;
+do
+    ../parser "$i"
+    if [[ "$?" == 0 ]]
+    then
+        pass "$i"
+    else
+        fail "$i"
+        exit 1
+    fi
+done
 
 res="$(../parser pass.json | diff -y pass.ref -)"
 

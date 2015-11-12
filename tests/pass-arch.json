@@ -1,0 +1,65 @@
+[
+{
+    "Id": "b97e110c94d9e6779837e0e6a9088cff4f5eb07f60ec89b269db4e518e8c151b",
+    "Parent": "b31c6c1462e6ade0a75d2ee34e5d92f3c1f5f4ac388464cfdea49d690ceb9d0e",
+    "Comment": "",
+    "Created": "2015-06-26T06:07:12.970580334Z",
+    "Container": "0f8236e3ec6d3dda3424d2a379403ce200497d748442d77e28f13618135738aa",
+    "ContainerConfig": {
+        "Hostname": "9291810c8d78",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": null,
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) ADD file:7e5b32c7e87060dcf5483d21e1df327398fcc5b7e13917b2d33528e4bcbf2c81 in /"
+        ],
+        "Image": "b31c6c1462e6ade0a75d2ee34e5d92f3c1f5f4ac388464cfdea49d690ceb9d0e",
+        "Volumes": null,
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "OnBuild": null,
+        "Labels": {}
+    },
+    "DockerVersion": "1.6.2",
+    "Author": "Travis Cline \u003ctravis.cline@gmail.com\u003e",
+    "Config": {
+        "Hostname": "9291810c8d78",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": null,
+        "Cmd": null,
+        "Image": "b31c6c1462e6ade0a75d2ee34e5d92f3c1f5f4ac388464cfdea49d690ceb9d0e",
+        "Volumes": null,
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "OnBuild": null,
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 278695415,
+    "VirtualSize": 278695415,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "3",
+            "DeviceName": "docker-8:7-2378568-b97e110c94d9e6779837e0e6a9088cff4f5eb07f60ec89b269db4e518e8c151b",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

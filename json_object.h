@@ -4,6 +4,8 @@
 #include "json_value.h"
 
 #include <map>
+#include <cctype>
+#include <algorithm>
 
 /**
  * @brief JSON object value.
@@ -12,6 +14,11 @@ class json_object : public json_value
 {
     std::map< const std::string, std::shared_ptr< json_value > > _pairs;
     std::string _last_key;
+
+    /**
+     * @brief Helper functor for case insensitive key lookup.
+     */
+    class icase_lookup;
 
 public:
     using object_children_t = std::map< const std::string, std::shared_ptr< json_value > >;
@@ -30,7 +37,7 @@ public:
 
     /**
      * @brief Find value in the object by its key.
-     * @param key_ key to look for
+     * @param key_ CASE INSENSITIVE key to look for
      * @return object associated with the given key
      */
     std::shared_ptr< json_value > find(const std::string& key_) const;
