@@ -429,14 +429,14 @@ is_valid_config (std::shared_ptr< json_value > val_)
 
 
 /**
- * @brief Performs semantic analysis - tells if given JSON
+ * @brief Performs semantic analysis of root object - tells if given JSON
  * is valid Docker image confuguration:
  * https://github.com/docker/docker/blob/master/image/spec/v1.md#image-json-description
  * @param val_ JSON document
  * @return is valid Docker image spec?
  */
 bool
-do_semantic_analysis (std::shared_ptr<json_value> val_)
+is_valid_root_object (std::shared_ptr<json_value> val_)
 {
     bool ret = true;
 
@@ -453,7 +453,6 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
      */
 
 	if (val_->jtype() != json_type::J_OBJECT) {
-		std::cerr << "Root is not object" << std::endl;
 		return false;
 	}
 
@@ -606,3 +605,59 @@ do_semantic_analysis (std::shared_ptr<json_value> val_)
 
     return ret;
 }
+
+/**
+ * @brief Performs semantic analysis of root array - tells if given JSON
+ * is valid Docker image confuguration:
+ * https://github.com/docker/docker/blob/master/image/spec/v1.md#image-json-description
+ * @param val_ JSON document
+ * @return is valid Docker image spec?
+ */
+bool
+is_valid_root_array(std::shared_ptr<json_value> val_)
+{
+    bool ret = true;
+
+	if (val_->jtype() != json_type::J_ARRAY) {
+		return false;
+	}
+
+    auto array = std::static_pointer_cast< json_array >(val_);
+    const auto &values = array->children();
+
+    if (!values.empty())
+    {
+        for (auto it = values.begin(); it != values.end(); ++it)
+        {
+            if (!is_valid_root_object((*it))) {
+                ret = false;
+            }
+        }
+    }
+
+	return ret;
+}
+
+/**
+ * @brief Performs semantic analysis - tells if given JSON
+ * is valid Docker image confuguration:
+ * https://github.com/docker/docker/blob/master/image/spec/v1.md#image-json-description
+ * @param val_ JSON document
+ * @return is valid Docker image spec?
+ */
+bool
+do_semantic_analysis (std::shared_ptr<json_value> val_)
+{
+	bool ret = false;
+
+	if (val_->jtype() == json_type::J_ARRAY) {
+		ret = is_valid_root_array(val_);
+	} else if (val_->jtype() == json_type::J_OBJECT) {
+		ret = is_valid_root_object(val_);
+	} else {
+		ret = false;
+	}
+
+	return ret;
+}
+
