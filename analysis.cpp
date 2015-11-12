@@ -633,7 +633,9 @@ is_valid_root_array(std::shared_ptr<json_value> val_)
                 ret = false;
             }
         }
-    }
+    } else {
+		ret = false;
+	}
 
 	return ret;
 }
