@@ -153,6 +153,11 @@ and smart pointers (std::shared\_ptr).
         with sole purpose of UTF-8 validation. This can be considered as a
         performance issue.
 
+    \item Late in our project we have found out that Docker Image Specification
+        output from docker has mandatory keys with capital first letters. This
+        implies that keys in docker are case insensitive. We have modified our
+        code to accept this behavior.
+
 \end{itemize}
 
 \section{Stats}
