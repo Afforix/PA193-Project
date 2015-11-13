@@ -1,0 +1,161 @@
+[
+{
+    "Id": "be19dbd1f4a6f76bdfec86d4154c233c6004c31288eb4411171eeade0605056e",
+    "Created": "2015-11-12T19:44:35.492085359Z",
+    "Path": "/docker-entrypoint.sh",
+    "Args": [
+        "postgres"
+    ],
+    "State": {
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 2254,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2015-11-12T19:44:36.135141944Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "Image": "776bbb0f2fccff9280e959c3558fc120b5a946e1f6f1791c0814ccdb0da6ee0a",
+    "NetworkSettings": {
+        "Bridge": "",
+        "EndpointID": "643082039d2addf9737db6908317c199212893282f94322b4b0ef7d4fdfe9f25",
+        "Gateway": "172.17.42.1",
+        "GlobalIPv6Address": "",
+        "GlobalIPv6PrefixLen": 0,
+        "HairpinMode": false,
+        "IPAddress": "172.17.0.1",
+        "IPPrefixLen": 16,
+        "IPv6Gateway": "",
+        "LinkLocalIPv6Address": "",
+        "LinkLocalIPv6PrefixLen": 0,
+        "MacAddress": "02:42:ac:11:00:01",
+        "NetworkID": "1273c07e482e320ae54b2dda08bacf5bb8b28918226b7abf3c85ee608e52f966",
+        "PortMapping": null,
+        "Ports": {
+            "5432/tcp": null
+        },
+        "SandboxKey": "/var/run/docker/netns/be19dbd1f4a6",
+        "SecondaryIPAddresses": null,
+        "SecondaryIPv6Addresses": null
+    },
+    "ResolvConfPath": "/var/lib/docker/containers/be19dbd1f4a6f76bdfec86d4154c233c6004c31288eb4411171eeade0605056e/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/be19dbd1f4a6f76bdfec86d4154c233c6004c31288eb4411171eeade0605056e/hostname",
+    "HostsPath": "/var/lib/docker/containers/be19dbd1f4a6f76bdfec86d4154c233c6004c31288eb4411171eeade0605056e/hosts",
+    "LogPath": "",
+    "Name": "/some-postgres",
+    "RestartCount": 0,
+    "Driver": "devicemapper",
+    "ExecDriver": "native-0.2",
+    "MountLabel": "system_u:object_r:svirt_sandbox_file_t:s0:c621,c858",
+    "ProcessLabel": "system_u:system_r:svirt_lxc_net_t:s0:c621,c858",
+    "AppArmorProfile": "",
+    "ExecIDs": null,
+    "HostConfig": {
+        "Binds": null,
+        "ContainerIDFile": "",
+        "LxcConf": [],
+        "Memory": 0,
+        "MemorySwap": 0,
+        "CpuShares": 0,
+        "CpuPeriod": 0,
+        "CpusetCpus": "",
+        "CpusetMems": "",
+        "CpuQuota": 0,
+        "BlkioWeight": 0,
+        "OomKillDisable": false,
+        "MemorySwappiness": -1,
+        "Privileged": false,
+        "PortBindings": {},
+        "Links": null,
+        "PublishAllPorts": false,
+        "Dns": null,
+        "DnsSearch": null,
+        "ExtraHosts": null,
+        "VolumesFrom": null,
+        "Devices": [],
+        "NetworkMode": "default",
+        "IpcMode": "",
+        "PidMode": "",
+        "UTSMode": "",
+        "CapAdd": null,
+        "CapDrop": null,
+        "GroupAdd": null,
+        "RestartPolicy": {
+            "Name": "no",
+            "MaximumRetryCount": 0
+        },
+        "SecurityOpt": null,
+        "ReadonlyRootfs": false,
+        "Ulimits": null,
+        "LogConfig": {
+            "Type": "journald",
+            "Config": {}
+        },
+        "CgroupParent": "",
+        "ConsoleSize": [
+            0,
+            0
+        ]
+    },
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "24",
+            "DeviceName": "docker-253:0-102230603-be19dbd1f4a6f76bdfec86d4154c233c6004c31288eb4411171eeade0605056e",
+            "DeviceSize": "107374182400"
+        }
+    },
+    "Mounts": [
+        {
+            "Name": "e3730641c3e9fa22069563fb7b6bfb154247d63a7a8cd4240050d8b5239847af",
+            "Source": "/var/lib/docker/volumes/e3730641c3e9fa22069563fb7b6bfb154247d63a7a8cd4240050d8b5239847af/_data",
+            "Destination": "/var/lib/postgresql/data",
+            "Driver": "local",
+            "Mode": "",
+            "RW": true
+        }
+    ],
+    "Config": {
+        "Hostname": "be19dbd1f4a6",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "5432/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "POSTGRES_PASSWORD=mysecretpassword",
+            "PATH=/usr/lib/postgresql/9.4/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "LANG=en_US.utf8",
+            "PG_MAJOR=9.4",
+            "PG_VERSION=9.4.5-1.pgdg80+1",
+            "PGDATA=/var/lib/postgresql/data"
+        ],
+        "Cmd": [
+            "postgres"
+        ],
+        "Image": "postgres",
+        "Volumes": {
+            "/var/lib/postgresql/data": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "/docker-entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": null,
+        "Labels": {}
+    }
+}
+]

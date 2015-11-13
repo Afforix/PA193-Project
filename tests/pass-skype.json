@@ -1,0 +1,85 @@
+[
+{
+    "Id": "a9c853f182e8049e231f6ca25b740ea6aefaf35665855004d57cc8f9e0589009",
+    "Parent": "b640ad4a23a39963bd26d849a3508021e38fc99c462cd70ca968046a9c9369ee",
+    "Comment": "",
+    "Created": "2015-11-07T07:38:08.869144973Z",
+    "Container": "ef4c1a995615b9935cabf9b2d28b1ed317a9e276fc7b211758087fd2cec9b89c",
+    "ContainerConfig": {
+        "Hostname": "f813a028846a",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "SKYPE_USER=skype"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) ENTRYPOINT \u0026{[\"/sbin/entrypoint.sh\"]}"
+        ],
+        "Image": "b640ad4a23a39963bd26d849a3508021e38fc99c462cd70ca968046a9c9369ee",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "/sbin/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.7.1",
+    "Author": "",
+    "Config": {
+        "Hostname": "f813a028846a",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "SKYPE_USER=skype"
+        ],
+        "Cmd": null,
+        "Image": "b640ad4a23a39963bd26d849a3508021e38fc99c462cd70ca968046a9c9369ee",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "/sbin/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 390711406,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "259",
+            "DeviceName": "docker-253:2-1452921-a9c853f182e8049e231f6ca25b740ea6aefaf35665855004d57cc8f9e0589009",
+            "DeviceSize": "10737418240"
+        }
+    }
+}
+]

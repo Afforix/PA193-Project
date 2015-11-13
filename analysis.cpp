@@ -116,7 +116,7 @@ is_port_spec (const std::string &s_)
 bool
 is_env_spec (const std::string &s_)
 {
-    const static std::regex env ("^\"[A-Z]+=[^=]*\"$");
+    const static std::regex env ("^\"[A-Z_]+[A-Z0-9_]*=[^=]*\"$");
 
     return std::regex_match (s_, env);
 }
@@ -513,8 +513,8 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
             std::cerr << "size isn't int" << std::endl;
             ret = false;
         } else {
-			if (std::static_pointer_cast<json_int>(size)->value() <= 0) {
-				std::cerr << "Size isn't positive integer" << std::endl;
+            if (std::static_pointer_cast<json_int>(size)->value() < 0) {
+                std::cerr << "Size is negative" << std::endl;
 				ret = false;
 			}
 		}
