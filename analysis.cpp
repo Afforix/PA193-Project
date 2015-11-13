@@ -70,6 +70,7 @@ is_user_group (const std::string &s_)
   std::regex uid_guid ("^\"[0-9]+:[0-9]+\"$");
   std::regex uid_group ("^\"[0-9]+:[a-zA-Z_][a-zA-Z0-9_-]*\"$");
   std::regex user_gid ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[0-9]+\"$");
+  std::regex empty ("^\"\"$");
 
   if (std::regex_match (s_, uid)) {
       return true;
@@ -92,6 +93,10 @@ is_user_group (const std::string &s_)
   }
 
   if (std::regex_match (s_, user_gid)) {
+      return true;
+  }
+
+  if (std::regex_match (s_, empty)) {
       return true;
   }
 
@@ -291,35 +296,37 @@ is_valid_config (std::shared_ptr< json_value > val_)
     // validate Env
     auto Env = object->find("\"Env\"");
     if (Env != nullptr) {
-        if (Env->jtype() != json_type::J_ARRAY) {
-            std::cerr << "Env isn't array" << std::endl;
-            ret = false;
-        } else {
-            if (!is_valid_env(Env)) {
-                std::cerr << "Env isn't valid env array" << std::endl;
-                ret = false;
-            }
-        }
+        if (Env->jtype() == json_type::J_ARRAY) {
+			if (!is_valid_env(Env)) {
+				std::cerr << "Env isn't valid env array" << std::endl;
+				ret = false;
+			}
+        } else if (Env->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     // validate ExposedPorts
     auto ExposedPorts = object->find("\"ExposedPorts\"");
     if (ExposedPorts != nullptr) {
-        if (ExposedPorts->jtype() != json_type::J_OBJECT) {
-            std::cerr << "ExposedPorts isn't object" << std::endl;
-            ret = false;
-        } else {
+        if (ExposedPorts->jtype() == json_type::J_OBJECT) {
             if (!is_valid_exposedports(ExposedPorts)) {
                 std::cerr << "ExposedPorts isn't valid exposedports object" << std::endl;
                 ret = false;
             }
-        }
+        } else if (ExposedPorts->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     // validate WorkingDir
     auto WorkingDir = object->find("\"WorkingDir\"");
     if (WorkingDir != nullptr) {
-        if (WorkingDir->jtype() != json_type::J_STRING) {
+        if (WorkingDir->jtype() != json_type::J_STRING && WorkingDir->jtype() != json_type::J_NULL) {
             std::cerr << "WorkingDir isn't object" << std::endl;
             ret = false;
         }
@@ -328,100 +335,106 @@ is_valid_config (std::shared_ptr< json_value > val_)
     // validate Volumes
     auto Volumes = object->find("\"Volumes\"");
     if (Volumes != nullptr) {
-        if (Volumes->jtype() != json_type::J_OBJECT) {
-            std::cerr << "Volumes isn't object" << std::endl;
-            ret = false;
-        } else {
+        if (Volumes->jtype() == json_type::J_OBJECT) {
             if (!is_valid_second_object_object(Volumes)) {
                 std::cerr << "Volumes isn't valid volumes object" << std::endl;
                 ret = false;
             }
-        }
+        } else if (Volumes->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     // validate Cmd
     auto Cmd = object->find("\"Cmd\"");
     if (Cmd != nullptr) {
-        if (Cmd->jtype() != json_type::J_ARRAY) {
-            std::cerr << "Cmd isn't array" << std::endl;
-            ret = false;
-        } else {
+        if (Cmd->jtype() == json_type::J_ARRAY) {
             if (!is_content_j_string_array(Cmd)) {
                 std::cerr << "Cmd isn't valid array of strings" << std::endl;
                 ret = false;
             }
-        }
+        } else if (Cmd->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     // validate Entrypoint
     auto Entrypoint = object->find("\"Entrypoint\"");
     if (Entrypoint != nullptr) {
-        if (Entrypoint->jtype() != json_type::J_ARRAY) {
-            std::cerr << "Entrypoint isn't array" << std::endl;
-            ret = false;
-        } else {
+        if (Entrypoint->jtype() == json_type::J_ARRAY) {
             if (!is_content_j_string_array(Entrypoint)) {
                 std::cerr << "Entrypoint isn't valid array of strings" << std::endl;
                 ret = false;
             }
-        }
+        } else if (Entrypoint->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     // validate CpuShares
     auto CpuShares = object->find("\"CpuShares\"");
     if (CpuShares != nullptr) {
-        if (CpuShares->jtype() != json_type::J_INT) {
-            std::cerr << "CpuShares isn't int" << std::endl;
-            ret = false;
-        } else {
+        if (CpuShares->jtype() == json_type::J_INT) {
 			if (std::static_pointer_cast<json_int>(CpuShares)->value() <= 0) {
 				std::cerr << "CpuShares isn't positive integer" << std::endl;
 				ret = false;
 			}
+		} else if (CpuShares->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
 		}
-
     }
 
     // validate MemorySwap
     auto MemorySwap = object->find("\"MemorySwap\"");
     if (MemorySwap != nullptr) {
-        if (MemorySwap->jtype() != json_type::J_INT) {
-            std::cerr << "MemorySwap isn't int" << std::endl;
-            ret = false;
-        } else {
+        if (MemorySwap->jtype() == json_type::J_INT) {
 			if (std::static_pointer_cast<json_int>(MemorySwap)->value() <= 0) {
 				std::cerr << "MemorySwap isn't positive integer" << std::endl;
 				ret = false;
 			}
+		} else if (MemorySwap->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
 		}
     }
 
     // validate Memory
     auto Memory = object->find("\"Memory\"");
     if (Memory != nullptr) {
-        if (Memory->jtype() != json_type::J_INT) {
-            std::cerr << "Memory isn't int" << std::endl;
-            ret = false;
-        } else {
+        if (Memory->jtype() == json_type::J_INT) {
 			if (std::static_pointer_cast<json_int>(Memory)->value() <= 0) {
 				std::cerr << "Memory isn't positive integer" << std::endl;
 				ret = false;
 			}
+		} else if (Memory->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
 		}
     }
 
     // validate User
     auto User = object->find("\"User\"");
     if (User != nullptr) {
-        if (User->jtype() != json_type::J_STRING) {
-            std::cerr << "User isn't string" << std::endl;
-            ret = false;
-        } else {
+        if (User->jtype() == json_type::J_STRING) {
             if (!is_user_group(User->to_string())) {
                 std::cerr << "User isn't valid user_group string" << std::endl;
                 ret = false;
             }
-        }
+        } else if (User->jtype() == json_type::J_NULL) {
+			; // is valid
+		} else {
+			ret = false;
+		}
     }
 
     return ret;
@@ -487,9 +500,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
                 ret = false;
             }
         }
-    } else {
-        std::cerr << "created doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate os
@@ -504,9 +514,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
                 ret = false;
             }
         }
-    } else {
-        std::cerr << "os doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate parent
@@ -521,9 +528,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
                 ret = false;
             }
         }
-    } else {
-        std::cerr << "parent doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate Size
@@ -538,9 +542,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
 				ret = false;
 			}
 		}
-    } else {
-        std::cerr << "size doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate architecture
@@ -555,9 +556,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
                 ret = false;
             }
         }
-    } else {
-        std::cerr << "architecture doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate author
@@ -567,9 +565,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
             std::cerr << "author isn't string" << std::endl;
             ret = false;
         }
-    } else {
-        std::cerr << "author doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate checksum
@@ -579,9 +574,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
             std::cerr << "checksum isn't string" << std::endl;
             ret = false;
         }
-    } else {
-        std::cerr << "checksum doesn't exist" << std::endl;
-        ret = false;
     }
 
     // validate config
@@ -598,9 +590,6 @@ is_valid_root_object (std::shared_ptr<json_value> val_)
             std::cerr << "config isn't valid type" << std::endl;
             ret = false;
         }
-    } else {
-        std::cerr << "config doesn't exist" << std::endl;
-        ret = false;
     }
 
     return ret;
