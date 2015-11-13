@@ -2,26 +2,24 @@
 #define JSON_OBJECT_H
 
 #include "json_value.h"
+#include "icase_comparator.h"
 
 #include <map>
-#include <cctype>
-#include <algorithm>
 
 /**
  * @brief JSON object value.
  */
 class json_object : public json_value
 {
-    std::map< const std::string, std::shared_ptr< json_value > > _pairs;
+public:
+    using object_children_t = std::map< const std::string, std::shared_ptr< json_value >, icase_comparator >;
+
+private:
+    object_children_t _pairs;
     std::string _last_key;
 
-    /**
-     * @brief Helper functor for case insensitive key lookup.
-     */
-    class icase_lookup;
 
 public:
-    using object_children_t = std::map< const std::string, std::shared_ptr< json_value > >;
 
     virtual void to_string(std::stringstream &ss_, size_t depth_ = 0) const;
     virtual json_type jtype() const { return json_type::J_OBJECT; }
@@ -49,13 +47,13 @@ public:
     const object_children_t& children() const { return _pairs; }
 
     /**
-     * @brief Tells if the key is contained in the object.
+     * @brief Tells if the key is contained in the object. CASE INSENSITIVE.
      * @param key_ key to look for
      * @return true if the value was found
      */
     bool contains(const std::string &key_) const
     {
-        return _pairs.find(key_) != _pairs.cend();
+        return _pairs.find(key_) != _pairs.end();
     }
 
     /**
