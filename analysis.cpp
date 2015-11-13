@@ -36,7 +36,7 @@ is_architecture (const std::string &arch_)
 bool
 is_hexadecimal_256bits (const std::string &s_)
 {
-    std::regex hexastring_64 ("^\"[0-9a-fA-F]{64}\"$");
+    const static std::regex hexastring_64 ("^\"[0-9a-fA-F]{64}\"$");
 
     return std::regex_match (s_, hexastring_64);
 }
@@ -50,7 +50,7 @@ is_hexadecimal_256bits (const std::string &s_)
 bool
 is_iso8601_datetime (const std::string &s_)
 {
-    std::regex date ("^\"([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?\"$");
+    const static std::regex date ("^\"([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?\"$");
 
     return std::regex_match (s_, date);
 }
@@ -64,43 +64,23 @@ is_iso8601_datetime (const std::string &s_)
 bool
 is_user_group (const std::string &s_)
 {
-  std::regex uid ("^\"[0-9]+\"$");
-  std::regex user ("^\"[a-zA-Z_][a-zA-Z0-9_-]*\"$");
-  std::regex user_group ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[a-zA-Z_][a-zA-Z0-9_-]*\"$");
-  std::regex uid_guid ("^\"[0-9]+:[0-9]+\"$");
-  std::regex uid_group ("^\"[0-9]+:[a-zA-Z_][a-zA-Z0-9_-]*\"$");
-  std::regex user_gid ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[0-9]+\"$");
-  std::regex empty ("^\"\"$");
+    const static std::vector< std::regex > regexes
+    {
+        std::regex ("^\"[0-9]+\"$"), // uid
+        std::regex ("^\"[a-zA-Z_][a-zA-Z0-9_-]*\"$"), // user
+        std::regex ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[a-zA-Z_][a-zA-Z0-9_-]*\"$"), // user_group
+        std::regex ("^\"[0-9]+:[0-9]+\"$"), // uid_guid
+        std::regex ("^\"[0-9]+:[a-zA-Z_][a-zA-Z0-9_-]*\"$"), // uid_group
+        std::regex ("^\"[a-zA-Z_][a-zA-Z0-9_-]*:[0-9]+\"$"), // user_gid
+        std::regex ("^\"\"$") // empty
+    };
 
-  if (std::regex_match (s_, uid)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, user)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, user_group)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, uid_guid)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, uid_group)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, user_gid)) {
-      return true;
-  }
-
-  if (std::regex_match (s_, empty)) {
-      return true;
-  }
-
-  return false;
+    return std::any_of(regexes.begin(),
+                       regexes.end(),
+                       [&s_](const std::regex &r_)
+    {
+        return std::regex_match(s_, r_);
+    });
 }
 
 
@@ -112,23 +92,19 @@ is_user_group (const std::string &s_)
 bool
 is_port_spec (const std::string &s_)
 {
-    std::regex port ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\"$");
-    std::regex udp ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/udp\"$");
-    std::regex tcp ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/tcp\"$");
+    const static std::vector< std::regex > regexes
+    {
+        std::regex ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\"$"), // port
+        std::regex ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/udp\"$"), // udp
+        std::regex ("^\"([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/tcp\"$") // tcp
+    };
 
-    if (std::regex_match (s_, port)) {
-        return true;
-    }
-
-    if (std::regex_match (s_, udp)) {
-        return true;
-    }
-
-    if (std::regex_match (s_, tcp)) {
-        return true;
-    }
-
-    return false;
+    return std::any_of(regexes.begin(),
+                       regexes.end(),
+                       [&s_](const std::regex &r_)
+    {
+        return std::regex_match(s_, r_);
+    });
 }
 
 
@@ -140,7 +116,7 @@ is_port_spec (const std::string &s_)
 bool
 is_env_spec (const std::string &s_)
 {
-    std::regex env ("^\"[A-Z]+=[^=]*\"$");
+    const static std::regex env ("^\"[A-Z]+=[^=]*\"$");
 
     return std::regex_match (s_, env);
 }
