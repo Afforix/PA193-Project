@@ -1,0 +1,77 @@
+[
+{
+    "Id": "1d6f63d023f51ae1bbc8c5623bcde3de05751dbe9bba5ae4b3405005f8b856c9",
+    "Parent": "ef2704e74ecc859442589f139553775bfa5a8a892afb40e480017fe23036eec8",
+    "Comment": "",
+    "Created": "2015-11-10T00:31:11.959319476Z",
+    "Container": "ba1f8314e1b51b1d4d75568e69230a7d6b327fba17eb1929c3ee8b63ba6e240b",
+    "ContainerConfig": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": null,
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [\"/bin/bash\"]"
+        ],
+        "Image": "ef2704e74ecc859442589f139553775bfa5a8a892afb40e480017fe23036eec8",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": null,
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "",
+    "Config": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": null,
+        "Cmd": [
+            "/bin/bash"
+        ],
+        "Image": "ef2704e74ecc859442589f139553775bfa5a8a892afb40e480017fe23036eec8",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": null,
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 125087165,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "7",
+            "DeviceName": "docker-253:0-749387-1d6f63d023f51ae1bbc8c5623bcde3de05751dbe9bba5ae4b3405005f8b856c9",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

@@ -1,0 +1,95 @@
+[
+{
+    "Id": "dcca5069ca0d18e6c35ad760ef652dfb6088210d71f26bb69ee4c48ac06da931",
+    "Parent": "ae13696a0ef2e413b252089708fb886f1b20e7542aa7b4742459ccad1bdeee2e",
+    "Comment": "",
+    "Created": "2015-08-05T16:42:04.444090604Z",
+    "Container": "11251a6d0691acc66b10064f57d9ee068163c7046367f5ee86e9c3b46fa05f65",
+    "ContainerConfig": {
+        "Hostname": "b20c898782d0",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "17500/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DEBIAN_FRONTEND=noninteractive"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [\"/dbox/run\"]"
+        ],
+        "Image": "ae13696a0ef2e413b252089708fb886f1b20e7542aa7b4742459ccad1bdeee2e",
+        "Volumes": {
+            "/dbox/.dropbox": {},
+            "/dbox/.dropbox-dist": {},
+            "/dbox/Dropbox": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.6.2",
+    "Author": "Jan Broer \u003cjaneczku@yahoo.de\u003e",
+    "Config": {
+        "Hostname": "b20c898782d0",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "17500/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DEBIAN_FRONTEND=noninteractive"
+        ],
+        "Cmd": [
+            "/dbox/run"
+        ],
+        "Image": "ae13696a0ef2e413b252089708fb886f1b20e7542aa7b4742459ccad1bdeee2e",
+        "Volumes": {
+            "/dbox/.dropbox": {},
+            "/dbox/.dropbox-dist": {},
+            "/dbox/Dropbox": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 330985187,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "104",
+            "DeviceName": "docker-253:0-749387-dcca5069ca0d18e6c35ad760ef652dfb6088210d71f26bb69ee4c48ac06da931",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

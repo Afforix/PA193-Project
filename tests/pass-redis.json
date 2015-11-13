@@ -1,0 +1,99 @@
+[
+{
+    "Id": "e65f97c3eeb6744e76353067463a2fcd46664c18df4cdaaa0826051b5840f412",
+    "Parent": "3190ac2a4dad5375f394df9151f60d7fd78f74a711a62d62c8819084edc3f9c4",
+    "Comment": "",
+    "Created": "2015-11-10T23:14:32.649672947Z",
+    "Container": "29b97c6b95a81b012c127aebf3327a4c60bb7d46e0535302d3d68164c1d1ce51",
+    "ContainerConfig": {
+        "Hostname": "f259a376263c",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "6379/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "REDIS_VERSION=3.0.5",
+            "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-3.0.5.tar.gz",
+            "REDIS_DOWNLOAD_SHA1=ad3ee178c42bfcfd310c72bbddffbbe35db9b4a6"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [\"redis-server\"]"
+        ],
+        "Image": "3190ac2a4dad5375f394df9151f60d7fd78f74a711a62d62c8819084edc3f9c4",
+        "Volumes": {
+            "/data": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "/data",
+        "Entrypoint": [
+            "/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "",
+    "Config": {
+        "Hostname": "f259a376263c",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "6379/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "REDIS_VERSION=3.0.5",
+            "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-3.0.5.tar.gz",
+            "REDIS_DOWNLOAD_SHA1=ad3ee178c42bfcfd310c72bbddffbbe35db9b4a6"
+        ],
+        "Cmd": [
+            "redis-server"
+        ],
+        "Image": "3190ac2a4dad5375f394df9151f60d7fd78f74a711a62d62c8819084edc3f9c4",
+        "Volumes": {
+            "/data": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "/data",
+        "Entrypoint": [
+            "/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 109127888,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "47",
+            "DeviceName": "docker-253:0-749387-e65f97c3eeb6744e76353067463a2fcd46664c18df4cdaaa0826051b5840f412",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

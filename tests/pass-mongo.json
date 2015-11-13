@@ -1,0 +1,97 @@
+[
+{
+    "Id": "87b959fe8b2539fc13527fc373aba93240c3b914658304e8b2b086d1d4190f83",
+    "Parent": "d3912fca595202cde484a07c48b392a1149b9e3add480d4398891cd3eca83df3",
+    "Comment": "",
+    "Created": "2015-11-10T19:47:28.56564134Z",
+    "Container": "e40ea6b324bf1f1bb9229346da0b62306e3d1682408c023e228cc1b593c26621",
+    "ContainerConfig": {
+        "Hostname": "f259a376263c",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "27017/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "MONGO_MAJOR=3.0",
+            "MONGO_VERSION=3.0.7"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [\"mongod\"]"
+        ],
+        "Image": "d3912fca595202cde484a07c48b392a1149b9e3add480d4398891cd3eca83df3",
+        "Volumes": {
+            "/data/db": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "",
+    "Config": {
+        "Hostname": "f259a376263c",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "27017/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "MONGO_MAJOR=3.0",
+            "MONGO_VERSION=3.0.7"
+        ],
+        "Cmd": [
+            "mongod"
+        ],
+        "Image": "d3912fca595202cde484a07c48b392a1149b9e3add480d4398891cd3eca83df3",
+        "Volumes": {
+            "/data/db": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "/entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 261519665,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "64",
+            "DeviceName": "docker-253:0-749387-87b959fe8b2539fc13527fc373aba93240c3b914658304e8b2b086d1d4190f83",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

@@ -1,0 +1,87 @@
+[
+{
+    "Id": "9d5313dc3109b86df4e2272845c295a1a77e0a06e63311b66058c7d6c75abcc3",
+    "Parent": "3f0f30bf83335c0572737081d4e309dd898167ad47960d6eed36408d64eb249b",
+    "Comment": "",
+    "Created": "2015-11-11T07:06:13.071335535Z",
+    "Container": "34935fac7bb022661d05640bf9011f384e0f16e09be44b6b13c2078b02f2820b",
+    "ContainerConfig": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "LANG=C.UTF-8",
+            "JAVA_VERSION=7u85",
+            "JAVA_DEBIAN_VERSION=7u85-2.6.1-6+deb8u1"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "apt-get update \u0026\u0026 apt-get install -y openjdk-7-jdk=\"$JAVA_DEBIAN_VERSION\" \u0026\u0026 rm -rf /var/lib/apt/lists/*"
+        ],
+        "Image": "3f0f30bf83335c0572737081d4e309dd898167ad47960d6eed36408d64eb249b",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "",
+    "Config": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": null,
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "LANG=C.UTF-8",
+            "JAVA_VERSION=7u85",
+            "JAVA_DEBIAN_VERSION=7u85-2.6.1-6+deb8u1"
+        ],
+        "Cmd": [
+            "/bin/bash"
+        ],
+        "Image": "3f0f30bf83335c0572737081d4e309dd898167ad47960d6eed36408d64eb249b",
+        "Volumes": null,
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 295145456,
+    "VirtualSize": 587539460,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "28",
+            "DeviceName": "docker-253:0-749387-9d5313dc3109b86df4e2272845c295a1a77e0a06e63311b66058c7d6c75abcc3",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

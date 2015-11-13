@@ -1,0 +1,95 @@
+[
+{
+    "Id": "bf727fd7a2b3e987a9959621e2647284b4d708544e2c88d1647a63d3910bad6d",
+    "Parent": "1aaf2c2e77e98ea025e57ac13359d90617b9bfb1e80aaa58394f3f1d238655d1",
+    "Comment": "",
+    "Created": "2015-11-10T20:16:53.209481202Z",
+    "Container": "c27df1a7c0dd24586d6e10e48f3f73305b14b7d7694eb33452dfd1e584852d7b",
+    "ContainerConfig": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "443/tcp": {},
+            "80/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "NGINX_VERSION=1.9.6-1~jessie"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [\"nginx\" \"-g\" \"daemon off;\"]"
+        ],
+        "Image": "1aaf2c2e77e98ea025e57ac13359d90617b9bfb1e80aaa58394f3f1d238655d1",
+        "Volumes": {
+            "/var/cache/nginx": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "NGINX Docker Maintainers \"docker-maint@nginx.com\"",
+    "Config": {
+        "Hostname": "206de6b7c8f7",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "443/tcp": {},
+            "80/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "NGINX_VERSION=1.9.6-1~jessie"
+        ],
+        "Cmd": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "Image": "1aaf2c2e77e98ea025e57ac13359d90617b9bfb1e80aaa58394f3f1d238655d1",
+        "Volumes": {
+            "/var/cache/nginx": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": null,
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 132719894,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "19",
+            "DeviceName": "docker-253:0-749387-bf727fd7a2b3e987a9959621e2647284b4d708544e2c88d1647a63d3910bad6d",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]

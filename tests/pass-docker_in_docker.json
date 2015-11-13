@@ -1,0 +1,99 @@
+[
+{
+    "Id": "124b21a3f5c24febb4f163410fd654258edd13e6df12d042f6bd7ee0fa478ffb",
+    "Parent": "9b81141b7475637872f35ffda86006134f63c61be4f3f8971039a66c7504bd5c",
+    "Comment": "",
+    "Created": "2015-11-10T18:58:16.997565924Z",
+    "Container": "694861b6cca7e139c30e2825224e7148d50d2f6c4d477407abd8c025e436417d",
+    "ContainerConfig": {
+        "Hostname": "afbbf75ae75d",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "2375/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DOCKER_BUCKET=get.docker.com",
+            "DOCKER_VERSION=1.9.0",
+            "DOCKER_SHA256=5d46455aac507e231fd2a558459779f1994f7151d6cb027efabfa36f568cf017",
+            "DIND_COMMIT=3b5fac462d21ca164b3778647420016315289034"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD []"
+        ],
+        "Image": "9b81141b7475637872f35ffda86006134f63c61be4f3f8971039a66c7504bd5c",
+        "Volumes": {
+            "/var/lib/docker": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "dockerd-entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "DockerVersion": "1.9.0",
+    "Author": "",
+    "Config": {
+        "Hostname": "afbbf75ae75d",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "2375/tcp": {}
+        },
+        "PublishService": "",
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DOCKER_BUCKET=get.docker.com",
+            "DOCKER_VERSION=1.9.0",
+            "DOCKER_SHA256=5d46455aac507e231fd2a558459779f1994f7151d6cb027efabfa36f568cf017",
+            "DIND_COMMIT=3b5fac462d21ca164b3778647420016315289034"
+        ],
+        "Cmd": [],
+        "Image": "9b81141b7475637872f35ffda86006134f63c61be4f3f8971039a66c7504bd5c",
+        "Volumes": {
+            "/var/lib/docker": {}
+        },
+        "VolumeDriver": "",
+        "WorkingDir": "",
+        "Entrypoint": [
+            "dockerd-entrypoint.sh"
+        ],
+        "NetworkDisabled": false,
+        "MacAddress": "",
+        "OnBuild": [],
+        "Labels": {}
+    },
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 0,
+    "VirtualSize": 44129201,
+    "GraphDriver": {
+        "Name": "devicemapper",
+        "Data": {
+            "DeviceId": "83",
+            "DeviceName": "docker-253:0-749387-124b21a3f5c24febb4f163410fd654258edd13e6df12d042f6bd7ee0fa478ffb",
+            "DeviceSize": "107374182400"
+        }
+    }
+}
+]
