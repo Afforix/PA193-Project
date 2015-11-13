@@ -1,5 +1,4 @@
 {
-    "Size" : 271828,
     "architecture" : "amd64",
     "author" : "Alyssa P. Hacker &ltalyspdev@example.com&gt",
     "checksum" : "tarsum.v1+sha256:e58fcf7418d2390dec8e8fb69d88c06ec07039d651fedc3aa72af9972e7d046b",
@@ -34,6 +33,7 @@
     "id" : "a9561eb1b190625c9adb5a9513e72c4dedafc1cb2d4c5236c9a6957ec7dfd5a9",
     "os" : "linux",
     "parent" : "c6e3cedcda2e3982a1a6760e178355e8e65f7b80e4e5248743fa3549d284e024",
+    "Size" : 271828,
     "zzz number parsing test" : {
         "pass 01" : "\/",
         "pass 02" : 123,
